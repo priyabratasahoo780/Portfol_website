@@ -1,0 +1,36 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#38bdf8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#818cf8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2dd4bf;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#0f172a"/>
+
+  <!-- Logo Group -->
+  <g transform="translate(400, 250)">
+    <!-- Abstract S / Wave Shape -->
+    <path d="M-60 -80 C -120 -80, -120 0, -60 0 S 0 80, -60 80 L 60 80 C 120 80, 120 0, 60 0 S 0 -80, 60 -80 Z" 
+          fill="url(#grad1)" opacity="0.8" filter="url(#glow)"/>
+    
+    <path d="M-40 -60 C -90 -60, -90 0, -40 0 S 10 60, -40 60 L 40 60 C 90 60, 90 0, 40 0 S -10 -60, 40 -60 Z" 
+          fill="url(#grad2)"/>
+  </g>
+
+  <!-- Text -->
+  <text x="400" y="420" font-family="'Inter', sans-serif" font-size="64" font-weight="bold" fill="#f8fafc" text-anchor="middle" letter-spacing="8">SOLINAS</text>
+  <text x="400" y="460" font-family="'Inter', sans-serif" font-size="24" fill="#94a3b8" text-anchor="middle" letter-spacing="2">ROBOTICS & DIGITIZATION</text>
+</svg>

@@ -1,0 +1,114 @@
+/* Responsive Styles for Pomodoro Timer */
+
+.pomodoro-overlay {
+  padding: 1rem;
+}
+
+.pomodoro-card {
+  width: 90vw;
+  max-width: 420px; /* Increased from 350px */
+  padding: 24px; /* Increased padding */
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 30px;
+}
+
+.timer-ring-container {
+  width: 300px; /* Significantly increased from 240px */
+  height: 300px;
+  margin: 0 auto 12px auto;
+  position: relative;
+}
+
+.timer-ring-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.timer-text {
+  font-size: 72px; /* Increased from 56px */
+  margin: 0;
+}
+
+.controls-container {
+  gap: 20px; /* Increased gap */
+  margin-bottom: 16px;
+}
+
+.control-btn {
+  width: 60px; /* Increased from 52px */
+  height: 60px;
+}
+
+.session-tabs-container {
+  margin-bottom: 16px;
+}
+
+.quote-container {
+  margin-bottom: 4px; /* Reduced margin from 8px */
+}
+
+.stats-container {
+  margin-top: 4px; /* Reduced margin from 8px */
+}
+
+.settings-panel {
+  right: 50%;
+  top: 50%;
+  transform: translate(50%, -50%) !important;
+  width: 260px;
+  max-width: 90vw;
+  padding: 20px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .pomodoro-card {
+    padding: 24px;
+    width: 95vw;
+  }
+
+  .timer-ring-container {
+    width: 220px;
+    height: 220px;
+  }
+
+  .timer-text {
+    font-size: 48px; /* Smaller font for mobile */
+    margin: 40px 0;
+  }
+
+  .control-btn {
+    width: 48px; /* Smaller buttons */
+    height: 48px;
+  }
+
+  .controls-container {
+    gap: 12px;
+  }
+  
+  /* Reposition Settings Panel for Mobile */
+  .settings-panel {
+    right: 50%;
+    transform: translate(50%, -50%) !important; /* Override inline transform */
+    top: 50%;
+    width: 90vw;
+    max-height: 70vh;
+  }
+  
+  .session-btn {
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .timer-ring-container {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .timer-text {
+    font-size: 40px;
+  }
+}

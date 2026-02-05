@@ -1,0 +1,7 @@
+Starting Test
+User: sahoopriyabrata780@gmail.com
+Pass: Set (Length: 16)
+SendGrid Key: Set (Length: 69)
+Testing Nodemailer (Gmail)...
+✅ Nodemailer verify success! Credentials are valid.
+✅ Test email sent: <557871b0-b5d9-6754-91c5-5a9107f2c8c8@gmail.com>

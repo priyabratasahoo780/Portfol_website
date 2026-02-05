@@ -1,0 +1,29 @@
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#1e1e2e"/>
+  
+  <!-- Header Bar -->
+  <rect x="0" y="0" width="600" height="80" fill="#2d2d42"/>
+  
+  <!-- Game Title/RGB Value -->
+  <text x="300" y="55" font-family="Arial, sans-serif" font-size="32" fill="#ffffff" text-anchor="middle" font-weight="bold">RGB(255, 0, 100)</text>
+  
+  <!-- Reset/Status Bar -->
+  <rect x="0" y="80" width="600" height="40" fill="#ffffff"/>
+  <text x="100" y="108" font-family="Arial, sans-serif" font-size="16" fill="#2c3e50" font-weight="bold">New Colors</text>
+  <text x="300" y="108" font-family="Arial, sans-serif" font-size="16" fill="#2c3e50" text-anchor="middle" font-weight="bold"></text>
+  <text x="500" y="108" font-family="Arial, sans-serif" font-size="16" fill="#2c3e50" text-anchor="middle" font-weight="bold">Hard</text>
+
+  <!-- Color Grid -->
+  <g transform="translate(140, 150)">
+    <!-- Top Row -->
+    <rect x="0" y="0" width="90" height="90" rx="8" fill="#ff0064"/>
+    <rect x="110" y="0" width="90" height="90" rx="8" fill="#2ecc71"/>
+    <rect x="220" y="0" width="90" height="90" rx="8" fill="#3498db"/>
+    
+    <!-- Bottom Row -->
+    <rect x="0" y="110" width="90" height="90" rx="8" fill="#9b59b6"/>
+    <rect x="110" y="110" width="90" height="90" rx="8" fill="#f1c40f"/>
+    <rect x="220" y="110" width="90" height="90" rx="8" fill="#e67e22"/>
+  </g>
+</svg>
