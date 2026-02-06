@@ -22,7 +22,7 @@ const itemVariants = {
 }
 
 // API URL - compute once
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/contact'
+const API_URL = import.meta.env.VITE_API_URL || '/api/contact'
 
 // Memoized ContactForm for performance
 const ContactForm = memo(() => {
