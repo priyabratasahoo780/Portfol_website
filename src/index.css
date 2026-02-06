@@ -1119,6 +1119,12 @@ footer::before {
     .footer-links a { margin: 0 15px; }
 
     .section-pad { padding: 80px 0; }
+
+    /* Fix Contact Form width on Tablet/Mobile */
+    .contact-form {
+        width: 90%; 
+        padding: 30px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1797,6 +1803,14 @@ html {
     
     .contact-form {
         padding: 25px 16px;
+        width: 100% !important; /* Full width on small screens */
+        border-radius: 16px;
+    }
+
+    .input-group input, 
+    .input-group textarea {
+        font-size: 16px !important; /* Prevent iOS zoom */
+        padding: 15px;
     }
     
     .floating-img {
