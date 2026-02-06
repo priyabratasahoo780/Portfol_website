@@ -56,6 +56,7 @@ app.get('/api/health', (req, res) => {
     message: 'Backend server is running',
     timestamp: new Date().toISOString()
   });
+});
 
 // Diagnostic endpoint (remove in production if sensitive)
 app.get('/api/debug-config', (req, res) => {
@@ -72,7 +73,6 @@ app.get('/api/debug-config', (req, res) => {
     },
     headers: req.headers
   });
-});
 });
 
 // Error handling middleware
