@@ -114,7 +114,6 @@ export const sendEmailNotification = async (name, email, message) => {
           console.error('  1. Go to Google Account > Security > 2-Step Verification > App Passwords');
           console.error('  2. Create new app password');
           console.error('  3. Update EMAIL_PASS in backend/.env');
-      }
       
       // THROW COMBINED ERROR
       // This allows the user to see WHY SendGrid failed, instead of just the Gmail timeout
