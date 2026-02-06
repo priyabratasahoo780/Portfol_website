@@ -75,6 +75,16 @@ app.get('/api/debug-config', (req, res) => {
   });
 });
 
+// Global 404 Handler - Catches any request that doesn't match a route
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: 'Route not found on this server',
+    path: req.originalUrl,
+    method: req.method
+  });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
