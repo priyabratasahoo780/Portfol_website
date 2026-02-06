@@ -110,14 +110,15 @@ export const sendEmailNotification = async (name, email, message) => {
       await sendViaGmail(name, email, message);
     } catch (gmailError) {
       console.error('❌ Gmail failed:', gmailError.message);
-      if (gmailError.response && gmailError.response.includes('535')) {
-          console.error('  CRITICAL: Authentication Failed (535).');
-          console.error('  Solution: You MUST use an App Password, not your login password.');
+      console.error('  Solution: You MUST use an App Password, not your login password.');
           console.error('  1. Go to Google Account > Security > 2-Step Verification > App Passwords');
           console.error('  2. Create new app password');
           console.error('  3. Update EMAIL_PASS in backend/.env');
       }
-      throw gmailError; // Re-throw to indicate total failure
+      
+      // THROW COMBINED ERROR
+      // This allows the user to see WHY SendGrid failed, instead of just the Gmail timeout
+      throw new Error(`ALL FAILED. SendGrid: [${sendGridError.message}] | Gmail: [${gmailError.message}]`);
     }
   }
 };
