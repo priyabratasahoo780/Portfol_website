@@ -42,7 +42,8 @@ mongoose.connect(process.env.MONGODB_URI)
   })
   .catch((err) => {
     console.error('❌ MongoDB connection error:', err.message);
-    process.exit(1);
+    // Do NOT exit process, allows server to stay alive for diagnostics
+    // process.exit(1); 
   });
 
 // Routes
@@ -55,6 +56,23 @@ app.get('/api/health', (req, res) => {
     message: 'Backend server is running',
     timestamp: new Date().toISOString()
   });
+
+// Diagnostic endpoint (remove in production if sensitive)
+app.get('/api/debug-config', (req, res) => {
+  res.json({
+    status: 'Diagnostic Report',
+    timestamp: new Date().toISOString(),
+    env: {
+      NODE_ENV: process.env.NODE_ENV,
+      PORT: process.env.PORT,
+      MONGODB_URI_Configured: !!process.env.MONGODB_URI,
+      EMAIL_USER_Configured: !!process.env.EMAIL_USER,
+      EMAIL_PASS_Configured: !!process.env.EMAIL_PASS,
+      SENDGRID_KEY_Configured: !!process.env.SENDGRID_API_KEY
+    },
+    headers: req.headers
+  });
+});
 });
 
 // Error handling middleware
