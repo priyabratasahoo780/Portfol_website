@@ -1,9 +1,31 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback, memo } from 'react'
 import { Send } from 'lucide-react'
 import { motion } from 'framer-motion'
 import GalaxyBackground from './ui/GalaxyBackground'
 
-const ContactForm = () => {
+// Move animation variants outside component to prevent recreation
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: { type: "spring", stiffness: 100, damping: 15 }
+  }
+}
+
+// API URL - compute once
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/contact'
+
+// Memoized ContactForm for performance
+const ContactForm = memo(() => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,18 +34,19 @@ const ContactForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [statusMessage, setStatusMessage] = useState({ type: '', text: '' })
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-    if (statusMessage.text) setStatusMessage({ type: '', text: '' })
-  }
+  // Memoized handlers to prevent unnecessary re-renders
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+    setStatusMessage(prev => prev.text ? { type: '', text: '' } : prev)
+  }, [])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault()
     setIsLoading(true)
     setStatusMessage({ type: '', text: '' })
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/contact'
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -39,21 +62,11 @@ const ContactForm = () => {
         throw new Error(data.message || 'Failed to send message')
       }
     } catch (error) {
-      console.error('Submission error:', error)
       setStatusMessage({ type: 'error', text: error.message || 'Something went wrong. Please try again.' })
     } finally {
       setIsLoading(false)
     }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    show: { 
-      opacity: 1, 
-      y: 0,
-      transition: { type: "spring", stiffness: 50 }
-    }
-  }
+  }, [formData])
 
   return (
     <motion.form variants={itemVariants} className="contact-form" onSubmit={handleSubmit}>
@@ -64,6 +77,7 @@ const ContactForm = () => {
           value={formData.name} 
           onChange={handleChange} 
           required 
+          autoComplete="name"
         />
         <label>Name</label>
       </div>
@@ -75,6 +89,7 @@ const ContactForm = () => {
           value={formData.email} 
           onChange={handleChange} 
           required 
+          autoComplete="email"
         />
         <label>Email</label>
       </div>
@@ -107,33 +122,15 @@ const ContactForm = () => {
       </button>
     </motion.form>
   )
-}
+})
+
+ContactForm.displayName = 'ContactForm'
 
 const Contact = () => {
   const sectionRef = useRef(null)
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    show: { 
-      opacity: 1, 
-      y: 0,
-      transition: { type: "spring", stiffness: 50 }
-    }
-  }
-
   return (
     <section id="contact" className="section-pad relative overflow-hidden" ref={sectionRef} style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
-      {/* Galaxy Stars Background */}
       <GalaxyBackground />
       
       <motion.div 
@@ -161,3 +158,4 @@ const Contact = () => {
 }
 
 export default Contact
+
