@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import contactRoutes from './routes/contact.js';
+import { sendEmailNotification } from './services/emailService.js';
 
 // Load environment variables
 dotenv.config();
@@ -56,6 +57,27 @@ app.get('/api/health', (req, res) => {
     message: 'Backend server is running',
     timestamp: new Date().toISOString()
   });
+});
+
+// Temporary Email Test Endpoint
+app.get('/api/test-email', async (req, res) => {
+  try {
+    const testEmail = process.env.EMAIL_USER; // Send to self
+    await sendEmailNotification('Test User', testEmail, 'This is a test email from your diagnostics tool.');
+    res.json({
+      success: true,
+      message: '✅ Email sent successfully! Check your inbox (and spam folder).',
+      recipient: testEmail
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: '❌ Email failed to send.',
+      error: error.message,
+      stack: error.stack,
+      hint: error.message.includes('535') ? 'Authentication failed. Check EMAIL_PASS.' : 'Check server logs.'
+    });
+  }
 });
 
 // Diagnostic endpoint (remove in production if sensitive)
