@@ -69,7 +69,7 @@ function App() {
         
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div></div>}>
           {/* Render only the active section */}
-          {activeSection === 'home' && <Hero />}
+          {activeSection === 'home' && <Hero onSectionChange={handleSectionChange} />}
           {activeSection === 'about' && <About />}
           {activeSection === 'skills' && <Skills />}
           {activeSection === 'journey' && <Journey />}

@@ -43,7 +43,7 @@ const TypingText = () => {
 }
 
 
-const Hero = () => {
+const Hero = ({ onSectionChange }) => {
   const contentRef = useRef(null)
   const imageRef = useRef(null)
 
@@ -78,12 +78,7 @@ const Hero = () => {
     })
   }, { scope: contentRef })
 
-  const scrollToContact = () => {
-    const element = document.getElementById('contact')
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+
 
   return (
     <section id="home" className="hero relative overflow-hidden min-h-screen flex items-center">
@@ -109,16 +104,12 @@ const Hero = () => {
           turning creative ideas into accessible tools.
         </p>
         <div className="hero-btns opacity-0 translate-y-8">
-          <a 
-            href="#contact" 
-            onClick={(e) => {
-              e.preventDefault()
-              scrollToContact()
-            }}
+          <button 
+            onClick={() => onSectionChange('contact')}
             className="btn btn-primary"
           >
-            Hire Me
-          </a>
+            Contact
+          </button>
           <a 
             href="/certificates/resumetemporary_netlify (1).pdf" 
             target="_blank" 
