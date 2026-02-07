@@ -73,7 +73,7 @@ const About = () => {
   }, [])
 
   return (
-    <section id="about" className="section-pad relative overflow-hidden" ref={sectionRef} style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+    <section id="about" className="section-pad relative overflow-hidden min-h-screen flex items-center justify-center max-[600px]:min-h-0 max-[600px]:flex-col max-[600px]:justify-start max-[600px]:!pt-[200px]" ref={sectionRef}>
       
       {/* Background Layer */}
       <div 

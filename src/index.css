@@ -1095,7 +1095,12 @@ footer::before {
     }
     .nav-links.active { transform: translateX(0); display: flex; }
     
-    .hamburger { display: block; z-index: 1001; }
+    .hamburger { 
+        display: block !important; 
+        z-index: 10002; 
+        position: relative;
+        color: #fff;
+    }
     
     .hero { 
         padding-top: 120px; 

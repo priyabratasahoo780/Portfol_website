@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Menu, X } from 'lucide-react'
 import Settings from './Settings'
-import AnimatedSPLogo from './ui/AnimatedSPLogo'
+
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { playLightningStrikeSound } from '../utils/lightningSound'
@@ -415,7 +415,23 @@ const Navbar = ({ onSectionChange, activeSection }) => {
         
       <div className="container nav-container" style={{ position: 'relative', zIndex: 1002 }}>
         <div className="logo" style={{ display: 'flex', alignItems: 'center' }}>
-          <AnimatedSPLogo />
+          <img 
+            src="/assets/chatgpt-logo.png" 
+            onError={(e) => {
+              e.target.onerror = null; 
+              e.target.src = "/logo.svg";
+            }}
+            alt="ChatGPT Logo" 
+            style={{ 
+              height: '70px', 
+              width: 'auto', 
+              cursor: 'pointer',
+              filter: 'drop-shadow(0 0 10px rgba(0, 234, 255, 0.5))',
+              transition: 'transform 0.3s ease'
+            }}
+            onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
+            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+          />
         </div>
         <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
           {['home', 'about', 'skills', 'journey', 'certificates', 'projects', 'contact'].map((item) => (

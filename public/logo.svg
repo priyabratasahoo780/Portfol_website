@@ -1,0 +1,57 @@
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00eaff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#a78bfa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer Path simulating the SP shape -->
+  <path d="
+    M 80 50 
+    L 220 50 
+    A 40 40 0 0 1 260 90 
+    A 40 40 0 0 1 220 130 
+    L 170 130 
+    L 170 170 
+    M 170 90 
+    L 220 90 
+    A 15 15 0 0 0 235 75 
+    A 15 15 0 0 0 220 60 
+    L 80 60 
+    A 25 25 0 0 0 55 85 
+    A 25 25 0 0 0 80 110 
+    L 130 110 
+    A 25 25 0 0 1 155 135 
+    L 155 170
+    M 130 135
+    L 80 135
+    L 140 170
+  " 
+  stroke="url(#logoGradient)" 
+  stroke-width="18" 
+  stroke-linecap="round" 
+  stroke-linejoin="round"
+  fill="none" 
+  display="none"/>
+
+  <!-- Let's try a simpler geometric approach matching the user image -->
+  <!-- Top bar connecting S top and P top -->
+  <path d="M 90 60 L 210 60 A 30 30 0 0 1 240 90 A 30 30 0 0 1 210 120 L 160 120 L 160 170" 
+        fill="none" stroke="url(#logoGradient)" stroke-width="12" stroke-linecap="round" />
+        
+  <!-- Inner/Bottom part of S -->
+  <path d="M 60 170 L 120 170 A 30 30 0 0 0 150 140 A 30 30 0 0 0 120 110 L 90 110 A 30 30 0 0 1 60 80 A 30 30 0 0 1 90 50" 
+        fill="none" stroke="url(#logoGradient)" stroke-width="12" stroke-linecap="round" />
+
+  <!-- Refined to match image better: Two interlocking tracks -->
+  <!-- Outer Track -->
+  <path d="M 85 45 L 215 45 A 45 45 0 0 1 260 90 A 45 45 0 0 1 215 135 L 180 135 L 180 180" 
+        fill="none" stroke="url(#logoGradient)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+        
+  <!-- Inner Track -->
+  <path d="M 75 165 L 125 165 A 35 35 0 0 0 160 130 A 35 35 0 0 0 125 95 L 85 95 A 35 35 0 0 1 50 60 A 35 35 0 0 1 85 25" 
+        fill="none" stroke="url(#logoGradient)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" transform="translate(0, 5)"/>
+        
+</svg>
