@@ -9,6 +9,7 @@ import { playLightningStrikeSound } from '../utils/lightningSound'
 const Navbar = ({ onSectionChange, activeSection }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState(activeSection || 'home')
+
   const canvasRef = useRef(null)
   
   // Store refs for cleanup
@@ -45,7 +46,6 @@ const Navbar = ({ onSectionChange, activeSection }) => {
     renderer.setClearColor(0x000000, 0)
     rendererRef.current = renderer
 
-    // --- Resize Handler ---
     // --- Resize Handler ---
     const handleResize = () => {
       // Guard for mobile (no renderer)
