@@ -1,972 +1,755 @@
-import { useState, useRef, useEffect, memo, useCallback } from 'react'
-import { ExternalLink, Code2, Info, X } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useRef, useLayoutEffect, useCallback } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import gsap from 'gsap'
-import Realistic3DBackground from './ui/Realistic3DBackground'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+gsap.registerPlugin(ScrollTrigger)
 
+// ─── Project Data ────────────────────────────────────────────────────────────
 const projectsData = [
   {
     id: 1,
-    image: '/color-guesser-logo.png',
-    title: 'Color Guessing Game',
-    description: 'A fun color guessing game where you test your skills at identifying RGB color codes.',
-    liveLink: 'https://color-guesss-game.netlify.app/',
-    codeLink: 'https://github.com/priyabratasahoo780/ColorGuessingGame',
-    videoLink: '#',
-    category: 'HTML/CSS/JS',
-    tech: ['HTML', 'CSS', 'JavaScript']
+    title: 'E-Commerce JioMart Clone',
+    emoji: '🛒',
+    description: 'A full-featured e-commerce platform clone with product listings, cart functionality, and seamless user experience mirroring the real JioMart website.',
+    features: [
+      'Dynamic product listings with search & filter functionality',
+      'Shopping cart with real-time price calculation',
+      'Fully responsive layout for all screen sizes',
+    ],
+    liveLink: 'https://jiomartclonewebsite.netlify.app',
+    codeLink: 'https://github.com/priyabratasahoo780/WEBSITE-1',
+    tech: ['React', 'CSS', 'JavaScript'],
+    image: '/jiomart-clone.png',
+    color: '#e63946',
+    gradient: 'linear-gradient(145deg, #e63946, #9b1b30)',
   },
   {
     id: 2,
-    image: '/jiomart-clone.png',
-    title: 'E-Commerce JioMart Clone',
-    description: 'A full-featured e-commerce platform clone with product listings, cart functionality, and seamless user experience.',
-    liveLink: 'https://jiomartclonewebsite.netlify.app',
-    codeLink: 'https://github.com/priyabratasahoo780/WEBSITE-1',
-    videoLink: '#',
-    category: 'ReactJS',
-    tech: ['React', 'CSS', 'JavaScript']
+    title: 'CryptoSlate Clone',
+    emoji: '₿',
+    description: 'A cryptocurrency news and data platform clone featuring real-time crypto information, market insights, and a sleek dashboard built with React.',
+    features: [
+      'Live crypto market data via API integration',
+      'News feed with categorized crypto articles',
+      'Responsive grid layout for market tracking',
+    ],
+    liveLink: 'https://cryptoslateclone.netlify.app/',
+    codeLink: 'https://github.com/priyabratasahoo780/CryptoSlate',
+    tech: ['React', 'CSS', 'API'],
+    image: '/cryptoslate-clone.png',
+    color: '#f4813f',
+    gradient: 'linear-gradient(145deg, #f4813f, #c45000)',
   },
   {
     id: 3,
-    image: '/namakwali-clone.png',
     title: 'Namakwali Clone',
-    description: 'A clone of the Namakwali website, featuring authentic Himalayan products. Built to demonstrate UI replication skills.',
+    emoji: '🏔️',
+    description: 'A pixel-perfect clone of the Namakwali website, showcasing authentic Himalayan products with rich imagery and smooth CSS animations.',
+    features: [
+      'Authentic Himalayan product showcase with rich imagery',
+      'Pixel-perfect UI replication with CSS mastery',
+      'Smooth animations & hover interaction effects',
+    ],
     liveLink: 'https://namakwaliclone.netlify.app/',
     codeLink: 'https://github.com/priyabratasahoo780/namakwali',
-    videoLink: '#',
-    category: 'HTML/CSS',
-    tech: ['HTML', 'CSS']
+    tech: ['HTML', 'CSS'],
+    image: '/namakwali-clone.png',
+    color: '#2ec4b6',
+    gradient: 'linear-gradient(145deg, #2ec4b6, #0e8a80)',
   },
   {
     id: 4,
-    image: '/patilkaki-clone.jpg',
-    title: 'PatilKaki Clone',
-    description: 'A clone of the PatilKaki E-commerce website. Features product displays and company information.',
-    liveLink: 'https://patilkakiclone.netlify.app/',
-    codeLink: '#',
-    videoLink: '#',
-    category: 'ReactJS',
-    tech: ['React', 'CSS', 'JavaScript']
+    title: 'Color Guessing Game',
+    emoji: '🎨',
+    description: 'A fun interactive color guessing game where you test your skills at identifying the correct RGB color codes. Features multiple difficulty levels.',
+    features: [
+      'Randomized RGB color challenge engine',
+      'Score tracking with multiple difficulty levels',
+      'Pure vanilla JS with zero dependencies',
+    ],
+    liveLink: 'https://color-guesss-game.netlify.app/',
+    codeLink: 'https://github.com/priyabratasahoo780/ColorGuessingGame',
+    tech: ['HTML', 'CSS', 'JavaScript'],
+    image: '/color-guesser-logo.png',
+    color: '#7b2fff',
+    gradient: 'linear-gradient(145deg, #7b2fff, #4a00cc)',
   },
   {
     id: 5,
-    image: '/bata-clone.png',
     title: 'Bata Clone',
-    description: 'A complete footwear e-commerce solution featuring a wide collection of shoes, sandals, and chappals for men and women.',
+    emoji: '👟',
+    description: 'A complete footwear e-commerce solution featuring a wide collection of shoes, sandals, and chappals for men and women using Bootstrap.',
+    features: [
+      'Product catalog with smart category filtering',
+      'Bootstrap-powered responsive grid layout',
+      'Detailed product pages with full sizing guide',
+    ],
     liveLink: 'https://bataclone.netlify.app/',
     codeLink: 'https://github.com/priyabratasahoo780/bata-clone-website',
-    videoLink: '#',
-    category: 'HTML/CSS',
-    tech: ['HTML', 'CSS', 'Bootstrap']
+    tech: ['HTML', 'CSS', 'Bootstrap'],
+    image: '/bata-clone.png',
+    color: '#f7b731',
+    gradient: 'linear-gradient(145deg, #f7b731, #b88200)',
   },
   {
     id: 6,
-    image: '/solinas-clone.png',
     title: 'Solinas Clone',
-    description: 'A modern and responsive web application with beautiful UI design and smooth animations.',
+    emoji: '✨',
+    description: 'A modern and responsive business website clone with stunning animated hero sections, scroll-based reveals, and elegant UI design.',
+    features: [
+      'Stunning hero section with entrance animations',
+      'Smooth scroll-based content reveal effects',
+      'Modern business card-style visual layout',
+    ],
     liveLink: 'https://solinasclone.netlify.app/',
     codeLink: 'https://github.com/priyabratasahoo780/Solinas-clone',
-    videoLink: '#',
-    category: 'HTML/CSS',
-    tech: ['HTML', 'CSS', 'JavaScript']
+    tech: ['HTML', 'CSS', 'JavaScript'],
+    image: '/solinas-project.png',
+    color: '#26c6da',
+    gradient: 'linear-gradient(145deg, #26c6da, #006d77)',
   },
   {
     id: 7,
-    image: '/cryptoslate-clone.png',
-    title: 'CryptoSlate Clone',
-    description: 'A cryptocurrency news and data platform clone featuring real-time crypto information and market insights.',
-    liveLink: 'https://cryptoslateclone.netlify.app/',
-    codeLink: 'https://github.com/priyabratasahoo780/CryptoSlate',
-    videoLink: '#',
-    category: 'ReactJS',
-    tech: ['React', 'CSS', 'API']
-  },
-  {
-    id: 8,
-    image: '/bookmyshow-clone.png',
-    title: 'Book My Show Clone',
-    description: 'A full-stack clone of the popular ticket booking platform featuring seat selection and booking flow.',
-    liveLink: '#',
+    title: 'PatilKaki Clone',
+    emoji: '🍱',
+    description: 'A brand-accurate clone of the PatilKaki e-commerce website featuring food product showcases, rich imagery, and a mobile-first design.',
+    features: [
+      'Food product showcase with rich brand imagery',
+      'Brand-accurate UI with custom design elements',
+      'Mobile-first fully responsive design approach',
+    ],
+    liveLink: 'https://patilkakiclone.netlify.app/',
     codeLink: '#',
-    videoLink: '#',
-    category: 'MERN Stack',
-    tech: ['MongoDB', 'Express', 'React', 'Node.js']
+    tech: ['React', 'CSS', 'JavaScript'],
+    image: '/patilkaki-clone.jpg',
+    color: '#ff6b9d',
+    gradient: 'linear-gradient(145deg, #ff6b9d, #a01050)',
   },
-  {
-    id: 9,
-    image: '/codinggita-platform.png',
-    title: 'Codinggita Platform',
-    description: 'An educational platform built to help students learn coding concepts efficiently.',
-    liveLink: '#',
-    codeLink: '#',
-    videoLink: '#',
-    category: 'Next.JS',
-    tech: ['Next.js', 'React', 'Tailwind']
-  }
 ]
 
+// ─── Tech Tag icons ───────────────────────────────────────────────────────────
+const TECH_ICON = {
+  React:       { bg: '#20232a', fg: '#61dafb', icon: '⚛' },
+  JavaScript:  { bg: '#f7df1e', fg: '#000',    icon: 'JS' },
+  CSS:         { bg: '#264de4', fg: '#fff',    icon: 'CS' },
+  HTML:        { bg: '#e34f26', fg: '#fff',    icon: 'H5' },
+  Bootstrap:   { bg: '#7952b3', fg: '#fff',    icon: 'B' },
+  API:         { bg: '#10b981', fg: '#fff',    icon: '⚡' },
+  MongoDB:     { bg: '#00ed64', fg: '#001e2b', icon: 'M' },
+  'Node.js':   { bg: '#339933', fg: '#fff',    icon: 'N' },
+  'Next.js':   { bg: '#000',    fg: '#fff',    icon: 'N↗' },
+  Tailwind:    { bg: '#06b6d4', fg: '#fff',    icon: '~' },
+}
 
-const ProjectCard = memo(({ project, index, setSelectedProject }) => {
-  const cardRef = useRef(null)
-
-  // 3D Card tilt effect - Internalized
-  const handleMouseMove = useCallback((e) => {
-    if (window.innerWidth < 768) return // Disable on mobile
-    const card = cardRef.current
-    if (!card) return
-
-    const rect = card.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
-
-    const rotateX = ((y - centerY) / centerY) * -15
-    const rotateY = ((x - centerX) / centerX) * 15
-
-    gsap.to(card, {
-      rotateX,
-      rotateY,
-      transformPerspective: 1000,
-      duration: 0.5,
-      ease: 'power2.out'
-    })
-
-    // Glow effect
-    const glowX = (x / rect.width) * 100
-    const glowY = (y / rect.height) * 100
-    card.style.setProperty('--glow-x', `${glowX}%`)
-    card.style.setProperty('--glow-y', `${glowY}%`)
-  }, [])
-
-  const handleMouseLeave = useCallback(() => {
-    const card = cardRef.current
-    if (!card) return
-
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      duration: 0.5,
-      ease: 'power2.out'
-    })
-  }, [])
+// ─── Circular Cursor ──────────────────────────────────────────────────────────
+const CircularCursor = ({ cursorRef, onClick }) => {
+  const [pressed, setPressed] = useState(false)
+  const text = 'VISIT PROJECT • VISIT PROJECT • '
 
   return (
     <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="project-card-3d"
-      onClick={() => setSelectedProject(project)}
+      ref={cursorRef}
+      onClick={onClick}
+      onMouseDown={() => setPressed(true)}
+      onMouseUp={() => setPressed(false)}
+      animate={{ scale: pressed ? 0.82 : 1 }}
+      transition={{ duration: 0.12 }}
       style={{
-        position: 'relative',
-        borderRadius: '24px',
-        background: 'linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.92))',
-        backdropFilter: 'blur(20px)',
-        border: '2px solid rgba(255, 255, 255, 0.15)',
-        overflow: 'hidden',
-        transformStyle: 'preserve-3d',
-        cursor: 'pointer',
-        transition: 'all 0.3s ease',
-        boxShadow: '0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 60px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
-        zIndex: 100
+        position: 'fixed',
+        top: 0, left: 0,
+        transform: 'translate(-50%, -50%)',
+        width: 110, height: 110,
+        pointerEvents: 'auto',
+        zIndex: 9999,
+        cursor: 'none',
+        opacity: 0,
+        willChange: 'transform',
       }}
     >
-      {/* Edge highlight (3D rim light) */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '2px',
-          background: 'linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.6), transparent)',
-          pointerEvents: 'none',
-          zIndex: 3
-        }}
-      />
-
-      {/* Glow overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 'var(--glow-y, 50%)',
-          left: 'var(--glow-x, 50%)',
-          width: '400px',
-          height: '400px',
-          background: 'radial-gradient(circle, rgba(99, 102, 241, 0.4), transparent 60%)',
-          transform: 'translate(-50%, -50%)',
-          pointerEvents: 'none',
-          opacity: 0.6,
-          transition: 'opacity 0.3s ease',
-          filter: 'blur(20px)'
-        }}
-      />
-
-      {/* Project Image */}
-      <div
-        style={{
-          width: '100%',
-          height: '240px',
-          overflow: 'hidden',
-          position: 'relative',
-          transform: 'translateZ(50px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
-        }}
+      <motion.svg
+        width={110} height={110} viewBox="0 0 110 110"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'linear', repeatType: 'loop' }}
+        style={{ position: 'absolute', top: 0, left: 0 }}
       >
-        <img
-          src={project.image}
-          alt={project.title}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            transition: 'transform 0.5s ease',
-            filter: 'brightness(0.9) contrast(1.1)'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.15)'
-            e.currentTarget.style.filter = 'brightness(1) contrast(1.2)'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)'
-            e.currentTarget.style.filter = 'brightness(0.9) contrast(1.1)'
-          }}
-        />
-        
-        {/* Gradient overlay on image */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: '50%',
-            background: 'linear-gradient(to top, rgba(15, 23, 42, 0.8), transparent)',
-            pointerEvents: 'none'
-          }}
-        />
+        <defs>
+          <path id="cpath" d="M 55,55 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
+        </defs>
+        <circle cx="55" cy="55" r="50" fill="#000" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+        <text fill="#fff" fontSize="10.5" fontWeight="700" letterSpacing="0.05em" fontFamily="'Inter',sans-serif">
+          <textPath href="#cpath" textLength="238.5" lengthAdjust="spacingAndGlyphs">{text}</textPath>
+        </text>
+      </motion.svg>
+      <div style={{
+        position: 'absolute', top: '50%', left: '50%',
+        transform: 'translate(-50%,-50%)',
+        pointerEvents: 'none',
+      }}>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
       </div>
-
-      {/* Project Info */}
-      <div style={{ padding: '24px', transform: 'translateZ(30px)', position: 'relative' }}>
-        <h3
-          style={{
-            fontSize: '24px',
-            fontWeight: '700',
-            marginBottom: '12px',
-            color: '#fff',
-            background: 'linear-gradient(90deg, #fff, #a78bfa)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 2px 10px rgba(167, 139, 250, 0.3)'
-          }}
-        >
-          {project.title}
-        </h3>
-        
-        <p style={{ 
-          color: '#94a3b8', 
-          fontSize: '14px', 
-          lineHeight: '1.7', 
-          marginBottom: '16px',
-          textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
-        }}>
-          {project.description}
-        </p>
-
-        {/* Technology Stack Tags */}
-        <div style={{ 
-          display: 'flex', 
-          gap: '8px', 
-          flexWrap: 'wrap',
-          marginBottom: '24px',
-          transform: 'translateZ(40px)'
-        }}>
-          {project.tech.map((tech, idx) => (
-            <span
-              key={idx}
-              style={{
-                padding: '6px 12px',
-                borderRadius: '6px',
-                background: 'rgba(96, 165, 250, 0.15)',
-                border: '1px solid rgba(96, 165, 250, 0.3)',
-                color: '#60a5fa',
-                fontSize: '12px',
-                fontWeight: '600',
-                backdropFilter: 'blur(5px)',
-                boxShadow: '0 2px 8px rgba(96, 165, 250, 0.2)',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(96, 165, 250, 0.25)'
-                e.currentTarget.style.borderColor = 'rgba(96, 165, 250, 0.5)'
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(96, 165, 250, 0.4)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(96, 165, 250, 0.15)'
-                e.currentTarget.style.borderColor = 'rgba(96, 165, 250, 0.3)'
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(96, 165, 250, 0.2)'
-              }}
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-
-        {/* Action Buttons */}
-        <div style={{ 
-          display: 'flex', 
-          gap: '12px', 
-          flexWrap: 'wrap',
-          justifyContent: 'space-between'
-        }}>
-          {/* Details Button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              setSelectedProject(project)
-            }}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '12px 24px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, #10b981, #059669)',
-              color: '#fff',
-              fontSize: '14px',
-              fontWeight: '600',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 6px 16px rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-              transform: 'translateZ(50px)'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateZ(50px) translateY(-4px) scale(1.05)'
-              e.currentTarget.style.boxShadow = '0 12px 24px rgba(16, 185, 129, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateZ(50px) translateY(0) scale(1)'
-              e.currentTarget.style.boxShadow = '0 6px 16px rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-            }}
-          >
-            <Info size={16} /> Details
-          </button>
-
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <a
-              href={project.liveLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 24px',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                color: '#fff',
-                fontSize: '14px',
-                fontWeight: '600',
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 6px 16px rgba(99, 102, 241, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-                transform: 'translateZ(50px)',
-                border: '1px solid rgba(255, 255, 255, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateZ(50px) translateY(-4px) scale(1.05)'
-                e.currentTarget.style.boxShadow = '0 12px 24px rgba(99, 102, 241, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.3)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateZ(50px) translateY(0) scale(1)'
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(99, 102, 241, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-              }}
-            >
-              <ExternalLink size={16} /> Demo
-            </a>
-            
-            <a
-              href={project.codeLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 24px',
-                borderRadius: '12px',
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '2px solid rgba(255, 255, 255, 0.2)',
-                color: '#fff',
-                fontSize: '14px',
-                fontWeight: '600',
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
-                transform: 'translateZ(50px)',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
-                e.currentTarget.style.transform = 'translateZ(50px) translateY(-4px) scale(1.05)'
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                e.currentTarget.style.transform = 'translateZ(50px) translateY(0) scale(1)'
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-              }}
-            >
-              <Code2 size={16} /> Code
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Enhanced depth shadow layer */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '-30px',
-          left: '5%',
-          right: '5%',
-          height: '30px',
-          background: 'radial-gradient(ellipse, rgba(99, 102, 241, 0.6), rgba(139, 92, 246, 0.3) 50%, transparent 80%)',
-          filter: 'blur(15px)',
-          pointerEvents: 'none',
-          zIndex: -1
-        }}
-      />
-
-      {/* Side shadow (left) */}
-      <div
-        style={{
-          position: 'absolute',
-          left: '-15px',
-          top: '10%',
-          bottom: '10%',
-          width: '15px',
-          background: 'linear-gradient(to right, rgba(0, 0, 0, 0.4), transparent)',
-          filter: 'blur(8px)',
-          pointerEvents: 'none',
-          zIndex: -1
-        }}
-      />
-
-      {/* Side shadow (right) */}
-      <div
-        style={{
-          position: 'absolute',
-          right: '-15px',
-          top: '10%',
-          bottom: '10%',
-          width: '15px',
-          background: 'linear-gradient(to left, rgba(0, 0, 0, 0.4), transparent)',
-          filter: 'blur(8px)',
-          pointerEvents: 'none',
-          zIndex: -1
-        }}
-      />
     </motion.div>
   )
-})
+}
 
+// ─── Phone Frame ──────────────────────────────────────────────────────────────
+const PhoneFrame = ({ src, alt, color, scrollFrom = 'top' }) => (
+  <div style={{
+    width: '100%',
+    background: '#0a0a0f',
+    borderRadius: 30, // more rounded like modern phones
+    overflow: 'hidden',
+    border: `2px solid #222`, // subtle dark border, not colored glow
+    boxShadow: `0 25px 60px rgba(0,0,0,0.6)`, // cleaner shadow
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    position: 'relative',
+  }}>
+    {/* iOS Style Status Bar */}
+    <div style={{
+      height: 28,
+      padding: '0 18px',
+      background: '#000',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexShrink: 0,
+      fontSize: 10,
+      fontWeight: 600,
+      fontFamily: "'Inter',sans-serif",
+      color: '#fff',
+      zIndex: 10,
+    }}>
+      <span>8:26</span>
+      <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+        {/* Simple wifi/battery symbols using div shapes */}
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+        <div style={{ width: 14, height: 8, border: '1px solid #fff', borderRadius: 2, position: 'relative' }}>
+          <div style={{ position: 'absolute', top: 1, bottom: 1, left: 1, right: 3, background: '#fff', borderRadius: 1 }} />
+          <div style={{ position: 'absolute', top: 2, bottom: 2, right: -2, width: 1, background: '#fff' }} />
+        </div>
+      </div>
+    </div>
+    
+    <img
+      src={src}
+      alt={alt}
+      style={{
+        flex: 1,
+        width: '100%',
+        height: 0, // important for flex child shrinking
+        objectFit: 'cover',
+        objectPosition: scrollFrom === 'top' ? 'top' : 'center',
+        display: 'block',
+      }}
+    />
+    
+    {/* iOS Home bar */}
+    <div style={{ height: 16, background: '#0a0a0f', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+      <div style={{ width: '35%', height: 4, background: '#444', borderRadius: 4 }} />
+    </div>
+  </div>
+)
+
+// ─── Tablet Frame ─────────────────────────────────────────────────────────────
+const TabletFrame = ({ src, alt, color }) => (
+  <div style={{
+    width: '100%',
+    background: '#0a0a0f',
+    borderRadius: 16,
+    overflow: 'hidden',
+    border: `2px solid #222`,
+    boxShadow: `0 30px 60px rgba(0,0,0,0.6)`,
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  }}>
+    {/* Browser chrome */}
+    <div style={{
+      height: 38,
+      padding: '0 16px',
+      background: '#111', // darker chrome
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8,
+      flexShrink: 0,
+      borderBottom: `1px solid #222`,
+    }}>
+      {['#ff5f56','#ffbd2e','#27c93f'].map((c, i) => (
+        <div key={i} style={{ width: 10, height: 10, borderRadius: '50%', background: c }} />
+      ))}
+      <div style={{
+        flex: 1,
+        maxWidth: 200,
+        margin: '0 auto',
+        height: 22,
+        background: '#1a1a1a',
+        borderRadius: 6,
+      }} />
+    </div>
+    <img
+      src={src}
+      alt={alt}
+      style={{ flex: 1, width: '100%', height: 0, objectFit: 'cover', objectPosition: 'top', display: 'block' }}
+    />
+  </div>
+)
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 const Projects = () => {
-  const [activeCategory, setActiveCategory] = useState('ALL')
-  const [selectedProject, setSelectedProject] = useState(null)
+  const containerRef   = useRef(null)
+  const rightPanelsRef = useRef([])
+  const leftTextsRef   = useRef([])
+  const ballRef        = useRef(null)
+  const ballTrackRef   = useRef(null)
+  const activeTrackRef = useRef(null)
+  const cursorDomRef   = useRef(null)  // Direct DOM ref for zero-lag cursor tracking
 
-  const categories = ['ALL', ...new Set(projectsData.map(project => project.category))]
+  /* cursor state — only activeLiveLink needs state; visibility handled via DOM */
+  const [activeLiveLink, setActiveLiveLink] = useState(projectsData[0].liveLink)
 
-  const filteredProjects = activeCategory === 'ALL'
-    ? projectsData
-    : projectsData.filter(project => project.category === activeCategory)
+  /* ── GSAP ScrollTrigger setup ─────────────────────────────────────────────── */
+  useLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      /* Set initial states: all left texts start hidden/lower, except first doesn't need to as we'll set fromTo */
+      leftTextsRef.current.forEach((textElement, i) => {
+        const panel = rightPanelsRef.current[i]
+        if (!panel || !textElement) return
+
+        // We want to scrub the text IN and OUT based on the panel's position in the viewport.
+        
+        // Animate IN
+        gsap.fromTo(textElement,
+          { opacity: 0, y: 50, pointerEvents: 'none' },
+          {
+            opacity: 1, y: 0, pointerEvents: 'auto',
+            immediateRender: false, // Critical for preventing GSAP conflicts on same element
+            scrollTrigger: {
+              trigger: panel,
+              start: 'top 75%', // Start fading in when top of panel hits 75% of viewport
+              end: 'top 35%',   // Fully visible when it hits 35% of viewport
+              scrub: true,
+              onEnter: () => setActiveLiveLink(projectsData[i].liveLink),
+              onEnterBack: () => setActiveLiveLink(projectsData[i].liveLink),
+            }
+          }
+        )
+
+        // Animate OUT (only if not the last item)
+        if (i < leftTextsRef.current.length - 1) {
+          gsap.to(textElement, {
+            opacity: 0, y: -50, pointerEvents: 'none',
+            immediateRender: false, // Critical for preventing GSAP conflicts on same element
+            scrollTrigger: {
+              trigger: rightPanelsRef.current[i + 1], // Trigger out based on NEXT panel coming in
+              start: 'top 85%', // Start fading out as next panel reaches 85%
+              end: 'top 45%',   // Fully gone when next panel reaches 45%
+              scrub: true,
+            }
+          })
+        }
+      })
+
+    /* progress ball scrolling down the track */
+    if (containerRef.current && ballRef.current && ballTrackRef.current) {
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start:   'top top',
+        end:     'bottom bottom',
+        scrub:   true,
+        onUpdate: (self) => {
+          const trackH = ballTrackRef.current?.offsetHeight ?? 300
+          const ballY = self.progress * (trackH - 32)
+          gsap.set(ballRef.current, { y: ballY })
+          if (activeTrackRef.current) gsap.set(activeTrackRef.current, { height: ballY + 22 }) // Add half the ball height to fill
+        },
+      })
+    }
+    }) // <--- Close gsap.context correctly!
+
+    return () => {
+      ctx?.revert()
+      ScrollTrigger.getAll().forEach(t => t.kill())
+    }
+  }, [])
+
+  /* cursor handlers — only on RIGHT panel, zero-lag via direct DOM */
+  const handleMouseMove = useCallback((e) => {
+    if (!cursorDomRef.current) return
+    cursorDomRef.current.style.left = e.clientX + 'px'
+    cursorDomRef.current.style.top  = e.clientY + 'px'
+    cursorDomRef.current.style.opacity = '1'
+  }, [])
+  const handleMouseLeave = useCallback(() => {
+    if (cursorDomRef.current) cursorDomRef.current.style.opacity = '0'
+  }, [])
+  const handleCursorClick = useCallback(() => {
+    if (activeLiveLink && activeLiveLink !== '#')
+      window.open(activeLiveLink, '_blank', 'noopener,noreferrer')
+  }, [activeLiveLink])
 
   return (
-    <section id="projects" className="section-wrapper relative" style={{ minHeight: '100vh', paddingTop: '100px', paddingBottom: '100px' }}>
-      {/* 3D Background */}
-      <Realistic3DBackground />
+    <div id="projects" style={{ background: '#0a0a0f', position: 'relative' }}>
 
-      <div className="container relative" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 20px', zIndex: 50 }}>
-        <motion.h2
-          className="section-title text-center"
-          initial={{ opacity: 0, y: -50 }}
+      {/* ── Section header ─────────────────────────────────────────────────── */}
+      <div style={{ padding: '100px 0 60px 80px', position: 'relative' }}>
+        {/* Top gradient line */}
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, height: 2,
+          background: 'linear-gradient(90deg, transparent, #6366f1, #a855f7, transparent)',
+        }} />
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          style={{
-            fontSize: 'clamp(32px, 5vw, 48px)',
-            fontWeight: '700',
-            marginBottom: '50px',
-            background: 'linear-gradient(90deg, #60a5fa, #a78bfa)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}
         >
-          Featured Projects
-        </motion.h2>
-        
-        {/* Category Filter */}
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '60px' }}>
-          {categories.map((category) => (
-            <div
-              key={category}
-              className="category-btn-wrapper"
-              style={{
-                padding: activeCategory === category ? '3px' : '0',
-                borderRadius: '16px',
-                background: activeCategory === category 
-                  ? 'linear-gradient(135deg, #10b981, #06b6d4, #6366f1, #8b5cf6)'
-                  : 'transparent',
-                backgroundSize: activeCategory === category ? '300% 300%' : 'auto',
-                animation: activeCategory === category ? 'gradientBorder 3s ease infinite' : 'none',
-                position: 'relative',
-                perspective: '1000px',
-                transformStyle: 'preserve-3d'
-              }}
-            >
-              <button
-                onClick={() => setActiveCategory(category)}
-                style={{
-                  padding: '14px 28px',
-                  borderRadius: '14px',
-                  background: activeCategory === category 
-                    ? 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%)'
-                    : 'linear-gradient(145deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.9))',
-                  border: activeCategory === category 
-                    ? '1px solid rgba(255, 255, 255, 0.2)'
-                    : '1px solid rgba(255, 255, 255, 0.05)',
-                  color: '#fff',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  fontWeight: '700',
-                  letterSpacing: '0.5px',
-                  transition: 'all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                  boxShadow: activeCategory === category 
-                    ? `0 8px 16px rgba(99, 102, 241, 0.4),
-                       0 16px 32px rgba(139, 92, 246, 0.3),
-                       0 0 40px rgba(168, 85, 247, 0.2),
-                       inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                       inset 0 -2px 8px rgba(0, 0, 0, 0.2)`
-                    : `0 4px 12px rgba(0, 0, 0, 0.4),
-                       0 2px 4px rgba(0, 0, 0, 0.3),
-                       inset 0 1px 0 rgba(255, 255, 255, 0.05),
-                       inset 0 -1px 2px rgba(0, 0, 0, 0.3)`,
-                  width: '100%',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transform: activeCategory === category 
-                    ? 'translateY(-4px) scale(1.05)' 
-                    : 'translateY(0) scale(1)',
-                  transformStyle: 'preserve-3d',
-                  textShadow: activeCategory === category 
-                    ? '0 2px 8px rgba(0, 0, 0, 0.5)' 
-                    : '0 1px 2px rgba(0, 0, 0, 0.3)'
-                }}
-                onMouseEnter={(e) => {
-                  if (activeCategory !== category) {
-                    e.currentTarget.style.background = 'linear-gradient(145deg, rgba(51, 65, 85, 0.95), rgba(30, 41, 59, 0.9))'
-                    e.currentTarget.style.transform = 'translateY(-3px) rotateX(8deg) rotateY(2deg)'
-                    e.currentTarget.style.boxShadow = `0 6px 20px rgba(99, 102, 241, 0.2),
-                                                        0 10px 30px rgba(0, 0, 0, 0.4),
-                                                        inset 0 1px 0 rgba(255, 255, 255, 0.1)`
-                  } else {
-                    e.currentTarget.style.transform = 'translateY(-6px) scale(1.08) rotateX(5deg)'
-                    e.currentTarget.style.boxShadow = `0 12px 24px rgba(99, 102, 241, 0.5),
-                                                        0 20px 40px rgba(139, 92, 246, 0.4),
-                                                        0 0 60px rgba(168, 85, 247, 0.3),
-                                                        inset 0 1px 0 rgba(255, 255, 255, 0.4)`
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (activeCategory !== category) {
-                    e.currentTarget.style.background = 'linear-gradient(145deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.9))'
-                    e.currentTarget.style.transform = 'translateY(0) rotateX(0) rotateY(0)'
-                    e.currentTarget.style.boxShadow = `0 4px 12px rgba(0, 0, 0, 0.4),
-                                                        0 2px 4px rgba(0, 0, 0, 0.3),
-                                                        inset 0 1px 0 rgba(255, 255, 255, 0.05)`
-                  } else {
-                    e.currentTarget.style.transform = 'translateY(-4px) scale(1.05)'
-                    e.currentTarget.style.boxShadow = `0 8px 16px rgba(99, 102, 241, 0.4),
-                                                        0 16px 32px rgba(139, 92, 246, 0.3),
-                                                        0 0 40px rgba(168, 85, 247, 0.2),
-                                                        inset 0 1px 0 rgba(255, 255, 255, 0.3)`
-                  }
-                }}
-                onMouseDown={(e) => {
-                  // Instant press feedback
-                  e.currentTarget.style.transform = 'translateY(1px) scale(0.98)'
-                  e.currentTarget.style.transition = 'all 0.1s ease'
-                }}
-                onMouseUp={(e) => {
-                  // Quick release - reset to hover state
-                  e.currentTarget.style.transition = 'all 0.2s ease'
-                  e.currentTarget.style.transform = 'translateY(-3px) rotateX(8deg) rotateY(2deg)'
-                }}
-              >
-                {/* Glossy overlay effect */}
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '50%',
-                  background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%)',
-                  borderRadius: '14px 14px 0 0',
-                  pointerEvents: 'none'
-                }} />
-                
-                {/* Shine effect on hover */}
-                <div style={{
-                  position: 'absolute',
-                  top: '-50%',
-                  left: '-50%',
-                  width: '200%',
-                  height: '200%',
-                  background: 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)',
-                  transform: 'translateX(-100%)',
-                  transition: 'transform 0.6s ease',
-                  pointerEvents: 'none'
-                }} className="btn-shine" />
-                
-                <span style={{ position: 'relative', zIndex: 1 }}>
-                  {category}
-                </span>
-              </button>
-            </div>
-          ))}
-        </div>
-
-        {/* Project Cards Grid */}
-        <motion.div 
-          layout
-          style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-            gap: '40px',
-            perspective: '2000px'
-          }}
-        >
-          <AnimatePresence mode="wait">
-            {filteredProjects.map((project, index) => (
-              <ProjectCard 
-                key={project.id} 
-                project={project} 
-                index={index} 
-                setSelectedProject={setSelectedProject} 
-              />
-            ))}
-          </AnimatePresence>
+          <p style={{
+            fontSize: 11, fontWeight: 700, letterSpacing: '0.3em',
+            color: '#6366f1', textTransform: 'uppercase', marginBottom: 14,
+            fontFamily: "'Inter',sans-serif",
+          }}>— My Work</p>
+          <h2 style={{
+            fontSize: 'clamp(36px,5.5vw,68px)', fontWeight: 900,
+            color: '#fff', margin: 0,
+            fontFamily: "'Inter',sans-serif", letterSpacing: '-0.04em', lineHeight: 1,
+          }}>
+            Featured{' '}
+            <span style={{
+              background: 'linear-gradient(90deg,#6366f1,#a855f7,#ec4899)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+            }}>Projects</span>
+          </h2>
+          <p style={{
+            marginTop: 18, fontSize: 15, color: '#475569', maxWidth: 480,
+            lineHeight: 1.75, fontFamily: "'Inter',sans-serif",
+          }}>
+            A curated collection of my best work — scroll to explore each project in detail.
+          </p>
         </motion.div>
       </div>
 
-      {/* Project Details Modal */}
-      <AnimatePresence>
-        {selectedProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 1000,
-              backdropFilter: 'blur(20px)',
-              background: 'rgba(0, 0, 0, 0.8)',
-              padding: '20px'
-            }}
-            onClick={() => setSelectedProject(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.8, y: 50, rotateX: -15 }}
-              animate={{ scale: 1, y: 0, rotateX: 0 }}
-              exit={{ scale: 0.8, y: 50, rotateX: 15 }}
-              transition={{ type: 'spring', damping: 25 }}
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                position: 'relative',
-                maxWidth: '900px',
-                width: '100%',
-                maxHeight: '90vh',
-                borderRadius: '32px',
-                background: 'linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95))',
-                border: '2px solid rgba(255, 255, 255, 0.1)',
-                boxShadow: '0 50px 100px -20px rgba(0, 0, 0, 0.9), 0 0 80px rgba(99, 102, 241, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.1)',
-                overflow: 'hidden',
-                transformStyle: 'preserve-3d'
-              }}
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedProject(null)}
+      {/* ── Main scroll container: LEFT sticky + RIGHT sections ───────────── */}
+      <div ref={containerRef} style={{ display: 'flex', position: 'relative' }}>
+
+        {/* ── LEFT: Sticky panel ─────────────────────────────────────────── */}
+        <div style={{
+          position: 'sticky',
+          top: 0,
+          height: '100vh',
+          width: '42%',
+          flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          zIndex: 10,
+        }}>
+          {/* Project text layers */}
+          <div style={{ padding: '0 0 0 80px', width: '100%', position: 'relative' }}>
+            {projectsData.map((proj, i) => (
+              <div
+                key={proj.id}
+                ref={el => { leftTextsRef.current[i] = el }}
                 style={{
                   position: 'absolute',
-                  top: '20px',
-                  right: '20px',
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  background: 'rgba(239, 68, 68, 0.2)',
-                  border: '2px solid rgba(239, 68, 68, 0.5)',
-                  color: '#ef4444',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  zIndex: 10,
-                  transition: 'all 0.3s ease',
-                  backdropFilter: 'blur(10px)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(239, 68, 68, 0.3)'
-                  e.currentTarget.style.transform = 'scale(1.1) rotate(90deg)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)'
-                  e.currentTarget.style.transform = 'scale(1) rotate(0deg)'
+                  top: '46%', // Moved slightly up
+                  left: 80,
+                  right: 0,
+                  transform: 'translateY(-50%)',
+                  opacity: i === 0 ? 1 : 0, 
+                  pointerEvents: i === 0 ? 'auto' : 'none',
                 }}
               >
-                <X size={24} />
-              </button>
-
-              {/* Edge highlight */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '3px',
-                  background: 'linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.8), rgba(139, 92, 246, 0.8), transparent)',
-                  zIndex: 3
-                }}
-              />
-
-              {/* Content Container */}
-              <div style={{ 
-                padding: '30px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px'
-              }}>
-                {/* Project Image */}
-                <div
-                  style={{
-                    width: '100%',
-                    height: '260px',
-                    borderRadius: '16px',
-                    overflow: 'hidden',
-                    boxShadow: '0 15px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)'
-                  }}
-                >
-                  <img
-                    src={selectedProject.image}
-                    alt={selectedProject.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
-                  />
+                {/* Accent line + title */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
+                  <div style={{ width: 32, height: 3, background: proj.color, borderRadius: 2 }} />
+                  <h3 style={{
+                    fontSize: 'clamp(32px, 4vw, 56px)', fontWeight: 900,
+                    color: '#fff', margin: 0,
+                    fontFamily: "'Inter',sans-serif", letterSpacing: '-0.02em', lineHeight: 1,
+                  }}>
+                    {proj.title}
+                  </h3>
                 </div>
 
-                {/* Project Title */}
-                <h2
-                  style={{
-                    fontSize: '28px',
-                    fontWeight: '800',
-                    marginBottom: '0',
-                    background: 'linear-gradient(90deg, #fff, #a78bfa)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    textShadow: '0 2px 20px rgba(167, 139, 250, 0.4)'
-                  }}
-                >
-                  {selectedProject.title}
-                </h2>
-
-                {/* Project Description */}
-                <p
-                  style={{
-                    color: '#cbd5e1',
-                    fontSize: '14px',
-                    lineHeight: '1.6',
-                    margin: '0',
-                    textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
-                  }}
-                >
-                  {selectedProject.description}
+                <p style={{
+                  fontSize: 16, lineHeight: 1.7, color: '#e2e8f0',
+                  margin: '0 0 24px', fontFamily: "'Inter',sans-serif",
+                  maxWidth: 440, // Wider text block
+                }}>
+                  {proj.emoji} {proj.description}
                 </p>
 
-                {/* Technologies Used */}
-                <div>
-                  <h3
-                    style={{
-                      fontSize: '16px',
-                      fontWeight: '700',
-                      color: '#60a5fa',
-                      marginBottom: '12px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '1px'
-                    }}
-                  >
-                    Technologies Used
-                  </h3>
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                    {selectedProject.tech.map((tech, idx) => (
-                      <span
-                        key={idx}
-                        style={{
-                          padding: '6px 14px',
-                          borderRadius: '8px',
-                          background: 'linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(139, 92, 246, 0.2))',
-                          border: '1px solid rgba(96, 165, 250, 0.4)',
-                          color: '#60a5fa',
-                          fontSize: '12px',
-                          fontWeight: '700',
-                          backdropFilter: 'blur(10px)',
-                          boxShadow: '0 2px 8px rgba(96, 165, 250, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.5px'
-                        }}
-                      >
-                        {tech}
+                {/* Feature bullets */}
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px' }}>
+                  {proj.features.map((f, fi) => (
+                    <li key={fi} style={{
+                      display: 'flex', alignItems: 'flex-start', gap: 12,
+                      marginBottom: 12,
+                    }}>
+                      <span style={{
+                        color: '#fbbf24', fontWeight: 900, fontSize: 18,
+                        lineHeight: 1.4, marginTop: 0, flexShrink: 0,
+                      }}>✦</span>
+                      <span style={{
+                        color: '#f8fafc', fontSize: 14, lineHeight: 1.5,
+                        fontFamily: "'Inter',sans-serif",
+                      }}>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Tech tags */}
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 32 }}>
+                  {proj.tech.map((t, ti) => {
+                    return (
+                      <span key={ti} style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 8,
+                        background: 'rgba(255,255,255,0.05)',
+                        border: '1px solid rgba(255,255,255,0.15)',
+                        borderRadius: 100, padding: '8px 18px',
+                        color: '#f1f5f9', fontSize: 14, fontWeight: 500,
+                        fontFamily: "'Inter',sans-serif",
+                      }}>
+                        {t}
                       </span>
-                    ))}
-                  </div>
+                    )
+                  })}
                 </div>
 
-                {/* Action Links */}
-                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                  <a
-                    href={selectedProject.liveLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      flex: '1',
-                      minWidth: '180px',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '8px',
-                      padding: '12px 24px',
-                      borderRadius: '12px',
-                      background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                      color: '#fff',
-                      fontSize: '14px',
-                      fontWeight: '700',
-                      textDecoration: 'none',
-                      transition: 'all 0.3s ease',
-                      boxShadow: '0 6px 20px rgba(99, 102, 241, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.2)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)'
-                      e.currentTarget.style.boxShadow = '0 12px 28px rgba(99, 102, 241, 0.7), inset 0 2px 0 rgba(255, 255, 255, 0.3)'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)'
-                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(99, 102, 241, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.2)'
-                    }}
-                  >
-                    <ExternalLink size={18} /> Live Demo
-                  </a>
-
-                  <a
-                    href={selectedProject.codeLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      flex: '1',
-                      minWidth: '180px',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '8px',
-                      padding: '12px 24px',
-                      borderRadius: '12px',
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      border: '2px solid rgba(255, 255, 255, 0.3)',
-                      color: '#fff',
-                      fontSize: '16px',
-                      fontWeight: '700',
-                      textDecoration: 'none',
-                      transition: 'all 0.3s ease',
-                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)',
-                      backdropFilter: 'blur(10px)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
-                      e.currentTarget.style.transform = 'translateY(-4px) scale(1.03)'
-                      e.currentTarget.style.boxShadow = '0 16px 32px rgba(0, 0, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.2)'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)'
-                      e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1)'
-                    }}
-                  >
-                    <Code2 size={20} /> View Source Code
-                  </a>
+                {/* Buttons */}
+                <div style={{ display: 'flex', gap: 16, pointerEvents: 'auto' }}>
+                  {proj.liveLink !== '#' && (
+                    <a
+                      href={proj.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 8,
+                        padding: '12px 28px', borderRadius: 8,
+                        background: proj.gradient,
+                        color: '#fff', fontSize: 15, fontWeight: 700,
+                        textDecoration: 'none',
+                        boxShadow: `0 8px 30px ${proj.color}50`,
+                        fontFamily: "'Inter',sans-serif",
+                        transition: 'transform 0.3s, box-shadow 0.3s',
+                      }}
+                      onMouseEnter={e => {
+                        e.currentTarget.style.transform = 'translateY(-3px)'
+                        e.currentTarget.style.boxShadow = `0 14px 40px ${proj.color}70`
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.transform = 'translateY(0)'
+                        e.currentTarget.style.boxShadow = `0 8px 30px ${proj.color}50`
+                      }}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                      Live Demo
+                    </a>
+                  )}
+                  {proj.codeLink !== '#' && (
+                    <a
+                      href={proj.codeLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 8,
+                        padding: '12px 26px', borderRadius: 8,
+                        background: 'transparent',
+                        border: '1.5px solid rgba(255,255,255,0.2)',
+                        color: '#f8fafc', fontSize: 15, fontWeight: 700,
+                        textDecoration: 'none',
+                        fontFamily: "'Inter',sans-serif",
+                        transition: 'all 0.3s',
+                      }}
+                      onMouseEnter={e => {
+                        e.currentTarget.style.borderColor = proj.color
+                        e.currentTarget.style.color = proj.color
+                        e.currentTarget.style.transform = 'translateY(-3px)'
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'
+                        e.currentTarget.style.color = '#f8fafc'
+                        e.currentTarget.style.transform = 'translateY(0)'
+                      }}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                      Code
+                    </a>
+                  )}
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ))}
+          </div>
+
+          {/* ── Vertical Progress Indicator ── */}
+          <div
+            ref={ballTrackRef}
+            style={{
+              position: 'absolute',
+              right: -2,
+              top: '25%',   // Shorter — starts lower
+              bottom: '25%', // Shorter — ends higher
+              width: 3,      // Thicker, like a volume slider
+              background: 'rgba(255,255,255,0.1)',
+              borderRadius: 3,
+            }}
+          >
+            {/* Active Highlight (fills above the ball) */}
+            <div
+              ref={activeTrackRef}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: 0,
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.15) 100%)',
+                borderRadius: '2px 2px 0 0',
+              }}
+            />
+            {/* Profile Ball */}
+            <div
+              ref={ballRef}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: '50%',
+                marginLeft: -28, // Center the 56px ball
+                width: 56,
+                height: 56,
+                borderRadius: '50%',
+                background: '#0a0a0f',
+                border: '2px solid rgba(255,255,255,0.25)',
+                boxShadow: '0 0 0 4px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6)',
+                overflow: 'hidden',
+                zIndex: 2,
+              }}
+            >
+              <img src="/profile.jpg" alt="Progress" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
+          </div>
+        </div>
+
+        {/* ── RIGHT: Scrollable mockup sections ──────────────────────────── */}
+        <div
+          style={{ flex: 1, cursor: 'none' }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          {projectsData.map((proj, i) => (
+            <div
+              key={proj.id}
+              ref={el => { rightPanelsRef.current[i] = el }}
+              style={{
+                height: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0 40px 0 60px', /* Shift right side padding for centering */
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+            >
+              {/* Separate Device cards layout — 2 top, 1 bottom full width */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr', // 2 equal columns
+                gridTemplateRows: '1fr 1fr',     // 2 rows
+                gap: 16,                         // card gaps
+                width: '100%',
+                height: '65vh',                  // slightly smaller height
+                maxWidth: 800,                   // making the project images slightly smaller
+                margin: '0 auto',
+              }}>
+                {/* Top Left Box */}
+                <div style={{
+                  gridColumn: 1, gridRow: 1,
+                  background: proj.color,
+                  borderRadius: 20,
+                  overflow: 'hidden',
+                  position: 'relative'
+                }}>
+                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+
+                {/* Top Right Box */}
+                <div style={{
+                  gridColumn: 2, gridRow: 1,
+                  background: proj.color,
+                  borderRadius: 20,
+                  overflow: 'hidden',
+                  position: 'relative'
+                }}>
+                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+
+                {/* Bottom Wide Box */}
+                <div style={{
+                  gridColumn: '1 / 3', gridRow: 2,
+                  background: proj.color,
+                  borderRadius: 20,
+                  overflow: 'hidden',
+                  position: 'relative'
+                }}>
+                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Bottom CTA ─────────────────────────────────────────────────────── */}
+      <div style={{
+        padding: '80px 0',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
+        background: '#0a0a0f',
+      }}>
+        <motion.a
+          href="https://github.com/priyabratasahoo780"
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.05, y: -4 }}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            padding: '15px 38px', borderRadius: 50,
+            background: 'linear-gradient(135deg,#6366f1,#a855f7)',
+            color: '#fff', fontSize: 14, fontWeight: 700,
+            textDecoration: 'none',
+            boxShadow: '0 8px 32px rgba(99,102,241,0.4)',
+            fontFamily: "'Inter',sans-serif",
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          View All Projects on GitHub
+        </motion.a>
+        <p style={{ color: '#1e293b', fontSize: 13, fontFamily: "'Inter',sans-serif" }}>
+          {projectsData.length} projects and counting...
+        </p>
+      </div>
+
+      {/* ── Global cursor ─────────────────────────────────────────────────── */}
+      <CircularCursor
+        cursorRef={cursorDomRef}
+        onClick={handleCursorClick}
+      />
 
       <style>{`
-        .project-card-3d:hover {
-          --glow-x: 50%;
-          --glow-y: 50%;
-        }
-        
-        @keyframes gradientBorder {
-          0% {
-            background-position: 0% 50%;
+        #projects a, #projects button { user-select: none; }
+        @media (max-width: 900px) {
+          #projects > div:nth-child(2) { flex-direction: column !important; }
+          #projects > div:nth-child(2) > div:first-child {
+            position: relative !important; height: auto !important;
+            width: 100% !important; padding: 48px 24px !important;
           }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-        
-        .category-btn-wrapper {
-          display: inline-block;
-        }
-        
-        /* Button shine effect on hover */
-        .category-btn-wrapper:hover .btn-shine {
-          transform: translateX(100%);
-        }
-        
-        button {
-          font-family: inherit;
+          #projects > div:nth-child(2) > div:last-child { width: 100% !important; }
         }
       `}</style>
-    </section>
+    </div>
   )
 }
 

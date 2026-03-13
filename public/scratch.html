@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { background: #111; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .cursor {
+      width: 110px; height: 110px;
+      position: relative;
+    }
+    svg { position: absolute; top: 0; left: 0; }
+  </style>
+</head>
+<body>
+  <div class="cursor">
+    <svg width="110" height="110" viewBox="0 0 110 110">
+      <defs>
+        <!-- R = 38 -->
+        <path id="cpath38" d="M 55,55 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
+        <!-- R = 36 -->
+        <path id="cpath36" d="M 55,55 m -36,0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" />
+      </defs>
+      <!-- Black background ring -->
+      <circle cx="55" cy="55" r="50" fill="#000" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+      
+      <!-- Try R=38 -->
+      <text fill="#fff" fontSize="10.5" fontWeight="700" letterSpacing="0.05em" font-family="'Inter', sans-serif">
+        <textPath href="#cpath38" textLength="238" lengthAdjust="spacingAndGlyphs">VISIT PROJECT • VISIT PROJECT • </textPath>
+      </text>
+
+      <!-- Center icon (just a reference) -->
+      <path transform="translate(41, 41)" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" fill="none" stroke="#fff" stroke-width="2"/>
+      <circle cx="53" cy="53" r="3" fill="none" stroke="#fff" stroke-width="2"/>
+    </svg>
+  </div>
+</body>
+</html>
