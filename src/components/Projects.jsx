@@ -130,16 +130,16 @@ const projectsData = [
 
 // ─── Tech Tag icons ───────────────────────────────────────────────────────────
 const TECH_ICON = {
-  React:       { bg: '#20232a', fg: '#61dafb', icon: '⚛' },
-  JavaScript:  { bg: '#f7df1e', fg: '#000',    icon: 'JS' },
-  CSS:         { bg: '#264de4', fg: '#fff',    icon: 'CS' },
-  HTML:        { bg: '#e34f26', fg: '#fff',    icon: 'H5' },
-  Bootstrap:   { bg: '#7952b3', fg: '#fff',    icon: 'B' },
-  API:         { bg: '#10b981', fg: '#fff',    icon: '⚡' },
-  MongoDB:     { bg: '#00ed64', fg: '#001e2b', icon: 'M' },
-  'Node.js':   { bg: '#339933', fg: '#fff',    icon: 'N' },
-  'Next.js':   { bg: '#000',    fg: '#fff',    icon: 'N↗' },
-  Tailwind:    { bg: '#06b6d4', fg: '#fff',    icon: '~' },
+  React:       { bg: '#20232a44', fg: '#61dafb', icon: '⚛', glow: '0 0 15px rgba(97, 218, 251, 0.3)' },
+  JavaScript:  { bg: '#f7df1e22', fg: '#f7df1e', icon: 'JS', glow: '0 0 15px rgba(247, 223, 30, 0.2)' },
+  CSS:         { bg: '#264de422', fg: '#38bdf8', icon: 'CS', glow: '0 0 15px rgba(56, 189, 248, 0.2)' },
+  HTML:        { bg: '#e34f2622', fg: '#ff7c5c', icon: 'H5', glow: '0 0 15px rgba(227, 79, 38, 0.2)' },
+  Bootstrap:   { bg: '#7952b322', fg: '#d1b3ff', icon: 'B',  glow: '0 0 15px rgba(121, 82, 179, 0.2)' },
+  API:         { bg: '#10b98122', fg: '#34d399', icon: '⚡', glow: '0 0 15px rgba(16, 185, 129, 0.2)' },
+  MongoDB:     { bg: '#00ed6422', fg: '#00ed64', icon: 'M',  glow: '0 0 15px rgba(0, 237, 100, 0.2)' },
+  'Node.js':   { bg: '#33993322', fg: '#6ee7b7', icon: 'N',  glow: '0 0 15px rgba(51, 153, 51, 0.2)' },
+  'Next.js':   { bg: '#ffffff11', fg: '#fff',    icon: 'N↗', glow: '0 0 15px rgba(255, 255, 255, 0.2)' },
+  Tailwind:    { bg: '#06b6d422', fg: '#22d3ee', icon: '~',  glow: '0 0 15px rgba(6, 182, 212, 0.2)' },
 }
 
 // ─── Circular Cursor ──────────────────────────────────────────────────────────
@@ -176,8 +176,8 @@ const CircularCursor = ({ cursorRef, onClick }) => {
         <defs>
           <path id="cpath" d="M 55,55 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
         </defs>
-        <circle cx="55" cy="55" r="50" fill="#000" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-        <text fill="#fff" fontSize="10.5" fontWeight="700" letterSpacing="0.05em" fontFamily="'Inter',sans-serif">
+        <circle cx="55" cy="55" r="50" fill="#000" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.2))' }} />
+        <text fill="#fff" fontSize="10.5" fontWeight="700" letterSpacing="0.05em" fontFamily="'Inter',sans-serif" style={{ filter: 'drop-shadow(0 0 5px rgba(255,255,255,0.4))' }}>
           <textPath href="#cpath" textLength="238.5" lengthAdjust="spacingAndGlyphs">{text}</textPath>
         </text>
       </motion.svg>
@@ -396,11 +396,12 @@ const Projects = () => {
     <div id="projects" style={{ background: '#0a0a0f', position: 'relative' }}>
 
       {/* ── Section header ─────────────────────────────────────────────────── */}
-      <div style={{ padding: '100px 0 60px 80px', position: 'relative' }}>
+      <div style={{ padding: '60px 0 30px 80px', position: 'relative' }}>
         {/* Top gradient line */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, height: 2,
           background: 'linear-gradient(90deg, transparent, #6366f1, #a855f7, transparent)',
+          boxShadow: '0 0 15px rgba(99, 102, 241, 0.5)',
         }} />
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -414,14 +415,23 @@ const Projects = () => {
             fontFamily: "'Inter',sans-serif",
           }}>— My Work</p>
           <h2 style={{
-            fontSize: 'clamp(36px,5.5vw,68px)', fontWeight: 900,
+            fontSize: 'clamp(38px,6vw,72px)', fontWeight: 900,
             color: '#fff', margin: 0,
             fontFamily: "'Inter',sans-serif", letterSpacing: '-0.04em', lineHeight: 1,
+            textShadow: '0 0 10px rgba(255, 255, 255, 0.2), 0 0 20px rgba(99, 102, 241, 0.3)',
+            position: 'relative',
           }}>
+            {/* Soft light beam behind header */}
+            <div style={{
+              position: 'absolute', top: '50%', left: '30%', width: '40%', height: '100%',
+              background: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)',
+              transform: 'translate(-50%, -50%)', filter: 'blur(40px)', zIndex: -1
+            }} />
             Featured{' '}
             <span style={{
               background: 'linear-gradient(90deg,#6366f1,#a855f7,#ec4899)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              filter: 'drop-shadow(0 0 15px rgba(168, 85, 247, 0.4)) drop-shadow(0 0 30px rgba(99, 102, 241, 0.2))',
             }}>Projects</span>
           </h2>
           <p style={{
@@ -446,16 +456,35 @@ const Projects = () => {
           display: 'flex',
           alignItems: 'center',
           zIndex: 10,
+          background: 'linear-gradient(to right, #0a0a0f 80%, transparent)', // Fade into background
         }}>
+          <div style={{
+            position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(99, 102, 241, 0.05) 1px, transparent 0)`,
+            backgroundSize: '40px 40px',
+            zIndex: -1,
+            opacity: 0.5,
+          }} />
           {/* Project text layers */}
           <div style={{ padding: '0 0 0 80px', width: '100%', position: 'relative' }}>
+            {/* Background glowing particles for the sticky section */}
+            {[...Array(6)].map((_, pi) => (
+              <div key={pi} className="particle" style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animation: `float-particle ${5 + Math.random() * 5}s infinite linear`,
+                animationDelay: `${Math.random() * 5}s`,
+                background: pi % 2 ? '#6366f1' : '#ec4899',
+                boxShadow: `0 0 8px ${pi % 2 ? '#6366f1' : '#ec4899'}`,
+              }} />
+            ))}
             {projectsData.map((proj, i) => (
               <div
                 key={proj.id}
                 ref={el => { leftTextsRef.current[i] = el }}
                 style={{
                   position: 'absolute',
-                  top: '46%', // Moved slightly up
+                  top: '40%', // Moved higher to remove gap
                   left: 80,
                   right: 0,
                   transform: 'translateY(-50%)',
@@ -465,11 +494,15 @@ const Projects = () => {
               >
                 {/* Accent line + title */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
-                  <div style={{ width: 32, height: 3, background: proj.color, borderRadius: 2 }} />
+                  <div style={{ 
+                    width: 32, height: 3, background: proj.color, borderRadius: 2,
+                    boxShadow: `0 0 15px ${proj.color}`,
+                  }} />
                   <h3 style={{
                     fontSize: 'clamp(32px, 4vw, 56px)', fontWeight: 900,
                     color: '#fff', margin: 0,
                     fontFamily: "'Inter',sans-serif", letterSpacing: '-0.02em', lineHeight: 1,
+                    textShadow: `0 0 10px ${proj.color}88, 0 0 20px ${proj.color}44, 0 0 40px ${proj.color}22`,
                   }}>
                     {proj.title}
                   </h3>
@@ -505,15 +538,19 @@ const Projects = () => {
                 {/* Tech tags */}
                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 32 }}>
                   {proj.tech.map((t, ti) => {
+                    const iconStyle = TECH_ICON[t] || { bg: 'rgba(255,255,255,0.05)', fg: '#f1f5f9', glow: 'none' };
                     return (
                       <span key={ti} style={{
                         display: 'inline-flex', alignItems: 'center', gap: 8,
-                        background: 'rgba(255,255,255,0.05)',
-                        border: '1px solid rgba(255,255,255,0.15)',
+                        background: iconStyle.bg,
+                        border: `1px solid ${iconStyle.fg}44`,
                         borderRadius: 100, padding: '8px 18px',
-                        color: '#f1f5f9', fontSize: 14, fontWeight: 500,
+                        color: iconStyle.fg, fontSize: 13, fontWeight: 600,
                         fontFamily: "'Inter',sans-serif",
+                        boxShadow: iconStyle.glow,
+                        letterSpacing: '0.02em',
                       }}>
+                        <span style={{ fontSize: 14 }}>{iconStyle.icon}</span>
                         {t}
                       </span>
                     )
@@ -594,8 +631,9 @@ const Projects = () => {
               top: '25%',   // Shorter — starts lower
               bottom: '25%', // Shorter — ends higher
               width: 3,      // Thicker, like a volume slider
-              background: 'rgba(255,255,255,0.1)',
+              background: 'rgba(255,255,255,0.05)',
               borderRadius: 3,
+              boxShadow: '0 0 10px rgba(99, 102, 241, 0.2)',
             }}
           >
             {/* Active Highlight (fills above the ball) */}
@@ -607,8 +645,9 @@ const Projects = () => {
                 left: 0,
                 width: '100%',
                 height: 0,
-                background: 'linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.15) 100%)',
+                background: 'linear-gradient(180deg, #6366f1 0%, #a855f7 100%)',
                 borderRadius: '2px 2px 0 0',
+                boxShadow: '0 0 15px #6366f1',
               }}
             />
             {/* Profile Ball */}
@@ -623,8 +662,8 @@ const Projects = () => {
                 height: 56,
                 borderRadius: '50%',
                 background: '#0a0a0f',
-                border: '2px solid rgba(255,255,255,0.25)',
-                boxShadow: '0 0 0 4px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6)',
+                border: '2px solid #6366f1',
+                boxShadow: '0 0 20px rgba(99, 102, 241, 0.4), 0 0 0 4px rgba(0,0,0,0.8)',
                 overflow: 'hidden',
                 zIndex: 2,
               }}
@@ -659,43 +698,60 @@ const Projects = () => {
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr', // 2 equal columns
                 gridTemplateRows: '1fr 1fr',     // 2 rows
-                gap: 16,                         // card gaps
+                gap: 20,                         // card gaps
                 width: '100%',
                 height: '65vh',                  // slightly smaller height
                 maxWidth: 800,                   // making the project images slightly smaller
                 margin: '0 auto',
+                position: 'relative',
               }}>
-                {/* Top Left Box */}
+                {/* Background neon blooms */}
                 <div style={{
+                  position: 'absolute', top: '20%', left: '20%', width: '60%', height: '60%',
+                  background: proj.color, filter: 'blur(120px)', opacity: 0.15, borderRadius: '50%',
+                  zIndex: -1,
+                }} />
+
+                {/* Top Left Box */}
+                <div className="neon-card" style={{
                   gridColumn: 1, gridRow: 1,
-                  background: proj.color,
+                  background: '#111',
                   borderRadius: 20,
                   overflow: 'hidden',
-                  position: 'relative'
+                  position: 'relative',
+                  border: `1px solid ${proj.color}44`,
+                  boxShadow: `0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px ${proj.color}22`,
                 }}>
-                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
+                  <div className="shimmer-sweep" />
                 </div>
 
                 {/* Top Right Box */}
-                <div style={{
+                <div className="neon-card" style={{
                   gridColumn: 2, gridRow: 1,
-                  background: proj.color,
+                  background: '#111',
                   borderRadius: 20,
                   overflow: 'hidden',
-                  position: 'relative'
+                  position: 'relative',
+                  border: `1px solid ${proj.color}44`,
+                  boxShadow: `0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px ${proj.color}22`,
                 }}>
-                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
+                  <div className="shimmer-sweep" />
                 </div>
 
                 {/* Bottom Wide Box */}
-                <div style={{
+                <div className="neon-card" style={{
                   gridColumn: '1 / 3', gridRow: 2,
-                  background: proj.color,
+                  background: '#111',
                   borderRadius: 20,
                   overflow: 'hidden',
-                  position: 'relative'
+                  position: 'relative',
+                  border: `1px solid ${proj.color}44`,
+                  boxShadow: `0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px ${proj.color}22`,
                 }}>
-                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
+                  <div className="shimmer-sweep" />
                 </div>
               </div>
             </div>
@@ -720,7 +776,7 @@ const Projects = () => {
             background: 'linear-gradient(135deg,#6366f1,#a855f7)',
             color: '#fff', fontSize: 14, fontWeight: 700,
             textDecoration: 'none',
-            boxShadow: '0 8px 32px rgba(99,102,241,0.4)',
+            boxShadow: '0 8px 32px rgba(99,102,241,0.6), 0 0 20px rgba(168, 85, 247, 0.4)',
             fontFamily: "'Inter',sans-serif",
           }}
         >
@@ -740,6 +796,58 @@ const Projects = () => {
 
       <style>{`
         #projects a, #projects button { user-select: none; }
+        
+        .shimmer-sweep {
+          position: absolute;
+          top: -100%;
+          left: -100%;
+          width: 300%;
+          height: 300%;
+          background: linear-gradient(
+            45deg,
+            transparent 45%,
+            rgba(255, 255, 255, 0.05) 50%,
+            transparent 55%
+          );
+          transform: rotate(-45deg);
+          animation: shimmer 8s infinite linear;
+          pointer-events: none;
+        }
+
+        @keyframes shimmer {
+          0% { transform: translate(-30%, -30%) rotate(-45deg); }
+          100% { transform: translate(30%, 30%) rotate(-45deg); }
+        }
+
+        .neon-card {
+          transition: all 0.5s var(--ease-smooth);
+        }
+        
+        .neon-card:hover {
+          filter: brightness(1.25);
+          transform: translateY(-8px) scale(1.02);
+          border-color: rgba(255,255,255,0.6) !important;
+          box-shadow: 0 30px 60px rgba(0,0,0,0.7), 0 0 20px rgba(255,255,255,0.2), inset 0 0 30px rgba(255,255,255,0.1) !important;
+          z-index: 10;
+        }
+
+        /* Ambient neon particles */
+        @keyframes float-particle {
+          0% { transform: translateY(0) translateX(0); opacity: 0; }
+          50% { opacity: 0.5; }
+          100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        .particle {
+          position: absolute;
+          width: 2px;
+          height: 2px;
+          background: #6366f1;
+          border-radius: 50%;
+          pointer-events: none;
+          box-shadow: 0 0 10px #6366f1;
+        }
+
         @media (max-width: 900px) {
           #projects > div:nth-child(2) { flex-direction: column !important; }
           #projects > div:nth-child(2) > div:first-child {
