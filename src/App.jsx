@@ -12,6 +12,7 @@ const About = lazy(() => import('./components/About'))
 const Skills = lazy(() => import('./components/Skills'))
 const Journey = lazy(() => import('./components/Journey'))
 const Projects = lazy(() => import('./components/Projects'))
+const LeetCode = lazy(() => import('./components/LeetCode'))
 const Certificates = lazy(() => import('./components/Certificates'))
 const Contact = lazy(() => import('./components/Contact'))
 const Footer = lazy(() => import('./components/Footer'))
@@ -68,15 +69,14 @@ function App() {
         <Navbar onSectionChange={handleSectionChange} activeSection={activeSection} />
         
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div></div>}>
-          {/* Render only the active section */}
-          {activeSection === 'home' && <Hero onSectionChange={handleSectionChange} />}
-          {activeSection === 'about' && <About />}
-          {activeSection === 'skills' && <Skills />}
-          {activeSection === 'journey' && <Journey />}
-          {activeSection === 'projects' && <Projects />}
-          {activeSection === 'certificates' && <Certificates />}
-          {activeSection === 'contact' && <Contact />}
-          
+          <Hero onSectionChange={handleSectionChange} />
+          <About />
+          <Skills />
+          <Journey />
+          <Projects />
+          <LeetCode />
+          <Certificates />
+          <Contact />
           <Footer />
         </Suspense>
       </div>

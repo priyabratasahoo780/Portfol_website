@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { Download, Linkedin, Github, Twitter } from 'lucide-react'
-import profileImg from '/profile.jpg'
-import ParticlesComponent from './ui/particles-bg'
+import profileImg from '/assets/myPhoto.png'
 
 const PHRASES = ["Full-Stack Developer", "Software Developer", "Creator"]
 
@@ -81,11 +80,7 @@ const Hero = ({ onSectionChange }) => {
 
 
   return (
-    <section id="home" className="hero relative overflow-hidden min-h-screen flex items-center">
-      <ParticlesComponent 
-        id="particles-hero" 
-        className="bg-gradient-to-tr from-[#e3f2fd] via-[#90caf9] to-[#64b5f6] dark:from-[#000814] dark:via-[#003566] dark:to-[#0077b6] transition-colors duration-500 absolute inset-0 z-0"
-      />
+    <section id="home" className="hero relative overflow-hidden min-h-screen flex items-center bg-gradient-to-tr from-[#e3f2fd] via-[#90caf9] to-[#64b5f6] dark:from-[#000814] dark:via-[#003566] dark:to-[#0077b6]">
       <div className="image-container relative z-10" ref={imageRef}>
         <img
           src={profileImg}

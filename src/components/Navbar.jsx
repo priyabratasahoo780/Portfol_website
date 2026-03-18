@@ -390,11 +390,18 @@ const Navbar = ({ onSectionChange, activeSection }) => {
   }
 
   const scrollToSection = (id) => {
-    // Instead of scrolling, trigger section change
+    const element = document.getElementById(id)
+    if (element) {
+      if (window.lenis) {
+        window.lenis.scrollTo(element, { offset: 0, duration: 1.5 })
+      } else {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+    setIsOpen(false)
     if (onSectionChange) {
       onSectionChange(id)
     }
-    setIsOpen(false)
   }
 
   return (
@@ -434,7 +441,7 @@ const Navbar = ({ onSectionChange, activeSection }) => {
           />
         </div>
         <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
-          {['home', 'about', 'skills', 'journey', 'certificates', 'projects', 'contact'].map((item) => (
+          {['home', 'about', 'skills', 'journey', 'projects', 'leetcode', 'certificates', 'contact'].map((item) => (
              <li key={item}>
                  <a 
                     onClick={(e) => handleNavClick(e, item)}

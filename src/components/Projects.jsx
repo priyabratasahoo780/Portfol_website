@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect, useCallback } from 'react'
+import { useState, useRef, useLayoutEffect, useCallback, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -492,6 +492,14 @@ const Projects = () => {
                   pointerEvents: i === 0 ? 'auto' : 'none',
                 }}
               >
+                <p style={{
+                  fontSize: 16, lineHeight: 1.7, color: '#e2e8f0',
+                  margin: '0 0 12px', fontFamily: "'Inter',sans-serif",
+                  maxWidth: 440, // Wider text block
+                }}>
+                  {proj.emoji} {proj.description}
+                </p>
+
                 {/* Accent line + title */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
                   <div style={{ 
@@ -507,14 +515,6 @@ const Projects = () => {
                     {proj.title}
                   </h3>
                 </div>
-
-                <p style={{
-                  fontSize: 16, lineHeight: 1.7, color: '#e2e8f0',
-                  margin: '0 0 24px', fontFamily: "'Inter',sans-serif",
-                  maxWidth: 440, // Wider text block
-                }}>
-                  {proj.emoji} {proj.description}
-                </p>
 
                 {/* Feature bullets */}
                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px' }}>

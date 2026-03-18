@@ -6,6 +6,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import contactRoutes from './routes/contact.js';
+import authRoutes from './routes/auth.js';
+import testRoutes from './routes/test.js';
 import { sendEmailNotification } from './services/emailService.js';
 
 // Load environment variables
@@ -49,6 +51,8 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // Routes
 app.use('/api/contact', contactRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/test', testRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
