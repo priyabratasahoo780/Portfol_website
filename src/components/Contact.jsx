@@ -2,7 +2,6 @@ import { useState, useRef, useCallback, memo, useEffect } from 'react'
 import { sendContactMessage } from '../services/emailService'
 import { Send, Github, Linkedin, Twitter, Youtube } from 'lucide-react'
 import { motion } from 'framer-motion'
-import GalaxyBackground from './ui/GalaxyBackground'
 
 // Move animation variants outside component to prevent recreation
 const containerVariants = {
@@ -112,7 +111,6 @@ const Contact = () => {
 
   return (
     <section id="contact" className="premium-contact-section" ref={sectionRef}>
-      <GalaxyBackground />
       
       <motion.div 
         className="premium-contact-container"

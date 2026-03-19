@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import GalaxyBackground from './ui/GalaxyBackground'
 
 const journeyData = [
   {
@@ -49,7 +48,6 @@ const Journey = () => {
   return (
     <section id="journey" className="section-pad relative overflow-hidden" ref={sectionRef}>
       {/* Galaxy Stars Background */}
-      <GalaxyBackground />
 
       <div className="container relative z-10">
         <h2 className="section-heading hidden text-center">My Journey & Experience</h2>

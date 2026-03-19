@@ -51,23 +51,22 @@ const Hero = ({ onSectionChange }) => {
     
     // Desktop Animation
     mm.add("(min-width: 769px)", () => {
-    // ... code truncated for brevity, same as before ... using a simpler replace to just fix the beginning of the component
       // Content Entry
       gsap.fromTo(contentRef.current.children, 
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power4.out", delay: 0.5 }
+        { opacity: 0, x: -50 },
+        { opacity: 1, x: 0, duration: 1, stagger: 0.2, ease: "power4.out", delay: 0.5 }
       )
       // Image Entry
       gsap.fromTo(imageRef.current,
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.5, ease: "elastic.out(1, 0.5)", delay: 0.2 }
+        { x: 50, opacity: 0, rotate: 5 },
+        { x: 0, opacity: 1, rotate: 0, duration: 1.5, ease: "power3.out", delay: 0.2 }
       )
     })
 
     // Mobile Animation
     mm.add("(max-width: 768px)", () => {
        gsap.fromTo(contentRef.current.children, 
-        { opacity: 0, y: 20 },
+        { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.2 }
       )
       gsap.fromTo(imageRef.current,
@@ -77,60 +76,73 @@ const Hero = ({ onSectionChange }) => {
     })
   }, { scope: contentRef })
 
-
-
   return (
-    <section id="home" className="hero relative overflow-hidden min-h-screen flex items-center bg-gradient-to-tr from-[#e3f2fd] via-[#90caf9] to-[#64b5f6] dark:from-[#000814] dark:via-[#003566] dark:to-[#0077b6]">
-      <div className="image-container relative z-10" ref={imageRef}>
-        <img
-          src={profileImg}
-          alt="Priyabrata"
-          className="floating-img rounded-2xl shadow-2xl"
-        />
-      </div>
-      <div className="container hero-content" ref={contentRef}>
-        <p className="greeting opacity-0 translate-y-8">Hi, I'm Priyabrata.</p>
-        <h1 className="hero-title opacity-0 translate-y-8">
-          "<TypingText />"
-        </h1>
-        <p className="hero-bio opacity-0 translate-y-8">
-          I'm a passionate Full-stack developer crafting digital experiences. I
-          love building intuitive web apps, exploring new technologies, and
-          turning creative ideas into accessible tools.
-        </p>
-        <div className="hero-btns opacity-0 translate-y-8">
-          <button 
-            onClick={() => onSectionChange('contact')}
-            className="btn btn-primary"
-          >
-            Contact
-          </button>
-          <a 
-            href="/certificates/resumetemporary_netlify (1).pdf" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="btn btn-secondary"
-          >
-            View Resume <Download className="btn-icon" size={18} />
-          </a>
+    <section id="home" className="hero-section-premium">
+      {/* Background Particles/Stars */}
+      <div className="hero-stars" />
+      
+      <div className="hero-container-two-col">
+        {/* Left Column: Content */}
+        <div className="hero-text-content" ref={contentRef}>
+          <div className="hero-badge-pill">
+            HI, I'M PRIYABRATA.
+          </div>
+
+          <h1 className="hero-display-title">
+            "<TypingText />"
+          </h1>
+          
+          <p className="hero-description">
+            I'm a passionate Full-stack developer crafting digital experiences. I
+            love building intuitive web apps, exploring new technologies, and
+            turning creative ideas into accessible tools.
+          </p>
+
+          <div className="hero-action-btns">
+            <button 
+              onClick={() => onSectionChange('contact')}
+              className="action-btn-primary"
+            >
+              Contact
+            </button>
+            <a 
+              href="/certificates/resumetemporary_netlify (1).pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="action-btn-outline"
+            >
+              View Resume <Download size={18} />
+            </a>
+          </div>
+
+          <div className="hero-socials-row">
+            <span className="social-label">Connect with me:</span>
+            <div className="social-pill-container">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-circle-link">
+                <Linkedin size={18} />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="social-circle-link">
+                <Github size={18} />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-circle-link">
+                <Twitter size={18} />
+              </a>
+            </div>
+          </div>
         </div>
-        <div className="social-connect opacity-0 translate-y-8">
-          <span>Connect with me:</span>
-          <div className="social-icons">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <Linkedin size={20} className="hover:text-blue-500 transition-colors" />
-            </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-              <Github size={20} className="hover:text-gray-400 transition-colors" />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-              <Twitter size={20} className="hover:text-blue-400 transition-colors" />
-            </a>
+
+        {/* Right Column: Image with Triple Border */}
+        <div className="hero-visual-content" ref={imageRef}>
+          <div className="image-frame-triple">
+            <div className="frame-border frame-1" />
+            <div className="frame-border frame-2" />
+            <div className="frame-border frame-3" />
+            <div className="main-image-wrapper">
+              <img src={profileImg} alt="Priyabrata" className="profile-hero-img" />
+            </div>
           </div>
         </div>
       </div>
-      <div className="shape shape-1"></div>
-      <div className="shape shape-2"></div>
     </section>
   )
 }

@@ -107,19 +107,7 @@ const Certificates = () => {
   }, [activeCategory])
 
   return (
-    <section id="certificates" className="section-pad" style={{ background: '#010410', position: 'relative', overflow: 'hidden' }}>
-      {/* Animated Neon Ambient Background */}
-      <div style={{
-        position: 'absolute', top: '10%', left: '10%', width: '40vw', height: '40vw',
-        background: 'radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 60%)',
-        filter: 'blur(80px)', pointerEvents: 'none', animation: 'float 20s infinite alternate'
-      }} />
-      <div style={{
-        position: 'absolute', bottom: '10%', right: '10%', width: '35vw', height: '35vw',
-        background: 'radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 60%)',
-        filter: 'blur(80px)', pointerEvents: 'none', animation: 'float 15s infinite alternate-reverse'
-      }} />
-
+    <section id="certificates" className="section-pad" style={{ background: 'var(--bg-main)', position: 'relative', overflow: 'hidden' }}>
       <div className="container" style={{ maxWidth: '1600px', position: 'relative', zIndex: 1 }}>
         {/* Neon Header Section */}
         <div style={{ textAlign: 'center', marginBottom: '5rem' }}>

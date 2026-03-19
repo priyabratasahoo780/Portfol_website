@@ -39,11 +39,12 @@
 .logo-text {
   font-size: 3.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+  background: var(--accent-gradient);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   z-index: 2;
+  filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.4));
   animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -52,15 +53,16 @@
   width: 100%;
   height: 100%;
   border: 2px solid transparent;
-  border-top-color: #38bdf8;
+  border-top-color: var(--neon-cyan);
   border-radius: 50%;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
   animation: spin 1.5s linear infinite;
 }
 
 .logo-ring.ring-2 {
   width: 85%;
   height: 85%;
-  border-top-color: #818cf8;
+  border-top-color: var(--neon-purple);
   animation-duration: 2s;
   animation-direction: reverse;
 }
@@ -68,7 +70,7 @@
 .logo-ring.ring-3 {
   width: 70%;
   height: 70%;
-  border-top-color: #c084fc;
+  border-top-color: var(--neon-pink);
   animation-duration: 2.5s;
 }
 
@@ -94,11 +96,12 @@
   font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 8px;
-  background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc, #38bdf8);
+  background: var(--accent-gradient);
   background-size: 300% 100%;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.3));
   animation: shimmer 2s linear infinite;
 }
 
@@ -146,11 +149,11 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+  background: var(--accent-gradient);
   border-radius: 10px;
   transition: width 0.3s ease;
   position: relative;
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 15px var(--neon-cyan);
 }
 
 .progress-fill::after {
@@ -168,9 +171,10 @@
 
 .progress-text {
   font-size: 0.9rem;
-  color: #38bdf8;
+  color: var(--neon-cyan);
   font-weight: 600;
   font-family: 'Courier New', monospace;
+  text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
 }
 
 /* Particles */
@@ -186,10 +190,11 @@
   position: absolute;
   width: 4px;
   height: 4px;
-  background: linear-gradient(135deg, #38bdf8, #818cf8);
+  background: var(--neon-cyan);
   border-radius: 50%;
   left: var(--x);
   bottom: -10px;
+  box-shadow: 0 0 8px var(--neon-cyan);
   animation: float var(--duration) ease-in-out infinite;
   animation-delay: var(--delay);
   opacity: 0;

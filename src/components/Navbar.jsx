@@ -173,7 +173,7 @@ const Navbar = ({ onSectionChange, activeSection }) => {
     
     // Glow Bolt (Simulation of bloom)
     const glowMaterial = new THREE.LineBasicMaterial({ 
-      color: 0x00eaff,
+      color: 0x00f3ff,
       transparent: true,
       opacity: 0.8,
       linewidth: 6
@@ -208,7 +208,7 @@ const Navbar = ({ onSectionChange, activeSection }) => {
       points.push(new THREE.Vector3(endX, endY, 0))
       
       const geometry = new THREE.BufferGeometry().setFromPoints(points)
-      const material = new THREE.LineBasicMaterial({ color: 0x00eaff, transparent: true })
+      const material = new THREE.LineBasicMaterial({ color: 0x00f3ff, transparent: true })
       const line = new THREE.Line(geometry, material)
       sceneRef.current.add(line)
       boltsRef.current.push({ mesh: line, geometry, material, life: 0.2 })
@@ -222,7 +222,7 @@ const Navbar = ({ onSectionChange, activeSection }) => {
         const pGeo = new THREE.BufferGeometry()
         pGeo.setAttribute('position', new THREE.Float32BufferAttribute([0,0,0], 3))
         const pMat = new THREE.PointsMaterial({
-            color: Math.random() > 0.5 ? 0xffffff : 0x00eaff,
+            color: Math.random() > 0.5 ? 0xffffff : 0x00f3ff,
             size: 4 + Math.random() * 4,
             transparent: true,
             blending: THREE.AdditiveBlending
@@ -254,7 +254,7 @@ const Navbar = ({ onSectionChange, activeSection }) => {
       if (!sceneRef.current) return
       const geometry = new THREE.RingGeometry(1, 2, 32)
       const material = new THREE.MeshBasicMaterial({ 
-          color: 0x00eaff, 
+          color: 0x00f3ff, 
           transparent: true, 
           side: THREE.DoubleSide
       })
@@ -299,7 +299,7 @@ const Navbar = ({ onSectionChange, activeSection }) => {
     tl.to(targetElement, { 
         scale: 1.1, 
         color: '#fff', 
-        textShadow: '0 0 10px #00eaff, 0 0 20px #00eaff',
+        textShadow: '0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan)',
         duration: 0.2,
         ease: 'power2.in'
     })
@@ -342,8 +342,8 @@ const Navbar = ({ onSectionChange, activeSection }) => {
         x: () => (Math.random() - 0.5) * 8, 
         y: () => (Math.random() - 0.5) * 4,
         rotation: () => (Math.random() - 0.5) * 4,
-        color: '#e0ffff', 
-        textShadow: '0 0 20px #fff, 0 0 40px #00eaff',
+        color: '#fff', 
+        textShadow: '0 0 20px #fff, 0 0 40px var(--neon-cyan)',
         duration: 0.05, 
         yoyo: true, 
         repeat: 6
@@ -354,8 +354,8 @@ const Navbar = ({ onSectionChange, activeSection }) => {
         x: 0,
         y: 0,
         rotation: 0,
-        color: '#00eaff',
-        textShadow: '0 0 5px #00eaff',
+        color: 'var(--neon-cyan)',
+        textShadow: '0 0 10px var(--neon-cyan)',
         scale: 1,
         duration: 0.2,
         clearProps: 'x,y,rotation'
@@ -364,7 +364,7 @@ const Navbar = ({ onSectionChange, activeSection }) => {
 
   const handleMouseEnter = (e) => {
       gsap.to(e.target, {
-          textShadow: '0 0 8px #00eaff',
+          textShadow: '0 0 12px var(--neon-cyan)',
           color: '#fff', 
           scale: 1.05,
           duration: 0.3
@@ -374,8 +374,8 @@ const Navbar = ({ onSectionChange, activeSection }) => {
   const handleMouseLeave = (e, id) => {
       if (activeTab === id && id !== 'contact') {
           gsap.to(e.target, {
-              textShadow: '0 0 5px #00eaff',
-              color: '#00eaff',
+              textShadow: '0 0 10px var(--neon-cyan)',
+              color: 'var(--neon-cyan)',
               scale: 1,
               duration: 0.3
           })
@@ -449,9 +449,9 @@ const Navbar = ({ onSectionChange, activeSection }) => {
                     onMouseLeave={(e) => handleMouseLeave(e, item)}
                     className={item === 'contact' ? 'nav-btn' : ''}
                     style={activeTab === item && item !== 'contact' ? { 
-                        color: '#00eaff', 
-                        textShadow: '0 0 5px #00eaff',
-                        borderBottom: '2px solid #00eaff' 
+                        color: 'var(--neon-cyan)', 
+                        textShadow: '0 0 10px var(--neon-cyan)',
+                        borderBottom: '2px solid var(--neon-cyan)' 
                     } : {}}
                  >
                     {item.charAt(0).toUpperCase() + item.slice(1).replace('Me', ' Me')}

@@ -4,54 +4,7 @@ import gsap from 'gsap'
 
 const About = () => {
   const sectionRef = useRef(null)
-  const starsRef = useRef(null)
 
-  // Galaxy Twinkling Stars Background
-  useEffect(() => {
-    if (!starsRef.current) return
-
-    const starsContainer = starsRef.current
-    const numStars = 100
-
-    for (let i = 0; i < numStars; i++) {
-        const star = document.createElement('div')
-        star.className = 'galaxy-star'
-        star.style.cssText = `
-          position: absolute;
-          width: ${Math.random() * 3 + 1}px;
-          height: ${Math.random() * 3 + 1}px;
-          background: ${i % 3 === 0 ? '#60a5fa' : i % 3 === 1 ? '#a78bfa' : '#ffffff'};
-          border-radius: 50%;
-          left: ${Math.random() * 100}%;
-          top: ${Math.random() * 100}%;
-          box-shadow: 0 0 ${Math.random() * 5 + 2}px currentColor;
-          pointer-events: none;
-        `
-        starsContainer.appendChild(star)
-  
-        gsap.to(star, {
-          opacity: Math.random() * 0.7 + 0.3,
-          duration: Math.random() * 2 + 1,
-          repeat: -1,
-          yoyo: true,
-          ease: 'power1.inOut',
-          delay: Math.random() * 2
-        })
-  
-        gsap.to(star, {
-          x: `+=${Math.random() * 20 - 10}`,
-          y: `+=${Math.random() * 20 - 10}`,
-          duration: Math.random() * 10 + 10,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut'
-        })
-    }
-
-    return () => {
-      if(starsContainer) starsContainer.innerHTML = ''
-    }
-  }, [])
 
   // Existing Reveal Animation
   useEffect(() => {
@@ -75,19 +28,6 @@ const About = () => {
   return (
     <section id="about" className="section-pad relative overflow-hidden min-h-screen flex items-center justify-center max-[600px]:min-h-0 max-[600px]:flex-col max-[600px]:justify-start max-[600px]:!pt-[200px]" ref={sectionRef}>
       
-      {/* Background Layer */}
-      <div 
-        ref={starsRef} 
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 0,
-          pointerEvents: 'none'
-        }}
-      />
       
       <div className="container relative z-10 w-full">
         <h2 className="section-heading hidden">About Me</h2>

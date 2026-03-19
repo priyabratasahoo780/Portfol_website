@@ -23,7 +23,7 @@ const GalaxyBackground = () => {
         position: absolute;
         width: ${Math.random() * 3 + 1}px;
         height: ${Math.random() * 3 + 1}px;
-        background: ${i % 3 === 0 ? '#60a5fa' : i % 3 === 1 ? '#a78bfa' : '#ffffff'};
+        background: ${i % 3 === 0 ? '#00f3ff' : i % 3 === 1 ? '#bf00ff' : '#ffffff'};
         border-radius: 50%;
         left: ${Math.random() * 100}%;
         top: ${Math.random() * 100}%;

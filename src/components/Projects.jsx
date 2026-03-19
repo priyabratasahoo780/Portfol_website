@@ -8,6 +8,23 @@ gsap.registerPlugin(ScrollTrigger)
 // ─── Project Data ────────────────────────────────────────────────────────────
 const projectsData = [
   {
+    id: 4,
+    title: 'Color Guessing Game',
+    emoji: '🎨',
+    description: 'A fun interactive color guessing game where you test your skills at identifying the correct RGB color codes. Features multiple difficulty levels.',
+    features: [
+      'Randomized RGB color challenge engine',
+      'Score tracking with multiple difficulty levels',
+      'Pure vanilla JS with zero dependencies',
+    ],
+    liveLink: 'https://color-guesss-game.netlify.app/',
+    codeLink: 'https://github.com/priyabratasahoo780/ColorGuessingGame',
+    tech: ['HTML', 'CSS', 'JavaScript'],
+    image: '/color-guesser-logo.png',
+    color: '#7b2fff',
+    gradient: 'linear-gradient(145deg, #7b2fff, #4a00cc)',
+  },
+  {
     id: 1,
     title: 'E-Commerce JioMart Clone',
     emoji: '🛒',
@@ -57,23 +74,6 @@ const projectsData = [
     image: '/namakwali-clone.png',
     color: '#2ec4b6',
     gradient: 'linear-gradient(145deg, #2ec4b6, #0e8a80)',
-  },
-  {
-    id: 4,
-    title: 'Color Guessing Game',
-    emoji: '🎨',
-    description: 'A fun interactive color guessing game where you test your skills at identifying the correct RGB color codes. Features multiple difficulty levels.',
-    features: [
-      'Randomized RGB color challenge engine',
-      'Score tracking with multiple difficulty levels',
-      'Pure vanilla JS with zero dependencies',
-    ],
-    liveLink: 'https://color-guesss-game.netlify.app/',
-    codeLink: 'https://github.com/priyabratasahoo780/ColorGuessingGame',
-    tech: ['HTML', 'CSS', 'JavaScript'],
-    image: '/color-guesser-logo.png',
-    color: '#7b2fff',
-    gradient: 'linear-gradient(145deg, #7b2fff, #4a00cc)',
   },
   {
     id: 5,
@@ -130,16 +130,16 @@ const projectsData = [
 
 // ─── Tech Tag icons ───────────────────────────────────────────────────────────
 const TECH_ICON = {
-  React:       { bg: '#20232a44', fg: '#61dafb', icon: '⚛', glow: '0 0 15px rgba(97, 218, 251, 0.3)' },
-  JavaScript:  { bg: '#f7df1e22', fg: '#f7df1e', icon: 'JS', glow: '0 0 15px rgba(247, 223, 30, 0.2)' },
-  CSS:         { bg: '#264de422', fg: '#38bdf8', icon: 'CS', glow: '0 0 15px rgba(56, 189, 248, 0.2)' },
-  HTML:        { bg: '#e34f2622', fg: '#ff7c5c', icon: 'H5', glow: '0 0 15px rgba(227, 79, 38, 0.2)' },
-  Bootstrap:   { bg: '#7952b322', fg: '#d1b3ff', icon: 'B',  glow: '0 0 15px rgba(121, 82, 179, 0.2)' },
-  API:         { bg: '#10b98122', fg: '#34d399', icon: '⚡', glow: '0 0 15px rgba(16, 185, 129, 0.2)' },
-  MongoDB:     { bg: '#00ed6422', fg: '#00ed64', icon: 'M',  glow: '0 0 15px rgba(0, 237, 100, 0.2)' },
-  'Node.js':   { bg: '#33993322', fg: '#6ee7b7', icon: 'N',  glow: '0 0 15px rgba(51, 153, 51, 0.2)' },
-  'Next.js':   { bg: '#ffffff11', fg: '#fff',    icon: 'N↗', glow: '0 0 15px rgba(255, 255, 255, 0.2)' },
-  Tailwind:    { bg: '#06b6d422', fg: '#22d3ee', icon: '~',  glow: '0 0 15px rgba(6, 182, 212, 0.2)' },
+  React:       { bg: 'rgba(97, 218, 251, 0.1)', fg: '#61dafb', icon: '⚛', glow: '0 0 12px rgba(97, 218, 251, 0.4)' },
+  JavaScript:  { bg: 'rgba(247, 223, 30, 0.08)', fg: '#f7df1e', icon: 'JS', glow: '0 0 12px rgba(247, 223, 30, 0.3)' },
+  CSS:         { bg: 'rgba(0, 243, 255, 0.08)', fg: 'var(--neon-cyan)', icon: 'CS', glow: '0 0 12px rgba(0, 243, 255, 0.4)' },
+  HTML:        { bg: 'rgba(255, 87, 34, 0.08)', fg: '#ff5722', icon: 'H5', glow: '0 0 12px rgba(255, 87, 34, 0.3)' },
+  Bootstrap:   { bg: 'rgba(121, 82, 179, 0.08)', fg: '#d1b3ff', icon: 'B',  glow: '0 0 12px rgba(121, 82, 179, 0.3)' },
+  API:         { bg: 'rgba(16, 185, 129, 0.08)', fg: '#34d399', icon: '⚡', glow: '0 0 12px rgba(16, 185, 129, 0.3)' },
+  MongoDB:     { bg: 'rgba(0, 237, 100, 0.08)', fg: '#00ed64', icon: 'M',  glow: '0 0 12px rgba(0, 237, 100, 0.3)' },
+  'Node.js':   { bg: 'rgba(51, 153, 51, 0.08)', fg: '#6ee7b7', icon: 'N',  glow: '0 0 12px rgba(51, 153, 51, 0.3)' },
+  'Next.js':   { bg: 'rgba(255, 255, 255, 0.05)', fg: '#fff',    icon: 'N↗', glow: '0 0 12px rgba(255, 255, 255, 0.3)' },
+  Tailwind:    { bg: 'rgba(6, 182, 212, 0.08)', fg: '#22d3ee', icon: '~',  glow: '0 0 12px rgba(6, 182, 212, 0.3)' },
 }
 
 // ─── Circular Cursor ──────────────────────────────────────────────────────────
@@ -393,15 +393,15 @@ const Projects = () => {
   }, [activeLiveLink])
 
   return (
-    <div id="projects" style={{ background: '#0a0a0f', position: 'relative' }}>
+    <div id="projects" style={{ background: 'var(--bg-main)', position: 'relative' }}>
 
       {/* ── Section header ─────────────────────────────────────────────────── */}
       <div style={{ padding: '60px 0 30px 80px', position: 'relative' }}>
         {/* Top gradient line */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, height: 2,
-          background: 'linear-gradient(90deg, transparent, #6366f1, #a855f7, transparent)',
-          boxShadow: '0 0 15px rgba(99, 102, 241, 0.5)',
+          background: 'var(--accent-gradient)',
+          boxShadow: '0 0 15px var(--neon-cyan)',
         }} />
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -411,28 +411,21 @@ const Projects = () => {
         >
           <p style={{
             fontSize: 11, fontWeight: 700, letterSpacing: '0.3em',
-            color: '#6366f1', textTransform: 'uppercase', marginBottom: 14,
+            color: 'var(--neon-cyan)', textTransform: 'uppercase', marginBottom: 14,
             fontFamily: "'Inter',sans-serif",
+            textShadow: '0 0 10px rgba(0, 243, 255, 0.4)'
           }}>— My Work</p>
           <h2 style={{
             fontSize: 'clamp(38px,6vw,72px)', fontWeight: 900,
             color: '#fff', margin: 0,
             fontFamily: "'Inter',sans-serif", letterSpacing: '-0.04em', lineHeight: 1,
-            textShadow: '0 0 10px rgba(255, 255, 255, 0.2), 0 0 20px rgba(99, 102, 241, 0.3)',
+            textShadow: '0 0 15px rgba(0, 243, 255, 0.3)',
             position: 'relative',
+            marginBottom: '2rem'
           }}>
             {/* Soft light beam behind header */}
-            <div style={{
-              position: 'absolute', top: '50%', left: '30%', width: '40%', height: '100%',
-              background: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)',
-              transform: 'translate(-50%, -50%)', filter: 'blur(40px)', zIndex: -1
-            }} />
             Featured{' '}
-            <span style={{
-              background: 'linear-gradient(90deg,#6366f1,#a855f7,#ec4899)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-              filter: 'drop-shadow(0 0 15px rgba(168, 85, 247, 0.4)) drop-shadow(0 0 30px rgba(99, 102, 241, 0.2))',
-            }}>Projects</span>
+            <span className="neon-text">Projects</span>
           </h2>
           <p style={{
             marginTop: 18, fontSize: 15, color: '#475569', maxWidth: 480,
@@ -456,7 +449,7 @@ const Projects = () => {
           display: 'flex',
           alignItems: 'center',
           zIndex: 10,
-          background: 'linear-gradient(to right, #0a0a0f 80%, transparent)', // Fade into background
+          background: 'var(--bg-main)', // Solid background
         }}>
           <div style={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
@@ -492,65 +485,66 @@ const Projects = () => {
                   pointerEvents: i === 0 ? 'auto' : 'none',
                 }}
               >
-                <p style={{
-                  fontSize: 16, lineHeight: 1.7, color: '#e2e8f0',
-                  margin: '0 0 12px', fontFamily: "'Inter',sans-serif",
-                  maxWidth: 440, // Wider text block
-                }}>
-                  {proj.emoji} {proj.description}
-                </p>
-
-                {/* Accent line + title */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
-                  <div style={{ 
-                    width: 32, height: 3, background: proj.color, borderRadius: 2,
+                {/* Title with left accent bar */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
+                   <div style={{ 
+                    width: 35, height: 4, background: proj.color, borderRadius: 2,
                     boxShadow: `0 0 15px ${proj.color}`,
+                    flexShrink: 0
                   }} />
                   <h3 style={{
-                    fontSize: 'clamp(32px, 4vw, 56px)', fontWeight: 900,
+                    fontSize: 'clamp(40px, 5vw, 68px)', fontWeight: 900,
                     color: '#fff', margin: 0,
-                    fontFamily: "'Inter',sans-serif", letterSpacing: '-0.02em', lineHeight: 1,
-                    textShadow: `0 0 10px ${proj.color}88, 0 0 20px ${proj.color}44, 0 0 40px ${proj.color}22`,
+                    fontFamily: "'Inter',sans-serif", letterSpacing: '-0.03em', lineHeight: 1.1,
+                    textShadow: `0 0 20px ${proj.color}44`,
                   }}>
                     {proj.title}
                   </h3>
                 </div>
 
+                <p style={{
+                  fontSize: 16, lineHeight: 1.7, color: '#f8fafc',
+                  margin: '0 0 20px', fontFamily: "'Inter',sans-serif",
+                  maxWidth: 440, fontWeight: 500,
+                }}>
+                  {proj.emoji} {proj.description}
+                </p>
+
                 {/* Feature bullets */}
-                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px' }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 35px' }}>
                   {proj.features.map((f, fi) => (
                     <li key={fi} style={{
-                      display: 'flex', alignItems: 'flex-start', gap: 12,
-                      marginBottom: 12,
+                      display: 'flex', alignItems: 'center', gap: 14,
+                      marginBottom: 15,
                     }}>
                       <span style={{
                         color: '#fbbf24', fontWeight: 900, fontSize: 18,
-                        lineHeight: 1.4, marginTop: 0, flexShrink: 0,
+                        lineHeight: 1, flexShrink: 0,
                       }}>✦</span>
                       <span style={{
-                        color: '#f8fafc', fontSize: 14, lineHeight: 1.5,
-                        fontFamily: "'Inter',sans-serif",
+                        color: '#f8fafc', fontSize: 15, fontWeight: 500,
+                        fontFamily: "'Inter',sans-serif", opacity: 0.9
                       }}>{f}</span>
                     </li>
                   ))}
                 </ul>
 
                 {/* Tech tags */}
-                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 32 }}>
+                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 40 }}>
                   {proj.tech.map((t, ti) => {
                     const iconStyle = TECH_ICON[t] || { bg: 'rgba(255,255,255,0.05)', fg: '#f1f5f9', glow: 'none' };
                     return (
                       <span key={ti} style={{
-                        display: 'inline-flex', alignItems: 'center', gap: 8,
+                        display: 'inline-flex', alignItems: 'center', gap: 10,
                         background: iconStyle.bg,
-                        border: `1px solid ${iconStyle.fg}44`,
-                        borderRadius: 100, padding: '8px 18px',
-                        color: iconStyle.fg, fontSize: 13, fontWeight: 600,
+                        border: `1.5px solid ${iconStyle.fg}33`,
+                        borderRadius: 20, padding: '10px 22px',
+                        color: iconStyle.fg, fontSize: 14, fontWeight: 700,
                         fontFamily: "'Inter',sans-serif",
                         boxShadow: iconStyle.glow,
-                        letterSpacing: '0.02em',
+                        letterSpacing: '0.05em',
                       }}>
-                        <span style={{ fontSize: 14 }}>{iconStyle.icon}</span>
+                        <span style={{ fontSize: 15, opacity: 0.8 }}>{iconStyle.icon}</span>
                         {t}
                       </span>
                     )
@@ -560,30 +554,19 @@ const Projects = () => {
                 {/* Buttons */}
                 <div style={{ display: 'flex', gap: 16, pointerEvents: 'auto' }}>
                   {proj.liveLink !== '#' && (
-                    <a
+                      <a
                       href={proj.liveLink}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="action-btn-primary"
                       style={{
-                        display: 'inline-flex', alignItems: 'center', gap: 8,
-                        padding: '12px 28px', borderRadius: 8,
-                        background: proj.gradient,
-                        color: '#fff', fontSize: 15, fontWeight: 700,
+                        padding: '14px 34px', borderRadius: 10,
+                        fontSize: 15, fontWeight: 700,
                         textDecoration: 'none',
-                        boxShadow: `0 8px 30px ${proj.color}50`,
                         fontFamily: "'Inter',sans-serif",
-                        transition: 'transform 0.3s, box-shadow 0.3s',
-                      }}
-                      onMouseEnter={e => {
-                        e.currentTarget.style.transform = 'translateY(-3px)'
-                        e.currentTarget.style.boxShadow = `0 14px 40px ${proj.color}70`
-                      }}
-                      onMouseLeave={e => {
-                        e.currentTarget.style.transform = 'translateY(0)'
-                        e.currentTarget.style.boxShadow = `0 8px 30px ${proj.color}50`
                       }}
                     >
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                       Live Demo
                     </a>
                   )}
@@ -592,28 +575,15 @@ const Projects = () => {
                       href={proj.codeLink}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="action-btn-outline"
                       style={{
-                        display: 'inline-flex', alignItems: 'center', gap: 8,
-                        padding: '12px 26px', borderRadius: 8,
-                        background: 'transparent',
-                        border: '1.5px solid rgba(255,255,255,0.2)',
-                        color: '#f8fafc', fontSize: 15, fontWeight: 700,
+                        padding: '14px 34px', borderRadius: 10,
+                        fontSize: 15, fontWeight: 700,
                         textDecoration: 'none',
                         fontFamily: "'Inter',sans-serif",
-                        transition: 'all 0.3s',
-                      }}
-                      onMouseEnter={e => {
-                        e.currentTarget.style.borderColor = proj.color
-                        e.currentTarget.style.color = proj.color
-                        e.currentTarget.style.transform = 'translateY(-3px)'
-                      }}
-                      onMouseLeave={e => {
-                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'
-                        e.currentTarget.style.color = '#f8fafc'
-                        e.currentTarget.style.transform = 'translateY(0)'
                       }}
                     >
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                       Code
                     </a>
                   )}
@@ -645,9 +615,9 @@ const Projects = () => {
                 left: 0,
                 width: '100%',
                 height: 0,
-                background: 'linear-gradient(180deg, #6366f1 0%, #a855f7 100%)',
+                background: 'var(--accent-gradient)',
                 borderRadius: '2px 2px 0 0',
-                boxShadow: '0 0 15px #6366f1',
+                boxShadow: '0 0 15px var(--neon-cyan)',
               }}
             />
             {/* Profile Ball */}
@@ -662,8 +632,8 @@ const Projects = () => {
                 height: 56,
                 borderRadius: '50%',
                 background: '#0a0a0f',
-                border: '2px solid #6366f1',
-                boxShadow: '0 0 20px rgba(99, 102, 241, 0.4), 0 0 0 4px rgba(0,0,0,0.8)',
+                border: '2px solid var(--neon-cyan)',
+                boxShadow: '0 0 20px rgba(0, 243, 255, 0.4), 0 0 0 4px rgba(0,0,0,0.8)',
                 overflow: 'hidden',
                 zIndex: 2,
               }}
@@ -706,51 +676,49 @@ const Projects = () => {
                 position: 'relative',
               }}>
                 {/* Background neon blooms */}
-                <div style={{
-                  position: 'absolute', top: '20%', left: '20%', width: '60%', height: '60%',
-                  background: proj.color, filter: 'blur(120px)', opacity: 0.15, borderRadius: '50%',
-                  zIndex: -1,
-                }} />
 
                 {/* Top Left Box */}
-                <div className="neon-card" style={{
+                <div className="neon-glass hover-lift" style={{
                   gridColumn: 1, gridRow: 1,
-                  background: '#111',
+                  background: 'rgba(255,255,255,0.02)',
                   borderRadius: 20,
                   overflow: 'hidden',
                   position: 'relative',
-                  border: `1px solid ${proj.color}44`,
-                  boxShadow: `0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px ${proj.color}22`,
+                  border: `1px solid rgba(255, 255, 255, 0.05)`,
+                  boxShadow: `0 20px 50px rgba(0,0,0,0.5)`,
+                  animation: 'heroFloat 7s ease-in-out infinite reverse'
                 }}>
-                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
+                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} />
                   <div className="shimmer-sweep" />
                 </div>
 
                 {/* Top Right Box */}
-                <div className="neon-card" style={{
+                <div className="neon-glass hover-lift" style={{
                   gridColumn: 2, gridRow: 1,
-                  background: '#111',
+                  background: 'rgba(255,255,255,0.02)',
                   borderRadius: 20,
                   overflow: 'hidden',
                   position: 'relative',
-                  border: `1px solid ${proj.color}44`,
-                  boxShadow: `0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px ${proj.color}22`,
+                  border: `1px solid rgba(255, 255, 255, 0.05)`,
+                  boxShadow: `0 20px 50px rgba(0,0,0,0.5)`,
+                  animation: 'heroFloat 5s ease-in-out infinite'
                 }}>
-                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
+                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} />
                   <div className="shimmer-sweep" />
                 </div>
 
                 {/* Bottom Wide Box */}
-                <div className="neon-card" style={{
+                <div className="neon-glass hover-lift" style={{
                   gridColumn: '1 / 3', gridRow: 2,
-                  background: '#111',
+                  background: 'rgba(255,255,255,0.02)',
                   borderRadius: 20,
                   overflow: 'hidden',
                   position: 'relative',
-                  border: `1px solid ${proj.color}44`,
-                  boxShadow: `0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px ${proj.color}22`,
+                  border: `1px solid rgba(255, 255, 255, 0.05)`,
+                  boxShadow: `0 20px 50px rgba(0,0,0,0.5)`,
+                  animation: 'heroFloat 6s ease-in-out infinite'
                 }}>
-                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
+                  <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} />
                   <div className="shimmer-sweep" />
                 </div>
               </div>
@@ -763,7 +731,7 @@ const Projects = () => {
       <div style={{
         padding: '80px 0',
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
-        background: '#0a0a0f',
+        background: 'var(--bg-main)',
       }}>
         <motion.a
           href="https://github.com/priyabratasahoo780"
