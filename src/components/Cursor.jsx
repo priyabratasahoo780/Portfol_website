@@ -180,8 +180,26 @@ const Cursor = () => {
         const elements = addHoverListeners()
         const interval = setInterval(addHoverListeners, 2000)
 
-        // Cleanup
+
+        // ── Projects cursor override ──────────────────────────────────
+        const onProjectsEnter = () => {
+            gsap.to([dotRef.current, ringRef.current], {
+                opacity: 0, scale: 0.5, duration: 0.3, ease: 'power2.in',
+            })
+            // Also hide canvas particles by setting global alpha
+            if (canvasRef.current) canvasRef.current.style.opacity = '0'
+        }
+        const onProjectsLeave = () => {
+            gsap.to([dotRef.current, ringRef.current], {
+                opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.5)',
+            })
+            if (canvasRef.current) canvasRef.current.style.opacity = '1'
+        }
+        document.addEventListener('cursor-projects-enter', onProjectsEnter)
+        document.addEventListener('cursor-projects-leave', onProjectsLeave)
+
         return () => {
+            // Combine all cleanup
             window.removeEventListener('resize', resize)
             window.removeEventListener('mousemove', onMouseMove)
             window.removeEventListener('mousedown', onMouseDown)
@@ -189,7 +207,8 @@ const Cursor = () => {
             gsap.ticker.remove(updateRing)
             clearInterval(interval)
             document.body.classList.remove('custom-cursor-active')
-
+            document.removeEventListener('cursor-projects-enter', onProjectsEnter)
+            document.removeEventListener('cursor-projects-leave', onProjectsLeave)
             elements.forEach(el => {
                 el.removeEventListener('mouseenter', onMouseEnter)
                 el.removeEventListener('mouseleave', onMouseLeave)

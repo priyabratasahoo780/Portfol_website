@@ -9,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger)
 const projectsData = [
   {
     id: 4,
+    category: 'Mini Projects',
     title: 'Color Guessing Game',
     emoji: '🎨',
     description: 'A fun interactive color guessing game where you test your skills at identifying the correct RGB color codes. Features multiple difficulty levels.',
@@ -26,6 +27,7 @@ const projectsData = [
   },
   {
     id: 1,
+    category: 'Clones',
     title: 'E-Commerce JioMart Clone',
     emoji: '🛒',
     description: 'A full-featured e-commerce platform clone with product listings, cart functionality, and seamless user experience mirroring the real JioMart website.',
@@ -43,6 +45,7 @@ const projectsData = [
   },
   {
     id: 2,
+    category: 'APIs',
     title: 'CryptoSlate Clone',
     emoji: '₿',
     description: 'A cryptocurrency news and data platform clone featuring real-time crypto information, market insights, and a sleek dashboard built with React.',
@@ -60,6 +63,7 @@ const projectsData = [
   },
   {
     id: 3,
+    category: 'Clones',
     title: 'Namakwali Clone',
     emoji: '🏔️',
     description: 'A pixel-perfect clone of the Namakwali website, showcasing authentic Himalayan products with rich imagery and smooth CSS animations.',
@@ -77,6 +81,7 @@ const projectsData = [
   },
   {
     id: 5,
+    category: 'Clones',
     title: 'Bata Clone',
     emoji: '👟',
     description: 'A complete footwear e-commerce solution featuring a wide collection of shoes, sandals, and chappals for men and women using Bootstrap.',
@@ -94,6 +99,7 @@ const projectsData = [
   },
   {
     id: 6,
+    category: 'Featured',
     title: 'Solinas Clone',
     emoji: '✨',
     description: 'A modern and responsive business website clone with stunning animated hero sections, scroll-based reveals, and elegant UI design.',
@@ -111,6 +117,7 @@ const projectsData = [
   },
   {
     id: 7,
+    category: 'Full-Stack Projects',
     title: 'PatilKaki Clone',
     emoji: '🍱',
     description: 'A brand-accurate clone of the PatilKaki e-commerce website featuring food product showcases, rich imagery, and a mobile-first design.',
@@ -145,7 +152,8 @@ const TECH_ICON = {
 // ─── Circular Cursor ──────────────────────────────────────────────────────────
 const CircularCursor = ({ cursorRef, onClick }) => {
   const [pressed, setPressed] = useState(false)
-  const text = 'VISIT PROJECT • VISIT PROJECT • '
+  // Only top-arc text so it never appears upside-down
+  const text = '• VISIT PROJECT • VISIT PROJECT '
 
   return (
     <motion.div
@@ -153,42 +161,92 @@ const CircularCursor = ({ cursorRef, onClick }) => {
       onClick={onClick}
       onMouseDown={() => setPressed(true)}
       onMouseUp={() => setPressed(false)}
-      animate={{ scale: pressed ? 0.82 : 1 }}
-      transition={{ duration: 0.12 }}
+      animate={{ scale: pressed ? 0.78 : 1 }}
+      transition={{ duration: 0.13, ease: 'backOut' }}
       style={{
         position: 'fixed',
         top: 0, left: 0,
         transform: 'translate(-50%, -50%)',
-        width: 110, height: 110,
-        pointerEvents: 'auto',
+        width: 120, height: 120,
+        pointerEvents: 'none',
         zIndex: 9999,
         cursor: 'none',
         opacity: 0,
         willChange: 'transform',
+        transition: 'opacity 0.25s ease',
       }}
     >
+      {/* Outer glowing ring — separate layer so it doesn't rotate */}
+      <svg
+        width={120} height={120} viewBox="0 0 120 120"
+        style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}
+      >
+        <defs>
+          <filter id="cursor-glow">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+        </defs>
+        {/* Glass fill */}
+        <circle cx="60" cy="60" r="54"
+          fill="rgba(0,0,0,0.82)"
+          style={{ backdropFilter: 'blur(12px)' }}
+        />
+        {/* Outer cyan glow ring */}
+        <circle cx="60" cy="60" r="56"
+          fill="none"
+          stroke="rgba(6,182,212,0.7)"
+          strokeWidth="1.5"
+          filter="url(#cursor-glow)"
+        />
+        {/* Inner subtle ring */}
+        <circle cx="60" cy="60" r="45"
+          fill="none"
+          stroke="rgba(255,255,255,0.06)"
+          strokeWidth="1"
+        />
+      </svg>
+
+      {/* Rotating text ring */}
       <motion.svg
-        width={110} height={110} viewBox="0 0 110 110"
+        width={120} height={120} viewBox="0 0 120 120"
         animate={{ rotate: 360 }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'linear', repeatType: 'loop' }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
         style={{ position: 'absolute', top: 0, left: 0 }}
       >
         <defs>
-          <path id="cpath" d="M 55,55 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
+          {/* Only upper arc — text always reads left-to-right */}
+          <path id="cpath-top"
+            d="M 60,60 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0"
+          />
         </defs>
-        <circle cx="55" cy="55" r="50" fill="#000" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.2))' }} />
-        <text fill="#fff" fontSize="10.5" fontWeight="700" letterSpacing="0.05em" fontFamily="'Inter',sans-serif" style={{ filter: 'drop-shadow(0 0 5px rgba(255,255,255,0.4))' }}>
-          <textPath href="#cpath" textLength="238.5" lengthAdjust="spacingAndGlyphs">{text}</textPath>
+        <text
+          fill="#06b6d4"
+          fontSize="10"
+          fontWeight="800"
+          letterSpacing="0.08em"
+          fontFamily="'Inter',sans-serif"
+          style={{ filter: 'drop-shadow(0 0 6px rgba(6,182,212,0.8))' }}
+        >
+          <textPath href="#cpath-top" startOffset="0%" textLength="264" lengthAdjust="spacingAndGlyphs">
+            {text}
+          </textPath>
         </text>
       </motion.svg>
+
+      {/* Center eye icon */}
       <div style={{
         position: 'absolute', top: '50%', left: '50%',
         transform: 'translate(-50%,-50%)',
         pointerEvents: 'none',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
+          stroke="#06b6d4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          style={{ filter: 'drop-shadow(0 0 8px rgba(6,182,212,0.9))' }}
+        >
           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-          <circle cx="12" cy="12" r="3" />
+          <circle cx="12" cy="12" r="3" fill="rgba(6,182,212,0.3)" />
         </svg>
       </div>
     </motion.div>
@@ -299,8 +357,164 @@ const TabletFrame = ({ src, alt, color }) => (
   </div>
 )
 
+// ─── GSAP 3D Filter Button ────────────────────────────────────────────────────
+const FilterButton = ({ label, isActive, onClick }) => {
+  const btnRef  = useRef(null)
+  const glowRef = useRef(null)
+
+  const handleMouseMove = useCallback((e) => {
+    const el  = btnRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = e.clientX - rect.left   // px from left edge
+    const y = e.clientY - rect.top    // px from top edge
+    const cx = rect.width  / 2
+    const cy = rect.height / 2
+    const dx = (x - cx) / cx          // -1 → +1
+    const dy = (y - cy) / cy          // -1 → +1
+
+    // 3D tilt — max ±14 deg
+    gsap.to(el, {
+      rotateX: -dy * 14,
+      rotateY:  dx * 14,
+      rotateZ:  dx * dy * 3,
+      scale: 1.08,
+      duration: 0.25,
+      ease: 'power2.out',
+      transformPerspective: 600,
+      transformOrigin: 'center center',
+    })
+
+    // Dynamic shadow tracks the "light source" opposite to tilt
+    const shadowX = -dx * 12
+    const shadowY = -dy * 8
+    gsap.to(el, {
+      boxShadow: isActive
+        ? `${shadowX}px ${shadowY}px 22px rgba(6,182,212,0.4), 0 0 40px rgba(6,182,212,0.15), inset 0 0 10px rgba(6,182,212,0.1)`
+        : `${shadowX}px ${shadowY}px 18px rgba(0,0,0,0.3), 0 0 12px rgba(6,182,212,0.06)`,
+      duration: 0.25,
+    })
+
+    // Move shimmer glow to cursor position
+    if (glowRef.current) {
+      gsap.set(glowRef.current, {
+        x: x - 30,
+        y: y - 30,
+        opacity: 0.5,
+      })
+    }
+  }, [isActive])
+
+  const handleMouseEnter = useCallback(() => {
+    const el = btnRef.current
+    if (!el) return
+    gsap.fromTo(el,
+      { scale: 1 },
+      { scale: 1.05, duration: 0.3, ease: 'back.out(2)' }
+    )
+    if (glowRef.current) gsap.to(glowRef.current, { opacity: 0.5, duration: 0.2 })
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    const el = btnRef.current
+    if (!el) return
+    // Spring back to flat
+    gsap.to(el, {
+      rotateX: 0, rotateY: 0, rotateZ: 0,
+      scale: 1,
+      boxShadow: isActive
+        ? '0 0 20px rgba(6,182,212,0.4), inset 0 0 10px rgba(6,182,212,0.2)'
+        : 'none',
+      duration: 0.55,
+      ease: 'elastic.out(1, 0.5)',
+    })
+    if (glowRef.current) gsap.to(glowRef.current, { opacity: 0, duration: 0.3 })
+  }, [isActive])
+
+  const handleMouseDown = useCallback(() => {
+    gsap.to(btnRef.current, {
+      scale: 0.93,
+      rotateX: 8,
+      boxShadow: '0 1px 4px rgba(0,243,255,0.1)',
+      duration: 0.12,
+      ease: 'power3.in',
+    })
+  }, [])
+
+  const handleMouseUp = useCallback(() => {
+    gsap.to(btnRef.current, {
+      scale: 1.06,
+      rotateX: 0,
+      duration: 0.35,
+      ease: 'elastic.out(1.2, 0.4)',
+    })
+  }, [])
+
+  return (
+    <button
+      ref={btnRef}
+      onClick={onClick}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        padding: '14px 32px',
+        borderRadius: 12,
+        fontSize: 15,
+        fontWeight: 700,
+        fontFamily: "'Inter',sans-serif",
+        letterSpacing: '0.1em',
+        textTransform: 'uppercase',
+        cursor: 'pointer',
+        border: isActive ? '1px solid #06b6d4' : '1px solid rgba(255,255,255,0.1)',
+        transformStyle: 'preserve-3d',
+        willChange: 'transform',
+        background: isActive ? 'rgba(6,182,212,0.07)' : 'rgba(15,23,42,0.6)',
+        color: isActive ? '#06b6d4' : '#94a3b8',
+        boxShadow: isActive
+          ? '0 0 20px rgba(6,182,212,0.4), inset 0 0 10px rgba(6,182,212,0.2)'
+          : 'none',
+        transition: 'background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s',
+      }}
+    >
+      {/* Radial spotlight glow that follows cursor */}
+      <span
+        ref={glowRef}
+        style={{
+          position: 'absolute',
+          width: 60, height: 60,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%)',
+          pointerEvents: 'none',
+          opacity: 0,
+          top: 0, left: 0,
+        }}
+      />
+      {/* Top edge highlight for 3D depth illusion */}
+      <span style={{
+        position: 'absolute',
+        top: 0, left: '10%', right: '10%',
+        height: 1,
+        background: isActive
+          ? 'linear-gradient(90deg, transparent, rgba(6,182,212,0.4), transparent)'
+          : 'linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent)',
+        borderRadius: '50%',
+        pointerEvents: 'none',
+      }} />
+      {label}
+    </button>
+  )
+}
+
 // ─── Main Component ───────────────────────────────────────────────────────────
+const FILTERS = ['All', 'Featured', 'Full-Stack Projects', 'APIs', 'Clones', 'Mini Projects']
+
 const Projects = () => {
+  const [activeFilter, setActiveFilter] = useState('All')
   const containerRef   = useRef(null)
   const rightPanelsRef = useRef([])
   const leftTextsRef   = useRef([])
@@ -308,6 +522,10 @@ const Projects = () => {
   const ballTrackRef   = useRef(null)
   const activeTrackRef = useRef(null)
   const cursorDomRef   = useRef(null)  // Direct DOM ref for zero-lag cursor tracking
+
+  const filteredProjects = activeFilter === 'All'
+    ? projectsData
+    : projectsData.filter(p => p.category === activeFilter)
 
   /* cursor state — only activeLiveLink needs state; visibility handled via DOM */
   const [activeLiveLink, setActiveLiveLink] = useState(projectsData[0].liveLink)
@@ -377,16 +595,58 @@ const Projects = () => {
     }
   }, [])
 
-  /* cursor handlers — only on RIGHT panel, zero-lag via direct DOM */
-  const handleMouseMove = useCallback((e) => {
-    if (!cursorDomRef.current) return
-    cursorDomRef.current.style.left = e.clientX + 'px'
-    cursorDomRef.current.style.top  = e.clientY + 'px'
-    cursorDomRef.current.style.opacity = '1'
+  /* cursor — document-level tracking scoped to right panel bounds */
+  const rightPanelAreaRef = useRef(null)
+  useEffect(() => {
+    const cursor = cursorDomRef.current
+    if (!cursor) return
+
+    // GSAP smooth setters — gives the magnetic lag effect
+    const setX = gsap.quickSetter(cursor, 'left', 'px')
+    const setY = gsap.quickSetter(cursor, 'top', 'px')
+    let mouseX = 0, mouseY = 0
+    let rafId = null
+
+    // Smooth follow via rAF
+    const lerp = (a, b, t) => a + (b - a) * t
+    let curX = 0, curY = 0
+    const tick = () => {
+      curX = lerp(curX, mouseX, 0.14)
+      curY = lerp(curY, mouseY, 0.14)
+      setX(curX)
+      setY(curY)
+      rafId = requestAnimationFrame(tick)
+    }
+    rafId = requestAnimationFrame(tick)
+
+    let wasInside = false
+    const onMove = (e) => {
+      mouseX = e.clientX
+      mouseY = e.clientY
+      // Check if mouse is inside the right panel area
+      const panel = rightPanelAreaRef.current
+      if (!panel) return
+      const rect = panel.getBoundingClientRect()
+      const inside =
+        e.clientX >= rect.left && e.clientX <= rect.right &&
+        e.clientY >= rect.top  && e.clientY <= rect.bottom
+      cursor.style.opacity = inside ? '1' : '0'
+      // Dispatch events only on boundary change
+      if (inside && !wasInside) {
+        document.dispatchEvent(new CustomEvent('cursor-projects-enter'))
+      } else if (!inside && wasInside) {
+        document.dispatchEvent(new CustomEvent('cursor-projects-leave'))
+      }
+      wasInside = inside
+    }
+
+    document.addEventListener('mousemove', onMove)
+    return () => {
+      document.removeEventListener('mousemove', onMove)
+      cancelAnimationFrame(rafId)
+    }
   }, [])
-  const handleMouseLeave = useCallback(() => {
-    if (cursorDomRef.current) cursorDomRef.current.style.opacity = '0'
-  }, [])
+
   const handleCursorClick = useCallback(() => {
     if (activeLiveLink && activeLiveLink !== '#')
       window.open(activeLiveLink, '_blank', 'noopener,noreferrer')
@@ -396,7 +656,7 @@ const Projects = () => {
     <div id="projects" style={{ background: 'var(--bg-main)', position: 'relative' }}>
 
       {/* ── Section header ─────────────────────────────────────────────────── */}
-      <div style={{ padding: '60px 0 30px 80px', position: 'relative' }}>
+      <div style={{ padding: '60px 80px 30px', textAlign: 'center', position: 'relative' }}>
         {/* Top gradient line */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, height: 2,
@@ -428,11 +688,25 @@ const Projects = () => {
             <span className="neon-text">Projects</span>
           </h2>
           <p style={{
-            marginTop: 18, fontSize: 15, color: '#475569', maxWidth: 480,
+            marginTop: 18, fontSize: 15, color: '#475569',
             lineHeight: 1.75, fontFamily: "'Inter',sans-serif",
           }}>
             A curated collection of my best work — scroll to explore each project in detail.
           </p>
+
+          {/* ── Filter Bar ── */}
+          <div style={{
+            display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 32, justifyContent: 'center',
+          }}>
+            {FILTERS.map(f => (
+              <FilterButton
+                key={f}
+                label={f}
+                isActive={activeFilter === f}
+                onClick={() => setActiveFilter(f)}
+              />
+            ))}
+          </div>
         </motion.div>
       </div>
 
@@ -471,7 +745,7 @@ const Projects = () => {
                 boxShadow: `0 0 8px ${pi % 2 ? '#6366f1' : '#ec4899'}`,
               }} />
             ))}
-            {projectsData.map((proj, i) => (
+            {filteredProjects.map((proj, i) => (
               <div
                 key={proj.id}
                 ref={el => { leftTextsRef.current[i] = el }}
@@ -645,11 +919,11 @@ const Projects = () => {
 
         {/* ── RIGHT: Scrollable mockup sections ──────────────────────────── */}
         <div
+          ref={rightPanelAreaRef}
           style={{ flex: 1, cursor: 'none' }}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
+          onClick={handleCursorClick}
         >
-          {projectsData.map((proj, i) => (
+          {filteredProjects.map((proj, i) => (
             <div
               key={proj.id}
               ref={el => { rightPanelsRef.current[i] = el }}
@@ -751,8 +1025,11 @@ const Projects = () => {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
           View All Projects on GitHub
         </motion.a>
-        <p style={{ color: '#1e293b', fontSize: 13, fontFamily: "'Inter',sans-serif" }}>
-          {projectsData.length} projects and counting...
+        <p style={{ color: '#475569', fontSize: 13, fontFamily: "'Inter',sans-serif" }}>
+          {filteredProjects.length === projectsData.length
+            ? `${projectsData.length} projects and counting...`
+            : `Showing ${filteredProjects.length} of ${projectsData.length} projects`
+          }
         </p>
       </div>
 

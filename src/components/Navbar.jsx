@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 import { Menu, X } from 'lucide-react'
-import ThemeToggle from './ThemeToggle'
 
 import * as THREE from 'three'
 import gsap from 'gsap'
@@ -458,12 +457,9 @@ const Navbar = ({ onSectionChange, activeSection }) => {
                  </a>
              </li>
           ))}
-          <li className="mobile-settings-item">
-            <ThemeToggle />
-          </li>
+
         </ul>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <ThemeToggle />
           <button className="hamburger" onClick={() => setIsOpen(!isOpen)} style={{ marginLeft: '10px' }}>
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
