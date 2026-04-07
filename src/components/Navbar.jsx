@@ -286,6 +286,7 @@ const Navbar = ({ onSectionChange, activeSection }) => {
     // Center calculation relative to screen top-left
     const centerX = leftX + width / 2
     const centerY = topY + height / 2
+    const rightX = leftX + width
     
     // Timeline
     const tl = gsap.timeline({
@@ -440,7 +441,7 @@ const Navbar = ({ onSectionChange, activeSection }) => {
           />
         </div>
         <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
-          {['home', 'about', 'skills', 'journey', 'projects', 'leetcode', 'certificates', 'contact'].map((item) => (
+          {['home', 'about', 'skills', 'journey', 'projects', 'leetcode', 'hackathons', 'youtube', 'certificates', 'contact'].map((item) => (
              <li key={item}>
                  <a 
                     onClick={(e) => handleNavClick(e, item)}

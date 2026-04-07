@@ -733,7 +733,7 @@ const Projects = () => {
             opacity: 0.5,
           }} />
           {/* Project text layers */}
-          <div style={{ padding: '0 0 0 80px', width: '100%', position: 'relative' }}>
+          <div style={{ padding: '0 0 0 80px', width: '100%', position: 'relative', height: '100vh' }}>
             {/* Background glowing particles for the sticky section */}
             {[...Array(6)].map((_, pi) => (
               <div key={pi} className="particle" style={{
@@ -751,7 +751,7 @@ const Projects = () => {
                 ref={el => { leftTextsRef.current[i] = el }}
                 style={{
                   position: 'absolute',
-                  top: '40%', // Moved higher to remove gap
+                  top: '50%',
                   left: 80,
                   right: 0,
                   transform: 'translateY(-50%)',
@@ -760,16 +760,16 @@ const Projects = () => {
                 }}
               >
                 {/* Title with left accent bar */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 18 }}>
                    <div style={{ 
                     width: 35, height: 4, background: proj.color, borderRadius: 2,
                     boxShadow: `0 0 15px ${proj.color}`,
                     flexShrink: 0
                   }} />
                   <h3 style={{
-                    fontSize: 'clamp(40px, 5vw, 68px)', fontWeight: 900,
+                    fontSize: 'clamp(22px, 3.5vw, 32px)', fontWeight: 900,
                     color: '#fff', margin: 0,
-                    fontFamily: "'Inter',sans-serif", letterSpacing: '-0.03em', lineHeight: 1.1,
+                    fontFamily: "'Inter',sans-serif", letterSpacing: '-0.02em', lineHeight: 1.2,
                     textShadow: `0 0 20px ${proj.color}44`,
                   }}>
                     {proj.title}

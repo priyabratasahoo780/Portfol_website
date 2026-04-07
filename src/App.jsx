@@ -13,6 +13,8 @@ const Skills = lazy(() => import('./components/Skills'))
 const Journey = lazy(() => import('./components/Journey'))
 const Projects = lazy(() => import('./components/Projects'))
 const LeetCode = lazy(() => import('./components/LeetCode'))
+const Hackathons = lazy(() => import('./components/Hackathons'))
+const YouTube = lazy(() => import('./components/YouTube'))
 const Certificates = lazy(() => import('./components/Certificates'))
 const Contact = lazy(() => import('./components/Contact'))
 const Footer = lazy(() => import('./components/Footer'))
@@ -75,6 +77,8 @@ function App() {
           <Journey />
           <Projects />
           <LeetCode />
+          <Hackathons />
+          <YouTube />
           <Certificates />
           <Contact />
           <Footer />

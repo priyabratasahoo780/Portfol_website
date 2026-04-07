@@ -248,17 +248,6 @@ const Footer = () => {
             </a>
           ))}
         </div>
-
-        {/* Animated divider */}
-        <div 
-          style={{
-            width: '100%',
-            height: '2px',
-            background: 'linear-gradient(90deg, transparent, #6366f1, #8b5cf6, transparent)',
-            marginBottom: '30px',
-            boxShadow: '0 0 10px rgba(99, 102, 241, 0.5)'
-          }}
-        />
       </div>
 
       {/* Copyright */}
@@ -273,7 +262,7 @@ const Footer = () => {
             gap: '8px'
           }}
         >
-          © 2025 Priyabrata Sahoo. Made with 
+          © 2026 Priyabrata Sahoo. Made with 
           <Heart 
             size={16} 
             style={{ 
