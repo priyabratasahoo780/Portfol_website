@@ -1,238 +1,377 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import { Youtube, Play, Globe, Share2, Award } from 'lucide-react'
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Youtube, Play, ExternalLink, X } from 'lucide-react'
 
+// ─── Video Data ───────────────────────────────────────────────────────────────
 const youtubeData = [
-  {
-    title: 'AgriSaar - AI for Sustainable Farming',
-    thumbnail: 'https://images.unsplash.com/photo-1523348830342-d01fb614ac01?auto=format&fit=crop&q=80',
-    views: '1.2K',
-    date: '2 months ago',
-    link: 'https://www.youtube.com/watch?v=your_video_id_1',
-    category: 'Project Demo'
-  },
-  {
-    title: 'Modern UI/UX Design with React & GSAP',
-    thumbnail: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80',
-    views: '2.5K',
-    date: '1 month ago',
-    link: 'https://www.youtube.com/watch?v=your_video_id_2',
-    category: 'Tutorial'
-  },
-  {
-      title: 'Hackathon Journey: Winning SIH 2024',
-      thumbnail: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80',
-      views: '5.8K',
-      date: '3 weeks ago',
-      link: 'https://www.youtube.com/watch?v=your_video_id_3',
-      category: 'Vlog'
-  }
+  { id: 'XHeITLqG_Jw', title: 'My Latest YouTube Video',  category: 'Featured' },
+  { id: 'wxSghN4KPhQ', title: 'YouTube Video 2',           category: 'Video'    },
+  { id: 'rKJG0e5612E', title: 'YouTube Video 3',           category: 'Video'    },
+  { id: 'f1LgMfOf48k', title: 'YouTube Video 4',           category: 'Video'    },
+  { id: 'vY5vS69lDuI', title: 'YouTube Video 5',           category: 'Video'    },
+  { id: 'FddnRYUhsjY', title: 'YouTube Video 6',           category: 'Video'    },
 ]
 
+const thumbUrl = (id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
+const embedUrl  = (id) => `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`
+
+// ─── Modal Player ─────────────────────────────────────────────────────────────
+const VideoModal = ({ video, onClose }) => (
+  <AnimatePresence>
+    {video && (
+      <motion.div
+        key="modal-bg"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        style={{
+          position: 'fixed', inset: 0, zIndex: 9999,
+          background: 'rgba(0,0,0,0.88)',
+          backdropFilter: 'blur(8px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: '24px',
+        }}
+      >
+        <motion.div
+          key="modal-box"
+          initial={{ scale: 0.85, opacity: 0, y: 40 }}
+          animate={{ scale: 1,    opacity: 1, y: 0 }}
+          exit={{   scale: 0.85, opacity: 0, y: 40 }}
+          transition={{ type: 'spring', damping: 22, stiffness: 260 }}
+          onClick={(e) => e.stopPropagation()}
+          style={{
+            width: '100%', maxWidth: '900px',
+            borderRadius: '20px',
+            overflow: 'hidden',
+            background: '#0d1117',
+            border: '1px solid rgba(239,68,68,0.3)',
+            boxShadow: '0 0 80px rgba(239,68,68,0.25), 0 40px 80px rgba(0,0,0,0.6)',
+          }}
+        >
+          {/* iframe */}
+          <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9' }}>
+            <iframe
+              src={embedUrl(video.id)}
+              title={video.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
+            />
+          </div>
+          {/* footer */}
+          <div style={{
+            padding: '16px 20px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            borderTop: '1px solid rgba(255,255,255,0.06)',
+          }}>
+            <span style={{
+              color: '#fff', fontWeight: 700, fontSize: '1rem',
+              fontFamily: "'Inter', sans-serif",
+            }}>{video.title}</span>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <a
+                href={`https://youtu.be/${video.id}`}
+                target="_blank" rel="noopener noreferrer"
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '6px',
+                  padding: '8px 16px', borderRadius: '10px',
+                  background: 'rgba(239,68,68,0.15)',
+                  border: '1px solid rgba(239,68,68,0.4)',
+                  color: '#f87171', fontSize: '13px', fontWeight: 600,
+                  textDecoration: 'none', fontFamily: "'Inter', sans-serif",
+                  transition: 'background 0.2s',
+                }}
+              >
+                <ExternalLink size={14} /> Open on YouTube
+              </a>
+              <button
+                onClick={onClose}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  width: '36px', height: '36px', borderRadius: '10px',
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  color: '#94a3b8', cursor: 'pointer',
+                }}
+              >
+                <X size={16} />
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+)
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 const YouTube = () => {
+  const [activeVideo, setActiveVideo] = useState(null)
+
   return (
-    <section id="youtube" className="section-pad" style={{ background: 'var(--bg-main)', position: 'relative', overflow: 'hidden' }}>
-      {/* Cinematic Gradient Background */}
-      <div style={{ 
-        position: 'absolute', 
-        top: 0, left: 0, right: 0, bottom: 0, 
-        background: 'linear-gradient(180deg, rgba(239, 68, 68, 0.05) 0%, transparent 50%, rgba(0, 243, 255, 0.05) 100%)',
-        zIndex: 0 
+    <section
+      id="youtube"
+      className="section-pad"
+      style={{ background: 'var(--bg-main)', position: 'relative', overflow: 'hidden' }}
+    >
+      {/* Background glows */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+        background: 'linear-gradient(180deg, rgba(239,68,68,0.06) 0%, transparent 40%, rgba(239,68,68,0.04) 100%)',
+        zIndex: 0, pointerEvents: 'none',
+      }} />
+      <div style={{
+        position: 'absolute', top: '-5%', left: '-15%',
+        width: '600px', height: '600px', borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(239,68,68,0.1) 0%, transparent 70%)',
+        filter: 'blur(80px)', zIndex: 0, pointerEvents: 'none',
+      }} />
+      <div style={{
+        position: 'absolute', bottom: '0%', right: '-10%',
+        width: '500px', height: '500px', borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(239,68,68,0.07) 0%, transparent 70%)',
+        filter: 'blur(80px)', zIndex: 0, pointerEvents: 'none',
       }} />
 
-      <div className="container" style={{ maxWidth: '1400px', position: 'relative', zIndex: 1 }}>
-        <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <p style={{
-                fontSize: 11, fontWeight: 700, letterSpacing: '0.3em',
-                color: '#ef4444', textTransform: 'uppercase', marginBottom: 14,
-                fontFamily: "'Inter',sans-serif",
-                textShadow: '0 0 10px rgba(239, 68, 68, 0.4)'
-              }}>— Video Content</p>
-            <h2 style={{ 
-              fontSize: 'clamp(3rem, 6vw, 5rem)', 
-              fontWeight: 900,
-              color: '#fff',
-              fontFamily: "'Inter', sans-serif",
-              letterSpacing: '-0.04em',
-              textShadow: '0 0 15px rgba(239, 68, 68, 0.3)'
-            }}>
-              YouTube <span style={{ 
-                background: 'linear-gradient(90deg, #ef4444, #f87171)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>Creations</span>
-            </h2>
-          </motion.div>
-        </div>
+      <div className="container" style={{ maxWidth: '1300px', position: 'relative', zIndex: 1 }}>
 
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', 
-          gap: '40px' 
-        }}>
+        {/* ── Section Header ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: 'center', marginBottom: '4rem' }}
+        >
+          <p style={{
+            fontSize: 11, fontWeight: 700, letterSpacing: '0.35em',
+            color: '#ef4444', textTransform: 'uppercase', marginBottom: 14,
+            fontFamily: "'Inter', sans-serif",
+            textShadow: '0 0 12px rgba(239,68,68,0.5)',
+          }}>— Video Content</p>
+
+          <h2 style={{
+            fontSize: 'clamp(2.6rem, 5.5vw, 4.2rem)',
+            fontWeight: 900, margin: 0,
+            color: '#fff',
+            fontFamily: "'Inter', sans-serif",
+            letterSpacing: '-0.04em',
+          }}>
+            YouTube{' '}
+            <span style={{
+              background: 'linear-gradient(90deg, #ef4444 0%, #f87171 50%, #fca5a5 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}>Creations</span>
+          </h2>
+
+          <p style={{
+            marginTop: '1rem', color: '#64748b',
+            fontSize: '1rem', fontFamily: "'Inter', sans-serif",
+          }}>
+            Click any video to watch it right here ↓
+          </p>
+        </motion.div>
+
+        {/* ── 3-Column Grid ── */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '28px',
+        }}
+          className="yt-grid"
+        >
           {youtubeData.map((video, index) => (
             <motion.div
-              key={video.title}
-              initial={{ opacity: 0, y: 40 }}
+              key={video.id}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              whileHover={{ scale: 1.02 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.55, delay: index * 0.1 }}
+              whileHover={{ y: -6, transition: { duration: 0.25 } }}
+              onClick={() => setActiveVideo(video)}
               style={{
-                background: 'rgba(15, 23, 42, 0.4)',
-                borderRadius: '28px',
-                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '20px',
                 overflow: 'hidden',
+                background: 'rgba(15,23,42,0.55)',
+                border: '1px solid rgba(255,255,255,0.07)',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.35)',
                 cursor: 'pointer',
-                position: 'relative',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                backdropFilter: 'blur(10px)',
+                transition: 'box-shadow 0.3s, border-color 0.3s',
               }}
-              onClick={() => window.open(video.link, '_blank')}
+              className="yt-card"
             >
-              {/* Thumbnail Container */}
-              <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', overflow: 'hidden' }}>
-                <img 
-                  src={video.thumbnail} 
-                  alt={video.title} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
-                  className="v-thumb"
+              {/* Thumbnail */}
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', overflow: 'hidden', background: '#000' }}>
+                <img
+                  src={thumbUrl(video.id)}
+                  alt={video.title}
+                  onError={(e) => { e.target.src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg` }}
+                  style={{
+                    width: '100%', height: '100%', objectFit: 'cover',
+                    display: 'block', transition: 'transform 0.5s ease',
+                  }}
+                  className="yt-thumb"
                 />
-                
-                {/* Play Button Overlay */}
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'rgba(0,0,0,0.3)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  opacity: 1,
-                  transition: 'background 0.3s'
-                }}>
-                  <div style={{
-                    width: '60px',
-                    height: '60px',
-                    borderRadius: '50%',
-                    background: '#ef4444',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: '0 0 30px rgba(239, 68, 68, 0.6)',
-                    transition: 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-                  }} className="v-play-btn">
-                    <Play size={24} fill="#fff" color="#fff" style={{ marginLeft: '4px' }} />
-                  </div>
-                </div>
 
-                {/* Duration/Category Tag */}
+                {/* Gradient overlay */}
                 <div style={{
-                  position: 'absolute',
-                  bottom: '15px',
-                  right: '15px',
-                  padding: '6px 12px',
-                  background: 'rgba(0,0,0,0.8)',
-                  backdropFilter: 'blur(4px)',
-                  borderRadius: '10px',
-                  fontSize: '11px',
-                  fontWeight: 700,
-                  color: '#fff',
-                  border: '1px solid rgba(255,255,255,0.1)'
+                  position: 'absolute', inset: 0,
+                  background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)',
+                  transition: 'opacity 0.3s',
+                  opacity: 0.8,
+                }} className="yt-overlay" />
+
+                {/* Category pill */}
+                <div style={{
+                  position: 'absolute', top: 12, left: 12,
+                  padding: '4px 10px',
+                  background: index === 0 ? 'rgba(239,68,68,0.9)' : 'rgba(0,0,0,0.7)',
+                  backdropFilter: 'blur(6px)',
+                  borderRadius: '8px',
+                  fontSize: '10px', fontWeight: 700,
+                  color: '#fff', letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  fontFamily: "'Inter', sans-serif",
+                  border: index === 0 ? 'none' : '1px solid rgba(255,255,255,0.12)',
+                }}>{video.category}</div>
+
+                {/* Play button */}
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
-                  {video.category}
+                  <motion.div
+                    whileHover={{ scale: 1.15 }}
+                    whileTap={{ scale: 0.92 }}
+                    style={{
+                      width: 54, height: 54, borderRadius: '50%',
+                      background: 'rgba(239,68,68,0.9)',
+                      backdropFilter: 'blur(4px)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      boxShadow: '0 0 30px rgba(239,68,68,0.5), 0 4px 20px rgba(0,0,0,0.4)',
+                      border: '2px solid rgba(255,255,255,0.2)',
+                    }}
+                  >
+                    <Play size={22} fill="#fff" color="#fff" style={{ marginLeft: '3px' }} />
+                  </motion.div>
                 </div>
               </div>
 
-              {/* Content */}
-              <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <h3 style={{
-                  color: '#fff',
-                  fontSize: '1.25rem',
-                  fontWeight: 800,
-                  marginBottom: '12px',
-                  lineHeight: 1.4,
-                  fontFamily: "'Inter', sans-serif"
-                }}>{video.title}</h3>
-                
-                <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', gap: '12px', color: '#94a3b8', fontSize: '13px' }}>
-                    <span>{video.views} views</span>
-                    <span>•</span>
-                    <span>{video.date}</span>
-                  </div>
-                  <div style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '12px',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#ef4444'
-                  }}>
-                    <Youtube size={20} />
-                  </div>
+              {/* Card Footer */}
+              <div style={{
+                padding: '16px 18px',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px',
+                borderTop: '1px solid rgba(255,255,255,0.05)',
+              }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <h3 style={{
+                    color: '#f1f5f9',
+                    fontSize: '0.9rem',
+                    fontWeight: 700,
+                    margin: 0,
+                    fontFamily: "'Inter', sans-serif",
+                    lineHeight: 1.4,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}>{video.title}</h3>
                 </div>
+
+                <a
+                  href={`https://youtu.be/${video.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  title="Open on YouTube"
+                  style={{
+                    flexShrink: 0,
+                    width: 34, height: 34, borderRadius: '10px',
+                    border: '1px solid rgba(239,68,68,0.3)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: '#ef4444', textDecoration: 'none',
+                    transition: 'background 0.2s, border-color 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(239,68,68,0.15)'
+                    e.currentTarget.style.borderColor = '#ef4444'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.borderColor = 'rgba(239,68,68,0.3)'
+                  }}
+                >
+                  <ExternalLink size={15} />
+                </a>
               </div>
             </motion.div>
           ))}
         </div>
 
+        {/* ── Subscribe CTA ── */}
         <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           transition={{ delay: 0.5 }}
-           style={{ marginTop: '5rem', textAlign: 'center' }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          style={{ marginTop: '4rem', textAlign: 'center' }}
         >
-            <button 
-                onClick={() => window.open('https://youtube.com/@your_channel', '_blank')}
-                style={{
-                    padding: '18px 40px',
-                    borderRadius: '20px',
-                    background: 'rgba(15, 23, 42, 0.4)',
-                    border: '1px solid #ef4444',
-                    color: '#fff',
-                    fontWeight: 900,
-                    fontSize: '16px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    boxShadow: '0 0 20px rgba(239, 68, 68, 0.2)',
-                    transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                    e.target.style.background = '#ef4444'
-                    e.target.style.boxShadow = '0 0 40px rgba(239, 68, 68, 0.4)'
-                }}
-                onMouseLeave={(e) => {
-                    e.target.style.background = 'rgba(15, 23, 42, 0.4)'
-                    e.target.style.boxShadow = '0 0 20px rgba(239, 68, 68, 0.2)'
-                }}
-            >
-                Subscribe to Channel <Youtube size={20} />
-            </button>
+          <a
+            href="https://www.youtube.com/@priyabratasahoo780?sub_confirmation=1"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '10px',
+              padding: '16px 36px',
+              borderRadius: '16px',
+              background: 'rgba(239,68,68,0.08)',
+              border: '1px solid rgba(239,68,68,0.5)',
+              color: '#fff',
+              fontWeight: 800, fontSize: '14px',
+              textTransform: 'uppercase', letterSpacing: '0.12em',
+              textDecoration: 'none',
+              boxShadow: '0 0 24px rgba(239,68,68,0.1)',
+              transition: 'all 0.3s ease',
+              fontFamily: "'Inter', sans-serif",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#ef4444'
+              e.currentTarget.style.boxShadow = '0 0 50px rgba(239,68,68,0.45)'
+              e.currentTarget.style.transform = 'translateY(-2px)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(239,68,68,0.08)'
+              e.currentTarget.style.boxShadow = '0 0 24px rgba(239,68,68,0.1)'
+              e.currentTarget.style.transform = 'translateY(0)'
+            }}
+          >
+            <Youtube size={20} />
+            Subscribe to Channel
+          </a>
         </motion.div>
       </div>
 
+      {/* ── Modal ── */}
+      <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />
+
+      {/* ── Scoped Styles ── */}
       <style>{`
-        .v-thumb {
-            transform: scale(1);
+        .yt-card:hover {
+          border-color: rgba(239,68,68,0.3) !important;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(239,68,68,0.15) !important;
         }
-        div:hover .v-thumb {
-            transform: scale(1.1);
+        .yt-card:hover .yt-thumb { transform: scale(1.07); }
+        .yt-card:hover .yt-overlay { opacity: 0.95 !important; }
+
+        @media (max-width: 900px) {
+          .yt-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
-        div:hover .v-play-btn {
-            transform: scale(1.2);
+        @media (max-width: 560px) {
+          .yt-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>
