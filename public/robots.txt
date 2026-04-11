@@ -1,0 +1,8 @@
+# robots.txt for Portfolio Website
+# https://portfol-website-xn8a.vercel.app/
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://portfol-website-xn8a.vercel.app/sitemap.xml
