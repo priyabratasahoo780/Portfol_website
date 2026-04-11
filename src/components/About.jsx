@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
 import { Activity, BookOpen, Cpu } from 'lucide-react'
-import { Helmet } from 'react-helmet'
 import gsap from 'gsap'
 
 const About = () => {
@@ -28,10 +27,6 @@ const About = () => {
 
   return (
     <section id="about" className="section-pad relative overflow-hidden min-h-screen flex items-center justify-center max-[600px]:min-h-0 max-[600px]:flex-col max-[600px]:justify-start max-[600px]:!pt-[200px]" ref={sectionRef}>
-      <Helmet>
-        <title>About - Priyabrata Sahoo section</title>
-        <meta name="description" content="About Priyabrata Sahoo section" />
-      </Helmet>
       <div className="container relative z-10 w-full">
         <h2 className="section-heading hidden">About Me</h2>
         <div className="about-grid hidden">

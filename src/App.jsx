@@ -1,4 +1,5 @@
 import { useState, useEffect, Suspense, lazy } from 'react'
+import { Helmet } from 'react-helmet'
 import { ThemeProvider } from 'next-themes'
 import Lenis from 'lenis'
 import Loading from './components/Loader'
@@ -19,9 +20,46 @@ const Certificates = lazy(() => import('./components/Certificates'))
 const Contact = lazy(() => import('./components/Contact'))
 const Footer = lazy(() => import('./components/Footer'))
 
+// Section metadata for scroll-aware dynamic title
+const SECTION_META = {
+  home:         { title: 'Priyabrata Sahoo | Full-Stack Developer', desc: 'Portfolio of Priyabrata Sahoo — Full-Stack Developer, Software Engineer & Creator.' },
+  about:        { title: 'About | Priyabrata Sahoo', desc: 'Learn about Priyabrata Sahoo — a B.Tech CSE student from SwamiNarayan University passionate about building web apps.' },
+  skills:       { title: 'Skills | Priyabrata Sahoo', desc: 'Explore the technical skills of Priyabrata Sahoo including React, Node.js, Python, and more.' },
+  journey:      { title: 'Journey | Priyabrata Sahoo', desc: 'The academic and professional journey of Priyabrata Sahoo as a developer.' },
+  projects:     { title: 'Projects | Priyabrata Sahoo', desc: 'Full-stack and frontend projects built by Priyabrata Sahoo.' },
+  leetcode:     { title: 'LeetCode Stats | Priyabrata Sahoo', desc: 'LeetCode problem-solving stats and competitive programming profile of Priyabrata Sahoo.' },
+  hackathons:   { title: 'Hackathons | Priyabrata Sahoo', desc: 'Hackathons and coding competitions participated in by Priyabrata Sahoo.' },
+  youtube:      { title: 'YouTube | Priyabrata Sahoo', desc: 'YouTube content and tech videos by Priyabrata Sahoo.' },
+  certificates: { title: 'Certificates | Priyabrata Sahoo', desc: 'Certifications and achievements earned by Priyabrata Sahoo.' },
+  contact:      { title: 'Contact | Priyabrata Sahoo', desc: 'Get in touch with Priyabrata Sahoo for collaborations, opportunities, or just to say hi.' },
+}
+
 function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [activeSection, setActiveSection] = useState('home')
+
+  // Scroll-aware dynamic title update via IntersectionObserver
+  useEffect(() => {
+    const sectionIds = Object.keys(SECTION_META)
+    const observers = []
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(id)
+          }
+        },
+        { threshold: 0.4 }
+      )
+      obs.observe(el)
+      observers.push(obs)
+    })
+
+    return () => observers.forEach((o) => o.disconnect())
+  }, [isLoading])
 
   useEffect(() => {
     // Smoother Scroll Settings - Tuned for "Ultra Premium" Feel
@@ -63,8 +101,39 @@ function App() {
     return <Loading onLoadingComplete={handleLoadingComplete} />
   }
 
+  const currentMeta = SECTION_META[activeSection] || SECTION_META.home
+
   return (
     <ThemeProvider attribute="class" defaultTheme="dark">
+      <Helmet>
+        {/* Primary Meta */}
+        <html lang="en" />
+        <title>{currentMeta.title}</title>
+        <meta name="description" content={currentMeta.desc} />
+        <meta name="keywords" content="Priyabrata Sahoo, Full-Stack Developer, React, Node.js, Portfolio, Web Developer, Software Engineer, CSE, SwamiNarayan University" />
+        <meta name="author" content="Priyabrata Sahoo" />
+        <link rel="canonical" href="https://portfol-website-xn8a.vercel.app/" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://portfol-website-xn8a.vercel.app/" />
+        <meta property="og:title" content={currentMeta.title} />
+        <meta property="og:description" content={currentMeta.desc} />
+        <meta property="og:image" content="https://portfol-website-xn8a.vercel.app/assets/myPhoto.png" />
+        <meta property="og:site_name" content="Priyabrata Sahoo Portfolio" />
+        <meta property="og:locale" content="en_US" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://portfol-website-xn8a.vercel.app/" />
+        <meta name="twitter:title" content={currentMeta.title} />
+        <meta name="twitter:description" content={currentMeta.desc} />
+        <meta name="twitter:image" content="https://portfol-website-xn8a.vercel.app/assets/myPhoto.png" />
+
+        {/* Misc */}
+        <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content="#0f1224" />
+      </Helmet>
       <div className="app-container relative">
         <Cursor />
         <ScrollReveal />

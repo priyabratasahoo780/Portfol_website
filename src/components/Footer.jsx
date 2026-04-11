@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
 import { DottedSurface } from "./ui/dotted-surface"
 import gsap from 'gsap'
-import { Helmet } from 'react-helmet'
 import { Linkedin, Github, Twitter, Mail, Heart, Sparkles } from 'lucide-react'
 
 const Footer = () => {
@@ -142,10 +141,6 @@ const Footer = () => {
         background: 'linear-gradient(180deg, rgba(5, 8, 22, 0.8) 0%, rgba(15, 18, 36, 1) 100%)',
       }}
     >
-      <Helmet>
-        <title>Footer - Priyabrata Sahoo section</title>
-        <meta name="description" content="Footer Priyabrata Sahoo section" />
-      </Helmet>
       {/* Dotted surface background */}
       <DottedSurface className="absolute inset-0 z-0 opacity-30 w-full h-full" />
       

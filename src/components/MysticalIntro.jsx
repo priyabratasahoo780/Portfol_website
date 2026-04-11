@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Helmet } from 'react-helmet';
+
 
 const MysticalIntro = ({ onEnter }) => {
   const [phase, setPhase] = useState('locked'); // phases: locked, inserting, unlocking, opening, flipping
@@ -40,10 +40,6 @@ const MysticalIntro = ({ onEnter }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black text-white">
-        <Helmet>
-        <title>Mystical Intro - Priyabrata Sahoo section</title>
-        <meta name="description" content="Mystical Intro Priyabrata Sahoo section" />
-      </Helmet>
       {/* Background - Slight Zoom Effect for Cinematic Feel */}
       <motion.div 
         className="absolute inset-0 bg-cover bg-center pointer-events-none"

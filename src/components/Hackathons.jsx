@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Trophy, Github, ExternalLink, Calendar, Code, X, Image as ImageIcon, ArrowRight, Camera, Users, Monitor, Cpu, Globe } from 'lucide-react'
-import { Helmet } from 'react-helmet'
+
 
 const hackathonsData = [
   {
@@ -116,10 +116,6 @@ const JourneyModal = ({ hackathon, onClose }) => {
             }}
             onClick={onClose}
         >
-            <Helmet>
-        <title>Hackathons - Priyabrata Sahoo section</title>
-        <meta name="description" content="Hackathons Priyabrata Sahoo section" />
-      </Helmet>
             <motion.div 
                 initial={{ scale: 0.9, opacity: 0, y: 50 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}

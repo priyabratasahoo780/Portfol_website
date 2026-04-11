@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { Download, Linkedin, Github, Twitter } from 'lucide-react'
 import profileImg from '/assets/myPhoto.png'
-import { Helmet } from 'react-helmet'
+
 const PHRASES = ["Full-Stack Developer", "Software Developer", "Creator"]
 
 const TypingText = () => {
@@ -78,10 +78,6 @@ const Hero = ({ onSectionChange }) => {
 
   return (
     <section id="home" className="hero-section-premium">
-      <Helmet>
-        <title>Hero - Priyabrata Sahoo section</title>
-        <meta name="description" content="Hero Priyabrata Sahoo section" />
-      </Helmet>
       {/* Background Particles/Stars */}
       <div className="hero-stars" />
       
