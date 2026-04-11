@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, memo, useEffect } from 'react'
 import { sendContactMessage } from '../services/emailService'
 import { Send, Github, Linkedin, Twitter, Youtube } from 'lucide-react'
+import { Helmet } from 'react-helmet'
 import { motion } from 'framer-motion'
 
 // Move animation variants outside component to prevent recreation
@@ -58,6 +59,10 @@ const ContactForm = memo(() => {
 
   return (
     <motion.form variants={itemVariants} className="premium-contact-form" onSubmit={handleSubmit}>
+      <Helmet>
+        <title>Contact - Priyabrata Sahoo section</title>
+        <meta name="description" content="Contact Priyabrata Sahoo section" />
+      </Helmet>
       <div className="premium-input-group">
         <input 
           type="text" 

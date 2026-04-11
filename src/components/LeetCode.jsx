@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ExternalLink, Trophy, Target, Zap, Activity, Info } from 'lucide-react'
+import { Helmet } from 'react-helmet'
 
 const LeetCode = () => {
   const [stats, setStats] = useState(null)
@@ -117,6 +118,10 @@ const LeetCode = () => {
 
   return (
     <section id="leetcode" className="leetcode-premium-section">
+      <Helmet>
+        <title>LeetCode - Priyabrata Sahoo section</title>
+        <meta name="description" content="LeetCode Priyabrata Sahoo section" />
+      </Helmet>
       {/* Dynamic Background Elements */}
       <div className="premium-bg-effects">
         <div className="bg-glow-orb purple" />

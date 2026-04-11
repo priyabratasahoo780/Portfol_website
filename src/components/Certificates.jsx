@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Eye, Download } from 'lucide-react'
+import { Helmet } from 'react-helmet'
 
 const certificatesData = [
   {
@@ -108,6 +109,10 @@ const Certificates = () => {
 
   return (
     <section id="certificates" className="section-pad" style={{ background: 'var(--bg-main)', position: 'relative', overflow: 'hidden' }}>
+      <Helmet>
+        <title>Certificates - Priyabrata Sahoo section</title>
+        <meta name="description" content="Certificates Priyabrata Sahoo section" />
+      </Helmet>
       <div className="container" style={{ maxWidth: '1600px', position: 'relative', zIndex: 1 }}>
         {/* Neon Header Section */}
         <div style={{ textAlign: 'center', marginBottom: '5rem' }}>

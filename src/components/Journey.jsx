@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Helmet } from 'react-helmet'
 
 const journeyData = [
   {
@@ -47,6 +48,10 @@ const Journey = () => {
 
   return (
     <section id="journey" className="section-pad relative overflow-hidden" ref={sectionRef}>
+      <Helmet>
+        <title>Journey - Priyabrata Sahoo section</title>
+        <meta name="description" content="Journey Priyabrata Sahoo section" />
+      </Helmet>
       {/* Galaxy Stars Background */}
 
       <div className="container relative z-10">
