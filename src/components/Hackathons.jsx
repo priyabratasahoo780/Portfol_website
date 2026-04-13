@@ -5,94 +5,68 @@ import { Trophy, Github, ExternalLink, Calendar, Code, X, Image as ImageIcon, Ar
 
 const hackathonsData = [
   {
-    id: 'innovaition',
-    title: 'InnovAItion Hackathon',
+    id: 'artpark-codeforge',
+    title: 'ArtPark CodeForge Hackathon',
     achievement: 'Participant',
-    issuer: 'DA-IICT (Unstop)',
-    date: 'Jan 2025',
-    project: 'AgriSaar - AI for Farmers',
-    description: 'An AI-powered platform helping farmers with crop recommendation and disease detection.',
-    fullDescription: 'AgriSaar is a comprehensive agricultural assistant that leverages Machine Learning to empower small-scale farmers. During this 24-hour hackathon, we built a system that analyzes soil data and local weather to recommend the most profitable crops while using Computer Vision to detect plant diseases from leaf photos.',
-    tech: ['React', 'Python', 'ML', 'Firebase'],
+    issuer: 'ArtPark (IISc)',
+    date: 'Apr 2026',
+    project: 'CodeForge AI — Intelligent Career Assistant',
+    description: 'An AI-powered career assistant that analyzes resumes, detects skill gaps, and generates personalized DAG-powered learning roadmaps with Gemini 2.0 Flash.',
+    fullDescription: 'CodeForge AI is a precision instrument for career growth built during a 48-hour ArtPark Hackathon at IISc. It leverages Google Gemini 2.0 Flash for semantic skill extraction from resumes and job descriptions, then computes gaps using fuzzy matching. A DAG engine performs Kahn\'s topological sort to generate logically ordered learning roadmaps — ensuring you learn prerequisites first (e.g., Variables → Functions → APIs). A dynamic Readiness Score updates in real time as skills are mastered. Deployed live on Vercel (frontend) and Render (backend).',
+    tech: ['React', 'FastAPI', 'Gemini AI', 'Python'],
     detailedTech: [
-        { name: 'React', icon: <Monitor size={14} />, color: '#61dafb' },
+        { name: 'React + Vite', icon: <Monitor size={14} />, color: '#61dafb' },
         { name: 'FastAPI', icon: <Cpu size={14} />, color: '#05998b' },
-        { name: 'TensorFlow', icon: <Cpu size={14} />, color: '#ff6f00' },
-        { name: 'Firebase', icon: <Globe size={14} />, color: '#ffca28' }
+        { name: 'Gemini 2.0 Flash', icon: <Globe size={14} />, color: '#4285f4' },
+        { name: 'Python', icon: <Cpu size={14} />, color: '#f7c948' },
+        { name: 'Docker', icon: <Cpu size={14} />, color: '#2496ed' },
+        { name: 'DAG Algorithm', icon: <Code size={14} />, color: '#a78bfa' }
+    ],
+    team: [
+        { name: 'Priyabrata Sahoo', role: 'Full-Stack & AI Lead', github: 'https://github.com/priyabratasahoo780' }
+    ],
+    liveLink: 'https://art-park-code-forge-hackathon-nine.vercel.app/',
+    link: 'https://github.com/priyabratasahoo780/ArtPark_CodeForge_Hackathon',
+    color: '#a78bfa',
+    journey: [
+        { image: '/assets/iisc.png', label: 'Problem Framing', desc: 'Identifying the resume-to-job gap with Gemini AI semantic analysis.' },
+        { image: '/assets/image copy.png', label: 'DAG Engine Build', desc: 'Implementing Kahn\'s topological sort for prerequisite-first roadmaps.' },
+        { image: '/assets/image.png', label: 'Neural Roadmap UI', desc: 'Rendering SVG skill graphs with real-time readiness scoring.' },
+        // { image: '/assets/image3.png', label: 'Live Deployment', desc: 'Shipping to Vercel & Render within the 48-hour window.' }
+    ]
+  },
+  {
+    id: 'gandhinagar-agrisaar',
+    title: 'Crafthon Hackathon',
+    achievement: 'Participant',
+    issuer: 'GandhiNagar University (Unstop)',
+    date: 'March 2026',
+    project: 'AgriSaar — Smart Farming AI',
+    description: 'An AI-powered decision support system helping farmers with crop recommendations, fertilizer plans, soil health scoring, and weather-aware suggestions.',
+    fullDescription: 'AgriSaar is a comprehensive agricultural intelligence platform built during the InnovAItion Hackathon at DA-IICT, GandhiNagar. It analyzes soil reports (PDF/image or manual input) to generate a soil health score (0–100), recommend optimal crops with suitability scores, and produce tailored fertilizer advisory with timing. Powered by Google Gemini 2.5 Flash for LLM-based reasoning, it integrates OpenWeather API for real-time weather alerts and includes government scheme eligibility (e.g., PM-Kisan), Hinglish explanations, and a step-by-step farming roadmap.',
+    tech: ['React', 'Node.js', 'Gemini AI', 'OpenWeather'],
+    detailedTech: [
+        { name: 'React.js', icon: <Monitor size={14} />, color: '#61dafb' },
+        { name: 'Node.js', icon: <Cpu size={14} />, color: '#68a063' },
+        { name: 'Express.js', icon: <Cpu size={14} />, color: '#ffffff' },
+        { name: 'Gemini 2.5 Flash', icon: <Globe size={14} />, color: '#4285f4' },
+        { name: 'OpenWeather API', icon: <Globe size={14} />, color: '#f97316' },
+        { name: 'Tailwind CSS', icon: <Monitor size={14} />, color: '#38bdf8' }
     ],
     team: [
         { name: 'Priyabrata Sahoo', role: 'Full-Stack Developer', github: 'https://github.com/priyabratasahoo780' },
-        { name: 'John Doe', role: 'ML Specialist', github: '#' },
-        { name: 'Jane Smith', role: 'UI/UX Designer', github: '#' }
+        { name: 'Abdul Haque', role: 'AI & Backend', github: 'https://github.com/abdulhaque2005' }
     ],
-    link: 'https://github.com/priyabratasahoo780/AgriSaar',
-    color: '#00f3ff',
+    liveLink: 'https://agrisaar-project.vercel.app/',
+    link: 'https://github.com/abdulhaque2005/AgriSaar',
+    color: '#4ade80',
     journey: [
-        { image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80', label: 'Team Formation & Ideation', desc: 'Brainstorming the AgriSaar concept with the team.' },
-        { image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80', label: '24H Code Sprint', desc: 'Powering through midnight to integrate ML models.' },
-        { image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80', label: 'Final Polish', desc: 'Refining the UI for a seamless farmer experience.' },
-        { image: 'https://images.unsplash.com/photo-1475721027187-4024733924f7?auto=format&fit=crop&q=80', label: 'Pitching Phase', desc: 'Presenting the solution to technical judges.' }
+        { image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80', label: 'Problem Identification', desc: 'Understanding soil analysis gaps faced by small-scale farmers.' },
+        { image: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&q=80', label: 'AI Integration', desc: 'Hooking Gemini 2.5 Flash for LLM-powered soil reasoning & crop advice.' },
+        { image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80', label: 'Dashboard Build', desc: 'Designing soil health scores, crop cards, and fertilizer timelines.' },
+        { image: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80', label: 'Live Demo & Pitch', desc: 'Presenting AgriSaar to judges at GandhiNagar with a live soil analysis demo.' }
     ]
   },
-  {
-    id: 'nation-building',
-    title: 'Nation Building Hackathon',
-    achievement: 'Finalist',
-    issuer: 'NAMO (Unstop)',
-    date: 'Feb 2026',
-    project: 'Smart Governance Portal',
-    description: 'A platform designed to bridge the gap between citizens and local government bodies.',
-    fullDescription: 'The Smart Governance Portal aims to digitize the interaction between local municipal bodies and citizens. Our solution introduced a real-time tracking system for public grievances, an automated budget transparency dashboard, and a direct communication channel for local leaders to share official updates.',
-    tech: ['React', 'Node.js', 'PostgreSQL'],
-    detailedTech: [
-        { name: 'Next.js', icon: <Monitor size={14} />, color: '#ffffff' },
-        { name: 'Node.js', icon: <Cpu size={14} />, color: '#68a063' },
-        { name: 'PostgreSQL', icon: <Globe size={14} />, color: '#336791' },
-        { name: 'Prisma', icon: <Cpu size={14} />, color: '#2d3748' }
-    ],
-    team: [
-        { name: 'Priyabrata Sahoo', role: 'Lead Developer', github: 'https://github.com/priyabratasahoo780' },
-        { name: 'Alex Wang', role: 'Backend Engineer', github: '#' },
-        { name: 'Sarah Connor', role: 'DevOps', github: '#' }
-    ],
-    link: '#',
-    color: '#60a5fa',
-    journey: [
-        { image: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?auto=format&fit=crop&q=80', label: 'Initial Planning', desc: 'Defining governance challenges and portal features.' },
-        { image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80', label: 'UI Prototyping', desc: 'Designing transparent tracking dashboards.' },
-        { image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80', label: 'System Integration', desc: 'Developing the citizen feedback loop.' },
-        { image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80', label: 'Final Presentation', desc: 'Discussing impact potential at a national scale.' }
-    ]
-  },
-  {
-    id: 'sih-2024',
-    title: 'Smart India Hackathon',
-    achievement: 'Internal Winner',
-    issuer: 'Ministry of Education',
-    date: 'Sept 2024',
-    project: 'Coal Mine Safety System',
-    description: 'IoT-based real-time monitoring and alert system for underground coal mines.',
-    fullDescription: 'The Coal Mine Safety System is a hardware-integrated software platform designed for the extreme conditions of underground mines. Using multiple gas sensors and humidity trackers, the system predicts unsafe environments and triggers automatic alerts to both ground workers and remote control centers.',
-    tech: ['IoT', 'Arduino', 'C++', 'Dashboard'],
-    detailedTech: [
-        { name: 'Arduino', icon: <Cpu size={14} />, color: '#00979d' },
-        { name: 'C++', icon: <Cpu size={14} />, color: '#00599c' },
-        { name: 'MQTT', icon: <Globe size={14} />, color: '#3c5280' },
-        { name: 'React', icon: <Monitor size={14} />, color: '#61dafb' }
-    ],
-    team: [
-        { name: 'Priyabrata Sahoo', role: 'IoT & Web Lead', github: 'https://github.com/priyabratasahoo780' },
-        { name: 'Michael Brown', role: 'Hardware Design', github: '#' },
-        { name: 'Emma Wilson', role: 'Embedded Logic', github: '#' }
-    ],
-    link: '#',
-    color: '#fbbf24',
-    journey: [
-        { image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80', label: 'Hardware Assembly', desc: 'Prototyping gas sensors and alert systems.' },
-        { image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80', label: 'Calibration', desc: 'Testing real-time data transmission from sensors.' },
-        { image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80', label: 'Internal Round Win', desc: 'Proud moment with the winning coal safety dashboard.' }
-    ]
-  }
 ]
 
 const JourneyModal = ({ hackathon, onClose }) => {
@@ -446,11 +420,36 @@ const Hackathons = () => {
                   position: 'relative', zIndex: 1 
                 }}>{h.title}</h3>
                 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#94a3b8', fontSize: '13px', marginBottom: '18px', position: 'relative', zIndex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#94a3b8', fontSize: '13px', marginBottom: '20px', position: 'relative', zIndex: 1 }}>
                   <Calendar size={14} />
                   <span>{h.date}</span>
                   <span style={{ opacity: 0.3 }}>|</span>
                   <span>{h.issuer}</span>
+                </div>
+
+                {/* Continuous Scroll Images */}
+                <div style={{
+                  width: 'calc(100% + 48px)',
+                  marginLeft: '-24px',
+                  marginBottom: '20px',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  zIndex: 1,
+                  display: 'flex',
+                  maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'
+                }}>
+                  <motion.div 
+                    animate={{ x: [0, '-50%'] }}
+                    transition={{ repeat: Infinity, duration: 25, ease: 'linear' }}
+                    style={{ flexShrink: 0, display: 'flex', gap: '10px', height: '100px', padding: '0 10px' }}
+                  >
+                    {[...h.journey, ...h.journey, ...h.journey, ...h.journey].map((step, i) => (
+                      <div key={i} style={{ width: '160px', height: '100%', flexShrink: 0, borderRadius: '12px', overflow: 'hidden', border: `1px solid ${h.color}33` }}>
+                        <img src={step.image} alt="hackathon moment" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      </div>
+                    ))}
+                  </motion.div>
                 </div>
 
                 <div style={{ 
@@ -470,6 +469,10 @@ const Hackathons = () => {
 
                 <div style={{ display: 'flex', gap: '12px', position: 'relative', zIndex: 1 }}>
                   <button 
+                    onClick={(e) => { 
+                      e.stopPropagation(); 
+                      if(h.liveLink !== '#') window.open(h.liveLink, '_blank'); 
+                    }}
                     style={{
                       flex: 1,
                       padding: '12px',
@@ -495,7 +498,7 @@ const Hackathons = () => {
                         e.target.style.borderColor = 'rgba(255,255,255,0.1)'
                     }}
                   >
-                    View Stories <ArrowRight size={14} />
+                    Live Demo <ExternalLink size={14} />
                   </button>
                   <button 
                     onClick={(e) => { e.stopPropagation(); window.open(h.link, '_blank'); }}
