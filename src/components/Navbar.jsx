@@ -3,7 +3,7 @@ import { Menu, X } from 'lucide-react'
 
 import * as THREE from 'three'
 import gsap from 'gsap'
-import { playLightningStrikeSound } from '../utils/lightningSound'
+
 
 const Navbar = ({ onSectionChange, activeSection }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -306,8 +306,6 @@ const Navbar = ({ onSectionChange, activeSection }) => {
     
     // 2. Strike (0.2s)
     tl.call(() => {
-        // Play the realistic sound via utility
-        playLightningStrikeSound()
         
         // STRICT CONFINEMENT to word bounds
         const boltCount = 6
