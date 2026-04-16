@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { Download, Linkedin, Github, Twitter } from 'lucide-react'
+import { Download, Linkedin, Github, Twitter, Youtube } from 'lucide-react'
 import profileImg from '/assets/myPhoto.png'
 
 const PHRASES = ["Full-Stack Developer", "Software Developer", "Creator"]
@@ -106,10 +106,12 @@ const Hero = ({ onSectionChange }) => {
               Contact
             </button>
             <a 
-              href="/certificates/resumetemporary_netlify (1).pdf" 
+              href="/Priyabrata_Sahoo.pdf" 
               target="_blank" 
               rel="noopener noreferrer"
               className="action-btn-outline"
+              title="Priyabrata Sahoo"
+              download="Priyabrata Sahoo"
             >
               View Resume <Download size={18} />
             </a>
@@ -126,6 +128,14 @@ const Hero = ({ onSectionChange }) => {
               </a>
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-circle-link">
                 <Twitter size={18} />
+              </a>
+              <a href="https://www.youtube.com/@priyabratasahoo780" target="_blank" rel="noopener noreferrer" className="social-circle-link">
+                <Youtube size={18} />
+              </a>
+              <a href="https://leetcode.com/u/Priyabrata_Sahoo780/" target="_blank" rel="noopener noreferrer" className="social-circle-link">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                  <path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414 0-1.954l-4.277-4.193a5.938 5.938 0 0 0-1.271-1.818 5.83 5.83 0 0 0-.349-1.017 5.527 5.527 0 0 0-.062-2.362 5.35 5.35 0 0 0 .125-.513 5.266 5.266 0 0 0 1.209-2.104l3.854-4.126 5.406-5.788a1.374 1.374 0 0 0-.961-2.17zM12 13h7.5a1 1 0 0 0 0-2H12a1 1 0 0 0 0 2z" />
+                </svg>
               </a>
             </div>
           </div>

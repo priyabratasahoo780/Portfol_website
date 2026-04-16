@@ -19,9 +19,8 @@ const ScrollReveal = () => {
     }, observerOptions)
 
     // Select all major content blocks
-    // You can add more selectors here based on your app structure
     const elements = document.querySelectorAll(
-      '.section-heading, .p, .about-text p, .hobby-list li, .skill-card, .timeline-content, .project-card, .cert-card, .contact-form, .hero-title, .hero-bio, .btn, .social-connect' 
+      '.hero-display-title, .hero-description, .hero-action-btns, .section-heading, .about-text p, .hobby-list li, .skill-card, .timeline-content, .project-card, .cert-card-neon, .premium-contact-form, .hero-visual-content, .yt-card' 
     )
 
     elements.forEach((el) => {

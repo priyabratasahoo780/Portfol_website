@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 :root {
     --bg-main: #0B0E23; /* Midnight dark blue from user image */
     --bg-alt: #0B0E23; 
@@ -25,7 +31,8 @@
     --neon-glow: 0 0 10px rgba(0, 243, 255, 0.4), 0 0 20px rgba(0, 243, 255, 0.2);
     --neon-glow-heavy: 0 0 15px rgba(0, 243, 255, 0.6), 0 0 30px rgba(0, 243, 255, 0.4), 0 0 45px rgba(0, 243, 255, 0.2);
     --neon-glow-purple: 0 0 15px rgba(191, 0, 255, 0.6), 0 0 30px rgba(191, 0, 255, 0.4);
-    --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-smooth: all 0.5s var(--ease-smooth);
 }
 
 .light {
@@ -57,6 +64,16 @@ body {
     line-height: 1.7;
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
+    animation: fadeInBody 1s var(--ease-smooth);
+}
+
+@keyframes fadeInBody {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+a, button, input, textarea, .skill-card, .project-card, .cert-card-neon, .timeline-content {
+    transition: var(--transition-smooth) !important;
 }
 
 
@@ -209,19 +226,20 @@ body {
     padding: 8px 0;
 }
 .nav-links a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--accent-gradient);
-    transition: width 0.3s ease;
-    border-radius: 2px;
+    display: none;
 }
 .nav-links a:hover { color: var(--text-main); }
-.nav-links a:hover::after { width: 100%; }
+
+.active-underline {
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent-gradient);
+    border-radius: 4px;
+    box-shadow: 0 0 12px var(--neon-cyan);
+}
 
 .nav-links a.nav-btn { 
     padding: 10px 28px; 

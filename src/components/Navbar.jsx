@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Menu, X } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 import * as THREE from 'three'
 import gsap from 'gsap'
@@ -8,6 +9,12 @@ import gsap from 'gsap'
 const Navbar = ({ onSectionChange, activeSection }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState(activeSection || 'home')
+
+  useEffect(() => {
+    if (activeSection) {
+      setActiveTab(activeSection)
+    }
+  }, [activeSection])
 
   const canvasRef = useRef(null)
   
@@ -441,19 +448,28 @@ const Navbar = ({ onSectionChange, activeSection }) => {
         <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
           {['home', 'about', 'skills', 'journey', 'projects', 'leetcode', 'hackathons', 'youtube', 'certificates', 'contact'].map((item) => (
              <li key={item}>
-                 <a 
+                  <a 
                     onClick={(e) => handleNavClick(e, item)}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={(e) => handleMouseLeave(e, item)}
                     className={item === 'contact' ? 'nav-btn' : ''}
                     style={activeTab === item && item !== 'contact' ? { 
                         color: 'var(--neon-cyan)', 
-                        textShadow: '0 0 10px var(--neon-cyan)',
-                        borderBottom: '2px solid var(--neon-cyan)' 
-                    } : {}}
-                 >
+                        textShadow: '0 0 15px var(--neon-cyan)',
+                        position: 'relative'
+                    } : { position: 'relative' }}
+                  >
                     {item.charAt(0).toUpperCase() + item.slice(1).replace('Me', ' Me')}
-                 </a>
+                    
+                    {activeTab === item && item !== 'contact' && (
+                      <motion.div 
+                        layoutId="activeUnderline"
+                        className="active-underline"
+                        initial={false}
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </a>
              </li>
           ))}
 

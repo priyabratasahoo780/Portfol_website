@@ -7,6 +7,7 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Cursor from './components/Cursor'
 import ScrollReveal from './components/ScrollReveal'
+import ScrollProgress from './components/ScrollProgress'
 
 // Lazy Load Heavy Components
 const About = lazy(() => import('./components/About'))
@@ -38,40 +39,51 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [activeSection, setActiveSection] = useState('home')
 
-  // Scroll-aware dynamic title update via IntersectionObserver
+  // Scroll-aware dynamic title update via IntersectionObserver (Enhanced for lazy loading)
   useEffect(() => {
+    if (isLoading) return;
+
     const sectionIds = Object.keys(SECTION_META)
     const observers = []
 
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id)
-      if (!el) return
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveSection(id)
-          }
-        },
-        { threshold: 0.4 }
-      )
-      obs.observe(el)
-      observers.push(obs)
-    })
+    const setupObservers = () => {
+      sectionIds.forEach((id) => {
+        const el = document.getElementById(id)
+        if (!el) return
+        
+        const obs = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setActiveSection(id)
+            }
+          },
+          { threshold: 0.2, rootMargin: '-10% 0px -40% 0px' }
+        )
+        obs.observe(el)
+        observers.push(obs)
+      })
+    }
 
-    return () => observers.forEach((o) => o.disconnect())
+    // Delay initialization slightly to wait for lazy Suspense components
+    const timer = setTimeout(setupObservers, 1500)
+
+    return () => {
+      clearTimeout(timer)
+      observers.forEach((o) => o.disconnect())
+    }
   }, [isLoading])
 
   useEffect(() => {
     // Smoother Scroll Settings - Tuned for "Ultra Premium" Feel
     const lenis = new Lenis({
-      duration: 1.5, // Slower, weightier feel (Butter smooth)
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential decay
+      duration: 1.2, // Slightly faster for responsiveness but still heavy
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential smoothing
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
       mouseMultiplier: 1,
-      smoothTouch: true,
-      touchMultiplier: 2, // Responsive touch
+      smoothTouch: false, // Disable on touch for native feel
+      touchMultiplier: 2,
       infinite: false,
     })
 
@@ -136,6 +148,7 @@ function App() {
       </Helmet>
       <div className="app-container relative">
         <Cursor />
+        <ScrollProgress />
         <ScrollReveal />
         <Navbar onSectionChange={handleSectionChange} activeSection={activeSection} />
         

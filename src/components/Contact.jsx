@@ -150,15 +150,30 @@ const Contact = () => {
                 <a href="https://twitter.com" className="social-pill" target="_blank" rel="noopener noreferrer">
                   <Twitter size={20} />
                 </a>
-                <a href="https://youtube.com" className="social-pill" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.youtube.com/@priyabratasahoo780" className="social-pill" target="_blank" rel="noopener noreferrer">
                   <Youtube size={20} />
+                </a>
+                <a href="https://leetcode.com/u/Priyabrata_Sahoo780/" className="social-pill" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414 0-1.954l-4.277-4.193a5.938 5.938 0 0 0-1.271-1.818 5.83 5.83 0 0 0-.349-1.017 5.527 5.527 0 0 0-.062-2.362 5.35 5.35 0 0 0 .125-.513 5.266 5.266 0 0 0 1.209-2.104l3.854-4.126 5.406-5.788a1.374 1.374 0 0 0-.961-2.17zM12 13h7.5a1 1 0 0 0 0-2H12a1 1 0 0 0 0 2z" />
+                  </svg>
                 </a>
               </div>
             </div>
 
-            <button className="premium-gradient-btn resume-btn mt-auto">
-              View Resume
-            </button>
+            <a 
+              href="/Priyabrata_Sahoo.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="resume-btn-link"
+              style={{ textDecoration: 'none' }}
+              title="Priyabrata Sahoo"
+              download="Priyabrata Sahoo"
+            >
+              <button className="premium-gradient-btn resume-btn mt-auto">
+                View Resume
+              </button>
+            </a>
           </motion.div>
 
           {/* Right Column: Message Form */}
