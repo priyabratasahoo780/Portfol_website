@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ExternalLink, X, Github, Youtube } from 'lucide-react'
 
@@ -129,13 +129,32 @@ const projectsData = [
       'Shopping cart with real-time price calculation',
       'Fully responsive layout for all screen sizes',
     ],
-    liveLink: 'https://jiomartcloneweb1.netlify.app',
+    liveLink: 'https://website-1-ltjf.vercel.app/',
     codeLink: 'https://github.com/priyabratasahoo780/WEBSITE-1.git',
     youtubeLink: 'https://youtu.be/f1LgMfOf48k?si=vrnRb94LG4cymF01',
-    tech: ['React', 'CSS'],
+    tech: ['HTML', 'CSS'],
     image: '/jiomart-clone.png',
     color: '#e63946',
     gradient: 'linear-gradient(145deg, #e63946, #9b1b30)',
+  },
+  {
+    id: 2,
+    category: 'Full-Stack Projects',
+    title: 'SoloLearn - LMS Platform',
+    emoji: '🎓',
+    description: 'A comprehensive Learning Management System featuring multi-role authentication, course management, and progress tracking built with the MERN stack.',
+    features: [
+      'Secure MERN backend with Google OAuth integration',
+      'Interactive dashboard for course tracking & analytics',
+      'Scalable cloud architecture for educational content',
+    ],
+    liveLink: 'https://solo-learn-zeta.vercel.app',
+    codeLink: 'https://github.com/priyabratasahoo780/Solo_learn.git',
+    youtubeLink: 'https://youtu.be/wxSghN4KPhQ?si=839FqHXy1--H2Gcy',
+    tech: ['MongoDB', 'Express', 'React', 'Node.js'],
+    image: '/solo-learn.png',
+    color: '#6366f1',
+    gradient: 'linear-gradient(145deg, #6366f1, #4338ca)',
   },
   // {
   //   id: 2,
@@ -196,7 +215,7 @@ const projectsData = [
   // },
   {
     id: 6,
-    category: 'Featured',
+    category: 'Clones',
     title: 'Solinas Clone',
     emoji: '✨',
     description: 'A modern and responsive business website clone with stunning animated hero sections, scroll-based reveals, and elegant UI design.',
@@ -215,7 +234,7 @@ const projectsData = [
   },
   {
     id: 7,
-    category: 'Full-Stack Projects',
+    category: 'Clones',
     title: 'PatilKaki Clone',
     emoji: '🍱',
     description: 'A brand-accurate clone of the PatilKaki e-commerce website featuring food product showcases, rich imagery, and a mobile-first design.',
@@ -227,7 +246,7 @@ const projectsData = [
     liveLink: 'https://patilkaki-waoy.vercel.app/',
     codeLink: 'https://github.com/priyabratasahoo780/PATILKAKI',
     youtubeLink: 'https://youtu.be/vY5vS69lDuI?si=QXiaWAYSes6EJn0h',
-    tech: ['React', 'CSS'],
+    tech: ['HTML', 'CSS'],
     image: '/patilkaki-clone.jpg',
     color: '#ff6b9d',
     gradient: 'linear-gradient(145deg, #ff6b9d, #a01050)',
@@ -236,7 +255,7 @@ const projectsData = [
 
 const FILTERS = ['All', 'Featured', 'Full-Stack Projects', 'APIs', 'Clones', 'Mini Projects']
 
-const Projects = () => {
+const Projects = memo(() => {
   const [activeFilter, setActiveFilter] = useState('All')
   const [currentPage, setCurrentPage] = useState(1)
   const [activeVideo, setActiveVideo] = useState(null)
@@ -554,7 +573,7 @@ const Projects = () => {
         .cert-img-box-neon img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain;
           transition: transform 0.8s ease;
         }
 
@@ -666,6 +685,6 @@ const Projects = () => {
       `}</style>
     </section>
   )
-}
+})
 
 export default Projects

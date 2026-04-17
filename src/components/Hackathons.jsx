@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Trophy, Github, ExternalLink, Calendar, Code, X, Image as ImageIcon, ArrowRight, Camera, Users, Monitor, Cpu, Globe } from 'lucide-react'
 
 
+
 const hackathonsData = [
   {
     id: 'artpark-codeforge',
@@ -62,9 +63,9 @@ const hackathonsData = [
     color: '#4ade80',
     journey: [
         { image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80', label: 'Problem Identification', desc: 'Understanding soil analysis gaps faced by small-scale farmers.' },
-        { image: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&q=80', label: 'AI Integration', desc: 'Hooking Gemini 2.5 Flash for LLM-powered soil reasoning & crop advice.' },
-        { image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80', label: 'Dashboard Build', desc: 'Designing soil health scores, crop cards, and fertilizer timelines.' },
-        { image: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80', label: 'Live Demo & Pitch', desc: 'Presenting AgriSaar to judges at GandhiNagar with a live soil analysis demo.' }
+        { image: 'https://res.cloudinary.com/dtw64z2mf/image/upload/v1776452949/WhatsApp_Image_2026-04-18_at_12.37.23_AM_zma2ba.jpg', label: 'AI Core Logic', desc: 'Developing the soil intelligence engine.' },
+        { image: 'https://res.cloudinary.com/dtw64z2mf/image/upload/q_auto/f_auto/v1776452946/WhatsApp_Image_2026-04-17_at_9.38.32_PM_1_qgipu3.jpg', label: 'Team Collaboration', desc: 'Building AgriSaar with Abdul Haque.' },
+        { image: 'https://res.cloudinary.com/dtw64z2mf/image/upload/q_auto/f_auto/v1776452947/WhatsApp_Image_2026-04-17_at_9.38.32_PM_zi8zha.jpg', label: 'Live Prototyping', desc: 'Working on the real-time weather integration.' }
     ]
   },
 ]

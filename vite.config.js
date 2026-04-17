@@ -4,6 +4,19 @@ import { defineConfig } from "vite"
 
 export default defineConfig({
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-gsap': ['gsap', '@gsap/react'],
+          'vendor-motion': ['framer-motion'],
+          'vendor-icons': ['lucide-react'],
+          'vendor-three': ['three'],
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000,
+  },
   server: {
     proxy: {
       '/api': {

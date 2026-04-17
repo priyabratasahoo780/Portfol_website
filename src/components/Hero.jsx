@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { Download, Linkedin, Github, Twitter, Youtube } from 'lucide-react'
+import { ExternalLink, Linkedin, Github, Twitter, Youtube } from 'lucide-react'
 import profileImg from '/assets/myPhoto.png'
 
 const PHRASES = ["Full-Stack Developer", "Software Developer", "Creator"]
@@ -111,9 +111,8 @@ const Hero = ({ onSectionChange }) => {
               rel="noopener noreferrer"
               className="action-btn-outline"
               title="Priyabrata Sahoo"
-              download="Priyabrata Sahoo"
             >
-              View Resume <Download size={18} />
+              View Resume <ExternalLink size={18} />
             </a>
           </div>
 

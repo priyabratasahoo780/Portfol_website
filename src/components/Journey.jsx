@@ -2,10 +2,10 @@ import { useEffect, useRef } from 'react'
 
 
 const journeyData = [
-  {
-    date: '2022 - 2023',
-    title: 'Secondary School (SSC)',
-    description: 'Completed 10th grade at Colourtex English Medium School. Built a strong academic foundation with a focus on Mathematics and Science, participating in various school-level competitions.',
+   {
+    date: '2025 - Present',
+    title: 'B.Tech in Computer Engineering',
+    description: 'Currently pursuing a Bachelor of Technology at Swaminarayan University. Specializing in Software Engineering, exploring Full-Stack Development, and building scalable applications.',
     position: 'left',
     isEducation: true
   },
@@ -17,9 +17,9 @@ const journeyData = [
     isEducation: true
   },
   {
-    date: '2025 - Present',
-    title: 'B.Tech in Computer Engineering',
-    description: 'Currently pursuing a Bachelor of Technology at Swaminarayan University. Specializing in Software Engineering, exploring Full-Stack Development, and building scalable applications.',
+    date: '2022 - 2023',
+    title: 'Secondary School (SSC)',
+    description: 'Completed 10th grade at Colourtex English Medium School. Built a strong academic foundation with a focus on Mathematics and Science, participating in various school-level competitions.',
     position: 'left',
     isEducation: true
   }

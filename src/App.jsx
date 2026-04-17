@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense, lazy } from 'react'
+import { useState, useEffect, Suspense, lazy, memo } from 'react'
 import { Helmet } from 'react-helmet'
 import { ThemeProvider } from 'next-themes'
 import Lenis from 'lenis'
@@ -9,17 +9,24 @@ import Cursor from './components/Cursor'
 import ScrollReveal from './components/ScrollReveal'
 import ScrollProgress from './components/ScrollProgress'
 
-// Lazy Load Heavy Components
-const About = lazy(() => import('./components/About'))
-const Skills = lazy(() => import('./components/Skills'))
-const Journey = lazy(() => import('./components/Journey'))
-const Projects = lazy(() => import('./components/Projects'))
-const LeetCode = lazy(() => import('./components/LeetCode'))
-const Hackathons = lazy(() => import('./components/Hackathons'))
-const YouTube = lazy(() => import('./components/YouTube'))
-const Certificates = lazy(() => import('./components/Certificates'))
-const Contact = lazy(() => import('./components/Contact'))
-const Footer = lazy(() => import('./components/Footer'))
+// Memoize and Lazy Load Heavy Components
+const About = memo(lazy(() => import('./components/About')))
+const Skills = memo(lazy(() => import('./components/Skills')))
+const Journey = memo(lazy(() => import('./components/Journey')))
+const Projects = memo(lazy(() => import('./components/Projects')))
+const LeetCode = memo(lazy(() => import('./components/LeetCode')))
+const Hackathons = memo(lazy(() => import('./components/Hackathons')))
+const YouTube = memo(lazy(() => import('./components/YouTube')))
+const Certificates = memo(lazy(() => import('./components/Certificates')))
+const Contact = memo(lazy(() => import('./components/Contact')))
+const Footer = memo(lazy(() => import('./components/Footer')))
+
+// Memoize Critical UI Components
+const MemoHero = memo(Hero)
+const MemoNavbar = memo(Navbar)
+const MemoCursor = memo(Cursor)
+const MemoScrollProgress = memo(ScrollProgress)
+const MemoScrollReveal = memo(ScrollReveal)
 
 // Section metadata for scroll-aware dynamic title
 const SECTION_META = {
@@ -28,7 +35,7 @@ const SECTION_META = {
   skills:       { title: 'Skills | Priyabrata Sahoo', desc: 'Explore the technical skills of Priyabrata Sahoo including React, Node.js, Python, and more.' },
   journey:      { title: 'Journey | Priyabrata Sahoo', desc: 'The academic and professional journey of Priyabrata Sahoo as a developer.' },
   projects:     { title: 'Projects | Priyabrata Sahoo', desc: 'Full-stack and frontend projects built by Priyabrata Sahoo.' },
-  leetcode:     { title: 'LeetCode Stats | Priyabrata Sahoo', desc: 'LeetCode problem-solving stats and competitive programming profile of Priyabrata Sahoo.' },
+  activity:     { title: 'Activity | Priyabrata Sahoo', desc: 'Real-time coding activity, LeetCode stats, and programming progress of Priyabrata Sahoo.' },
   hackathons:   { title: 'Hackathons | Priyabrata Sahoo', desc: 'Hackathons and coding competitions participated in by Priyabrata Sahoo.' },
   youtube:      { title: 'YouTube | Priyabrata Sahoo', desc: 'YouTube content and tech videos by Priyabrata Sahoo.' },
   certificates: { title: 'Certificates | Priyabrata Sahoo', desc: 'Certifications and achievements earned by Priyabrata Sahoo.' },
@@ -47,6 +54,10 @@ function App() {
     const observers = []
 
     const setupObservers = () => {
+      // Disconnect existing to avoid duplicates
+      observers.forEach((o) => o.disconnect())
+      observers.length = 0
+
       sectionIds.forEach((id) => {
         const el = document.getElementById(id)
         if (!el) return
@@ -57,18 +68,29 @@ function App() {
               setActiveSection(id)
             }
           },
-          { threshold: 0.2, rootMargin: '-10% 0px -40% 0px' }
+          { 
+            // Better 'active point': centered around the top 30% of the viewport
+            threshold: 0,
+            rootMargin: '-30% 0px -65% 0px' 
+          }
         )
         obs.observe(el)
         observers.push(obs)
       })
     }
 
-    // Delay initialization slightly to wait for lazy Suspense components
-    const timer = setTimeout(setupObservers, 1500)
+    // Run observers immediately
+    setupObservers()
+    
+    // Poll for components that might Lazy Load late
+    const interval = setInterval(setupObservers, 2000)
+
+    // Also run on scroll to catch any missed updates (rare but helpful)
+    window.addEventListener('scroll', setupObservers, { passive: true })
 
     return () => {
-      clearTimeout(timer)
+      clearInterval(interval)
+      window.removeEventListener('scroll', setupObservers)
       observers.forEach((o) => o.disconnect())
     }
   }, [isLoading])
@@ -147,19 +169,30 @@ function App() {
         <meta name="theme-color" content="#0f1224" />
       </Helmet>
       <div className="app-container relative">
-        <Cursor />
-        <ScrollProgress />
-        <ScrollReveal />
-        <Navbar onSectionChange={handleSectionChange} activeSection={activeSection} />
+        <MemoCursor />
+        <MemoScrollProgress />
+        <MemoScrollReveal />
+        <MemoNavbar onSectionChange={handleSectionChange} activeSection={activeSection} />
         
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div></div>}>
-          <Hero onSectionChange={handleSectionChange} />
+        {/* Priority 1 Content: Instant Load */}
+        <MemoHero onSectionChange={handleSectionChange} />
+        
+        {/* Priority 2 Content: Crucial Info */}
+        <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-10 h-10 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin shadow-[0_0_15px_rgba(6,182,212,0.5)]"></div></div>}>
           <About />
           <Skills />
+        </Suspense>
+
+        {/* Priority 3 Content: Heavy Media/Interactive */}
+        <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-10 h-10 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div></div>}>
           <Journey />
           <Projects />
           <LeetCode />
           <Hackathons />
+        </Suspense>
+
+        {/* Priority 4 Content: External/Footer */}
+        <Suspense fallback={<div className="h-40 flex items-center justify-center text-slate-500">Loading details...</div>}>
           <YouTube />
           <Certificates />
           <Contact />

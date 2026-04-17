@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, memo } from 'react'
 import { Menu, X } from 'lucide-react'
 import { motion } from 'framer-motion'
 
@@ -443,10 +443,11 @@ const Navbar = ({ onSectionChange, activeSection }) => {
             }}
             onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
             onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+            onClick={() => scrollToSection('home')}
           />
         </div>
         <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
-          {['home', 'about', 'skills', 'journey', 'projects', 'leetcode', 'hackathons', 'youtube', 'certificates', 'contact'].map((item) => (
+          {['home', 'about', 'skills', 'journey', 'projects', 'activity', 'hackathons', 'youtube', 'certificates', 'contact'].map((item) => (
              <li key={item}>
                   <a 
                     onClick={(e) => handleNavClick(e, item)}
@@ -462,12 +463,17 @@ const Navbar = ({ onSectionChange, activeSection }) => {
                     {item.charAt(0).toUpperCase() + item.slice(1).replace('Me', ' Me')}
                     
                     {activeTab === item && item !== 'contact' && (
-                      <motion.div 
-                        layoutId="activeUnderline"
-                        className="active-underline"
-                        initial={false}
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      />
+                        <motion.div 
+                          layoutId="activeUnderline"
+                          className="active-underline"
+                          initial={false}
+                          transition={{ 
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 24,
+                            mass: 0.8
+                          }}
+                        />
                     )}
                   </a>
              </li>
@@ -484,4 +490,4 @@ const Navbar = ({ onSectionChange, activeSection }) => {
   )
 }
 
-export default Navbar
+export default memo(Navbar)

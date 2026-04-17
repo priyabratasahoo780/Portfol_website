@@ -18,7 +18,7 @@ const Loader = ({ onLoadingComplete }) => {
           }, 500)
           return 100
         }
-        return prev + Math.random() * 15 + 5
+        return prev + Math.random() * 25 + 10
       })
     }, 100)
 
