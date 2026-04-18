@@ -719,15 +719,133 @@ const ActivityHub = () => {
         .sync-btn:hover { color: #fff; background: rgba(255,255,255,0.08); }
         .sync-btn.spinning { animation: spin 1s linear infinite; }
 
+        /* ── Tablet (≤ 1100px) ── */
         @media (max-width: 1100px) {
-          .hub-grid { grid-template-columns: 1fr; }
-          .lc-main-stats { flex-direction: column; gap: 40px; }
-          .circular-wrap { width: 220px; height: 220px; }
-          .glass-card { padding: 30px; }
+          .hub-grid { grid-template-columns: 1fr; gap: 24px; }
+          .glass-card { padding: 30px; border-radius: 28px; }
+          .activity-premium-section { padding: 100px 0; }
+          .activity-header { margin-bottom: 50px; }
+          .lc-main-stats { flex-direction: row; align-items: center; gap: 30px; }
+          .circular-wrap { width: 160px; height: 160px; }
+          .count-big { font-size: 2.8rem; }
         }
+
+        /* ── Mobile (≤ 768px) ── */
         @media (max-width: 768px) {
-          .title-massive { font-size: 3.5rem; }
-          .avatar-frame { width: 70px; height: 70px; }
+          .activity-premium-section { padding: 80px 0 60px; }
+          .activity-container { width: 95%; }
+          .activity-header { margin-bottom: 40px; }
+
+          .title-massive { font-size: clamp(2.2rem, 8vw, 3.5rem); letter-spacing: -0.03em; }
+          .sync-badge { font-size: 0.6rem; padding: 6px 12px; }
+
+          .glass-card { padding: 24px; border-radius: 24px; }
+          .card-header { margin-bottom: 24px; }
+
+          /* GitHub card */
+          .profile-hero { gap: 16px; margin-bottom: 24px; }
+          .avatar-frame { width: 65px; height: 65px; border-radius: 18px; }
+          .avatar-img { border-radius: 15px; }
+          .name-bold { font-size: 1.4rem; }
+          .handle { font-size: 0.8rem; margin-bottom: 10px; }
+          .stats-strip { gap: 14px; flex-wrap: wrap; }
+
+          /* Heatmap */
+          .github-heatmap { padding: 16px; border-radius: 16px; }
+          .heatmap-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+          .heatmap-legend { display: none; }
+          .heatmap-image-wrapper { padding: 12px; border-radius: 14px; }
+
+          /* LeetCode stats — stack vertically */
+          .lc-main-stats { flex-direction: column; align-items: center; gap: 24px; margin-bottom: 24px; }
+          .circular-wrap { width: 150px; height: 150px; flex-shrink: 0; }
+          .count-big { font-size: 2.6rem; }
+          .lc-diff-breakdown { width: 100%; }
+          .diff-header { font-size: 0.75rem; }
+
+          /* Terminal */
+          .terminal-card { padding: 18px; border-radius: 20px; margin-top: 16px; }
+          .log-line { font-size: 0.7rem; white-space: normal; word-break: break-all; }
+
+          /* LeetCode footer */
+          .lc-footer { flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 20px; padding-top: 16px; }
+          .ranking-box { font-size: 0.7rem; }
+
+          /* Tech pills */
+          .tech-pills { gap: 8px; margin-top: 14px; }
+          .pill { padding: 6px 12px; font-size: 0.7rem; }
+        }
+
+        /* ── Mobile Small (≤ 600px) ── */
+        @media (max-width: 600px) {
+          .activity-premium-section { padding: 70px 0 50px; }
+          .activity-container { width: 96%; }
+
+          .title-massive { font-size: clamp(1.9rem, 9vw, 2.8rem); }
+          .sync-badge { font-size: 0.55rem; letter-spacing: 0.1em; }
+
+          .glass-card { padding: 18px; border-radius: 20px; }
+          .card-header { margin-bottom: 18px; }
+          .platform-brand { font-size: 0.75rem; gap: 8px; }
+          .platform-icon { width: 18px; height: 18px; }
+
+          /* GitHub */
+          .profile-hero { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 18px; }
+          .avatar-frame { width: 60px; height: 60px; border-radius: 16px; }
+          .name-bold { font-size: 1.2rem; }
+          .stats-strip { gap: 10px; }
+          .stat-unit { font-size: 0.75rem; }
+
+          /* Heatmap */
+          .github-heatmap { padding: 12px; border-radius: 14px; margin-bottom: 18px; }
+          .heatmap-image-wrapper { padding: 10px; border-radius: 12px; margin-bottom: 14px; }
+
+          /* LeetCode */
+          .circular-wrap { width: 130px; height: 130px; }
+          .count-big { font-size: 2.2rem; }
+          .count-label { font-size: 0.6rem; }
+          .diff-item { margin-bottom: 4px; }
+
+          /* Terminal */
+          .terminal-card { padding: 14px; border-radius: 16px; }
+          .term-title { font-size: 0.6rem; }
+          .terminal-content { font-size: 0.78rem; }
+          .log-entries { gap: 6px; }
+
+          /* streak badge */
+          .streak-badge { font-size: 0.65rem; padding: 4px 8px; }
+        }
+
+        /* ── Tiny (≤ 480px) ── */
+        @media (max-width: 480px) {
+          .title-massive { font-size: 1.8rem; }
+          .glass-card { padding: 14px; border-radius: 18px; }
+
+          .profile-hero { gap: 10px; }
+          .avatar-frame { width: 52px; height: 52px; border-radius: 14px; }
+          .name-bold { font-size: 1.1rem; }
+
+          .circular-wrap { width: 115px; height: 115px; }
+          .count-big { font-size: 1.9rem; }
+
+          .tech-pills { gap: 6px; }
+          .pill { padding: 5px 10px; font-size: 0.65rem; border-radius: 8px; }
+
+          .lc-footer { gap: 10px; padding-top: 12px; margin-top: 14px; }
+          .ranking-box { font-size: 0.65rem; }
+          .sync-btn { padding: 8px; border-radius: 10px; }
+        }
+
+        /* ── Ultra Small (≤ 400px) ── */
+        @media (max-width: 400px) {
+          .activity-premium-section { padding: 60px 0 40px; }
+          .title-massive { font-size: 1.6rem; }
+          .glass-card { padding: 12px; border-radius: 16px; }
+          .circular-wrap { width: 100px; height: 100px; }
+          .count-big { font-size: 1.7rem; }
+          .heatmap-image-wrapper { padding: 8px; }
+          .terminal-card { padding: 12px; }
+          .log-line { font-size: 0.65rem; }
         }
       `}</style>
     </section>
