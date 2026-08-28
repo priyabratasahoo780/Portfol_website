@@ -149,44 +149,7 @@ const priyabrata = {
 
 ---
 
-## 📊 GitHub Statistics
-
-<div align="center">
-
-<img height="180em" src="https://github-readme-stats.vercel.app/api?username=priyabratasahoo780&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true&border_radius=12&hide_border=true&bg_color=0d1117&title_color=06b6d4&icon_color=7c3aed&text_color=94a3b8"/>
-<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=priyabratasahoo780&layout=compact&theme=tokyonight&border_radius=12&hide_border=true&bg_color=0d1117&title_color=06b6d4&text_color=94a3b8&langs_count=8"/>
-
-</div>
-
-<div align="center">
-
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=priyabratasahoo780&theme=tokyonight&hide_border=true&background=0d1117&ring=06b6d4&fire=f59e0b&currStreakLabel=06b6d4&sideLabels=94a3b8&dates=64748b&border_radius=12" alt="GitHub Streak" />
-
-</div>
-
----
-
-## 🏆 GitHub Trophies
-
-<div align="center">
-
-<img src="https://github-profile-trophy.vercel.app/?username=priyabratasahoo780&theme=tokyonight&no-frame=true&no-bg=true&column=7&margin-w=4" alt="GitHub Trophies"/>
-
-</div>
-
----
-
-## 📈 Contribution Graph
-
-<div align="center">
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=priyabratasahoo780&bg_color=0d1117&color=06b6d4&line=7c3aed&point=f59e0b&area=true&hide_border=true&radius=8" alt="Contribution Graph" width="100%"/>
-
-</div>
-
----
-
-## 🐍 Contribution Snake
+## 🐍 GitHub Activity & Contributions
 
 <div align="center">
 
