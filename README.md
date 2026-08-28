@@ -4,8 +4,8 @@
 
 <br/>
 
-<a href="https://git.io/typing-svg">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=06B6D4&center=true&vCenter=true&random=false&width=600&lines=Building+Premium+Web+Experiences+🚀;React+%2B+Node.js+Full-Stack+Developer;Turning+Ideas+Into+Interactive+Reality;Open+to+Exciting+Opportunities+💼" alt="Typing SVG" />
+<a href="https://github.com/priyabratasahoo780">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=06B6D4&center=true&vCenter=true&random=false&width=600&lines=Building+Premium+Web+Experiences;Full-Stack+Developer+%7C+React+%26+Node.js;Turning+Ideas+Into+Interactive+Reality;Open+to+Exciting+Opportunities" alt="Typing SVG" />
 </a>
 
 <br/><br/>
