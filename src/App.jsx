@@ -1,5 +1,4 @@
 import { useState, useEffect, Suspense, lazy, memo } from 'react'
-import { Helmet } from 'react-helmet'
 import { ThemeProvider } from 'next-themes'
 import Lenis from 'lenis'
 import Loading from './components/Loader'
@@ -96,29 +95,31 @@ function App() {
   }, [isLoading])
 
   useEffect(() => {
-    // Smoother Scroll Settings - Tuned for "Ultra Premium" Feel
+    // Ultra Smooth 60-120fps Scroll Settings
     const lenis = new Lenis({
-      duration: 1.2, // Slightly faster for responsiveness but still heavy
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential smoothing
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false, // Disable on touch for native feel
-      touchMultiplier: 2,
+      mouseMultiplier: 0.95,
+      smoothTouch: false,
+      touchMultiplier: 1.6,
       infinite: false,
     })
 
     window.lenis = lenis
+    let rafId
 
     function raf(time) {
       lenis.raf(time)
-      requestAnimationFrame(raf)
+      rafId = requestAnimationFrame(raf)
     }
 
-    requestAnimationFrame(raf)
+    rafId = requestAnimationFrame(raf)
 
     return () => {
+      cancelAnimationFrame(rafId)
       lenis.destroy()
     }
   }, [])
@@ -131,43 +132,19 @@ function App() {
     setActiveSection(section)
   }
 
+  useEffect(() => {
+    const currentMeta = SECTION_META[activeSection] || SECTION_META.home
+    document.title = currentMeta.title
+    const metaDesc = document.querySelector('meta[name="description"]')
+    if (metaDesc) metaDesc.setAttribute('content', currentMeta.desc)
+  }, [activeSection])
+
   if (isLoading) {
     return <Loading onLoadingComplete={handleLoadingComplete} />
   }
 
-  const currentMeta = SECTION_META[activeSection] || SECTION_META.home
-
   return (
     <ThemeProvider attribute="class" defaultTheme="dark">
-      <Helmet>
-        {/* Primary Meta */}
-        <html lang="en" />
-        <title>{currentMeta.title}</title>
-        <meta name="description" content={currentMeta.desc} />
-        <meta name="keywords" content="Priyabrata Sahoo, Full-Stack Developer, React, Node.js, Portfolio, Web Developer, Software Engineer, CSE, SwamiNarayan University" />
-        <meta name="author" content="Priyabrata Sahoo" />
-        <link rel="canonical" href="https://portfol-website-xn8a.vercel.app/" />
-
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://portfol-website-xn8a.vercel.app/" />
-        <meta property="og:title" content={currentMeta.title} />
-        <meta property="og:description" content={currentMeta.desc} />
-        <meta property="og:image" content="https://portfol-website-xn8a.vercel.app/assets/myPhoto.png" />
-        <meta property="og:site_name" content="Priyabrata Sahoo Portfolio" />
-        <meta property="og:locale" content="en_US" />
-
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://portfol-website-xn8a.vercel.app/" />
-        <meta name="twitter:title" content={currentMeta.title} />
-        <meta name="twitter:description" content={currentMeta.desc} />
-        <meta name="twitter:image" content="https://portfol-website-xn8a.vercel.app/assets/myPhoto.png" />
-
-        {/* Misc */}
-        <meta name="robots" content="index, follow" />
-        <meta name="theme-color" content="#0f1224" />
-      </Helmet>
       <div className="app-container relative">
         <MemoCursor />
         <MemoScrollProgress />

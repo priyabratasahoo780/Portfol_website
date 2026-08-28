@@ -119,31 +119,33 @@ const Cursor = () => {
         }
 
         // Canvas Animation Loop
+        let hasDrawn = false
         const animateCanvas = () => {
-            ctx.clearRect(0, 0, width, height)
-            
-            // "Dotted form" - Removed blur, kept additive for glow
-            ctx.globalCompositeOperation = 'lighter'
-            // ctx.filter = 'blur(8px)' // REMOVED for dotted look
+            const particles = particlesRef.current
 
-            particlesRef.current.forEach((p, i) => {
-                p.x += p.vx
-                p.y += p.vy
-                p.life -= 0.2 // Faster decay (Optimization)
+            if (particles.length > 0) {
+                ctx.clearRect(0, 0, width, height)
+                hasDrawn = true
                 
-                if (p.life <= 0) {
-                    particlesRef.current.splice(i, 1)
-                } else {
-                    ctx.beginPath()
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-                    ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.life})`
-                    // Add subtle glow to individual dots
-                    ctx.shadowBlur = 5
-                    ctx.shadowColor = `hsla(${p.hue}, 100%, 50%, 1)`
-                    ctx.fill()
-                    ctx.shadowBlur = 0 // Reset
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i]
+                    p.x += p.vx
+                    p.y += p.vy
+                    p.life -= 0.15
+                    
+                    if (p.life <= 0) {
+                        particles.splice(i, 1)
+                    } else {
+                        ctx.beginPath()
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+                        ctx.fillStyle = `hsla(${p.hue}, 100%, 65%, ${p.life})`
+                        ctx.fill()
+                    }
                 }
-            })
+            } else if (hasDrawn) {
+                ctx.clearRect(0, 0, width, height)
+                hasDrawn = false
+            }
             
             requestAnimationFrame(animateCanvas)
         }

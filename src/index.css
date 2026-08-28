@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -80,7 +79,7 @@ body {
 }
 
 a, button, input, textarea, .skill-card, .project-card, .cert-card-neon, .timeline-content {
-    transition: var(--transition-smooth) !important;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 }
 
 

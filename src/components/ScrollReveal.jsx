@@ -12,8 +12,7 @@ const ScrollReveal = () => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('show')
-          // Optional: Stop observing once shown for better performance
-          // observer.unobserve(entry.target) 
+          observer.unobserve(entry.target)
         }
       })
     }, observerOptions)

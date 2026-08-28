@@ -122,7 +122,7 @@ const Hero = ({ onSectionChange }) => {
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-circle-link">
                 <Linkedin size={18} />
               </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="social-circle-link">
+              <a href="https://github.com/priyabratasahoo780" target="_blank" rel="noopener noreferrer" className="social-circle-link">
                 <Github size={18} />
               </a>
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-circle-link">

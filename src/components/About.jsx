@@ -1,7 +1,6 @@
 import { useRef } from 'react'
 import { Activity, BookOpen, Cpu, Award, Globe, Heart } from 'lucide-react'
 import { motion, useInView } from 'framer-motion'
-import aboutImage from '/about-profile.jpg' // Using existing image
 
 const About = () => {
   const containerRef = useRef(null)
@@ -53,31 +52,7 @@ const About = () => {
         </motion.div>
 
         <div className="about-content-wrapper">
-          {/* Left Side: Visual/Profile */}
-          <motion.div 
-            className="about-visual"
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={itemVariants}
-          >
-            <div className="profile-card-premium">
-              <div className="profile-image-container">
-                <img src={aboutImage} alt="Priyabrata Sahoo" className="profile-img-main" />
-                <div className="profile-overlay" />
-              </div>
-              
-              {/* Floating Badge */}
-              <div className="achievement-badge animate-float">
-                <Award className="badge-icon" />
-                <div className="badge-text">
-                  <span className="badge-title">B.Tech Student</span>
-                  <span className="badge-subtitle">S.N University</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Side: Narrative */}
+          {/* Narrative */}
           <motion.div 
             className="about-narrative"
             initial="hidden"
@@ -98,6 +73,7 @@ const About = () => {
               </p>
 
               <div className="quick-tags">
+                <span className="tag-pill"><Award size={14} className="tag-icon-accent" /> B.Tech Student (S.N University)</span>
                 <span className="tag-pill"><Globe size={14} /> Surat, India</span>
                 <span className="tag-pill"><Cpu size={14} /> CSE Student</span>
                 <span className="tag-pill"><Heart size={14} /> Tech Explorer</span>
@@ -190,93 +166,20 @@ const About = () => {
         }
 
         .about-content-wrapper {
-          display: grid;
-          grid-template-columns: 0.8fr 1.2fr;
-          gap: 60px;
-          align-items: center;
-        }
-
-        .about-visual {
-          position: relative;
-          display: flex;
-          justify-content: center;
-        }
-
-        .profile-card-premium {
-          position: relative;
+          max-width: 900px;
+          margin: 0 auto;
           width: 100%;
-          max-width: 400px;
-          border-radius: 30px;
-          padding: 15px;
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          backdrop-filter: blur(10px);
         }
 
-        .profile-image-container {
-          position: relative;
-          border-radius: 20px;
-          overflow: hidden;
-          aspect-ratio: 4/5;
-        }
-
-        .profile-img-main {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.5s ease;
-        }
-
-        .profile-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to top, rgba(11, 14, 35, 0.8) 0%, transparent 40%);
-        }
-
-        .achievement-badge {
-          position: absolute;
-          bottom: 30px;
-          right: -30px;
-          background: rgba(15, 23, 42, 0.8);
-          backdrop-filter: blur(12px);
-          border: 1px solid rgba(0, 243, 255, 0.3);
-          border-radius: 16px;
-          padding: 12px 20px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        @keyframes heroFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-
-        .animate-float {
-          animation: heroFloat 4s ease-in-out infinite;
-        }
-
-        .badge-icon {
+        .tag-icon-accent {
           color: var(--neon-cyan);
-        }
-
-        .badge-title {
-          display: block;
-          color: #fff;
-          font-weight: 700;
-          font-size: 0.85rem;
-        }
-
-        .badge-subtitle {
-          color: #94a3b8;
-          font-size: 0.7rem;
         }
 
         .about-narrative {
           display: flex;
           flex-direction: column;
           gap: 30px;
+          width: 100%;
         }
 
         .bio-card-glass {
@@ -367,15 +270,12 @@ const About = () => {
         }
 
         @media (max-width: 1024px) {
-          .about-content-wrapper { grid-template-columns: 1fr; gap: 40px; }
-          .about-visual { order: 2; }
-          .about-narrative { order: 1; }
+          .about-content-wrapper { gap: 40px; }
           .stats-grid-about { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 640px) {
           .stats-grid-about { grid-template-columns: 1fr; }
-          .achievement-badge { bottom: 20px; right: 0; }
           .bio-card-glass { padding: 25px; }
         }
       `}</style>

@@ -1,16 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Youtube, Play, ExternalLink, X } from 'lucide-react'
+import { Youtube, Play, ExternalLink, X, RefreshCw } from 'lucide-react'
 
-// ─── Video Data ───────────────────────────────────────────────────────────────
-const youtubeData = [
-  { id: 'XHeITLqG_Jw', title: 'My Latest YouTube Video',  category: 'Featured' },
-  { id: 'wxSghN4KPhQ', title: 'YouTube Video 2',           category: 'Video'    },
-  { id: 'rKJG0e5612E', title: 'YouTube Video 3',           category: 'Video'    },
-  { id: 'f1LgMfOf48k', title: 'YouTube Video 4',           category: 'Video'    },
-  { id: 'vY5vS69lDuI', title: 'YouTube Video 5',           category: 'Video'    },
-  { id: 'FddnRYUhsjY', title: 'YouTube Video 6',           category: 'Video'    },
+// ─── Constants & Fallback Data ────────────────────────────────────────────────
+const CHANNEL_ID = 'UCzHiV0-wtTP1MCjGeSbXbSQ'
+const RSS_FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`
+const CACHE_KEY = 'youtube_latest_6_videos_v2'
+const ONE_DAY_MS = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
+
+const FALLBACK_VIDEOS = [
+  { id: 'QDSYctSbrJQ', title: '🔥 I Built a Smart Survey App in React Native 📱 | Camera, GPS & Contacts', category: 'Featured Project' },
+  { id: 'XRvtXPIMltQ', title: 'The Easiest LeetCode Problem That Confuses Everyone | 1399 count largest group', category: 'LeetCode' },
+  { id: 'ltVFJVyJ4co', title: '99% Beginners Overthink This LeetCode Problem 😱 | LeetCode 2114', category: 'LeetCode' },
+  { id: 'GMAzbfjYbtU', title: 'LeetCode 1446 Consecutive Characters | Easy C++ Solution', category: 'LeetCode' },
+  { id: 'sHDZYkG_70s', title: 'Google Asked This Stock Problem 😱 | LeetCode 121 Explained in 10 Minutes', category: 'LeetCode' },
+  { id: 'EwW21zaCzN0', title: 'Google, Amazon & Microsoft Asked This Question 😱 | LeetCode 485', category: 'LeetCode' },
 ]
+
+const decodeHtmlEntities = (str) => {
+  if (!str) return ''
+  return str
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&#x2F;/g, '/')
+}
+
+const extractVideoId = (item) => {
+  if (item.guid && item.guid.includes('yt:video:')) {
+    return item.guid.replace('yt:video:', '')
+  }
+  if (item.link) {
+    const match = item.link.match(/(?:v=|\/vi\/|\/v\/|youtu\.be\/|\/embed\/)([a-zA-Z0-9_-]{11})/)
+    if (match) return match[1]
+  }
+  return item.id || ''
+}
 
 const thumbUrl = (id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
 const embedUrl  = (id) => `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`
@@ -107,7 +135,117 @@ const VideoModal = ({ video, onClose }) => (
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 const YouTube = () => {
+  const [videos, setVideos] = useState(() => {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY)
+      if (cached) {
+        const parsed = JSON.parse(cached)
+        if (parsed?.data?.length) return parsed.data
+      }
+    } catch (e) {
+      console.warn('Failed to load cached YouTube videos:', e)
+    }
+    return FALLBACK_VIDEOS
+  })
+
   const [activeVideo, setActiveVideo] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  const fetchLatestVideos = async (force = false) => {
+    if (!force) {
+      try {
+        const cached = localStorage.getItem(CACHE_KEY)
+        if (cached) {
+          const parsed = JSON.parse(cached)
+          // Valid if fetched within the last 24 hours (1 day)
+          if (parsed?.timestamp && (Date.now() - parsed.timestamp < ONE_DAY_MS) && parsed.data?.length) {
+            setVideos(parsed.data)
+            return
+          }
+        }
+      } catch (e) {
+        console.warn('Cache validation error:', e)
+      }
+    }
+
+    try {
+      setLoading(true)
+      let parsedVideos = []
+
+      // 1. Primary Source: rss2json
+      try {
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_FEED_URL)}`
+        const res = await fetch(apiUrl)
+        if (res.ok) {
+          const json = await res.json()
+          if (json.status === 'ok' && json.items?.length) {
+            parsedVideos = json.items.slice(0, 6).map((item, idx) => ({
+              id: extractVideoId(item),
+              title: decodeHtmlEntities(item.title),
+              category: idx === 0 ? 'Featured' : (item.title?.toLowerCase().includes('leetcode') ? 'LeetCode' : 'Project'),
+              published: item.pubDate
+            })).filter(v => v.id)
+          }
+        }
+      } catch (err) {
+        console.warn('rss2json fetch error:', err)
+      }
+
+      // 2. Fallback Source: allorigins XML proxy
+      if (parsedVideos.length === 0) {
+        try {
+          const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_FEED_URL)}`
+          const res = await fetch(proxyUrl)
+          if (res.ok) {
+            const xml = await res.text()
+            const entries = xml.split('<entry>')
+            for (let i = 1; i < entries.length && parsedVideos.length < 6; i++) {
+              const entry = entries[i]
+              const idMatch = entry.match(/<yt:videoId>(.*?)<\/yt:videoId>/)
+              const titleMatch = entry.match(/<title>(.*?)<\/title>/)
+              if (idMatch) {
+                const title = titleMatch ? decodeHtmlEntities(titleMatch[1]) : 'YouTube Video'
+                parsedVideos.push({
+                  id: idMatch[1],
+                  title,
+                  category: parsedVideos.length === 0 ? 'Featured' : (title.toLowerCase().includes('leetcode') ? 'LeetCode' : 'Project')
+                })
+              }
+            }
+          }
+        } catch (err) {
+          console.warn('allorigins XML proxy error:', err)
+        }
+      }
+
+      if (parsedVideos.length > 0) {
+        setVideos(parsedVideos)
+        try {
+          localStorage.setItem(CACHE_KEY, JSON.stringify({
+            timestamp: Date.now(),
+            data: parsedVideos
+          }))
+        } catch (e) {
+          console.warn('LocalStorage save error:', e)
+        }
+      }
+    } catch (error) {
+      console.error('YouTube video sync error:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchLatestVideos()
+
+    // 24-Hour (1 day) automatic re-fetch interval
+    const interval = setInterval(() => {
+      fetchLatestVideos(true)
+    }, ONE_DAY_MS)
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <section
@@ -144,12 +282,21 @@ const YouTube = () => {
           transition={{ duration: 0.8 }}
           style={{ textAlign: 'center', marginBottom: '4rem' }}
         >
-          <p style={{
-            fontSize: 11, fontWeight: 700, letterSpacing: '0.35em',
-            color: '#ef4444', textTransform: 'uppercase', marginBottom: 14,
-            fontFamily: "'Inter', sans-serif",
-            textShadow: '0 0 12px rgba(239,68,68,0.5)',
-          }}>— Video Content</p>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            padding: '6px 14px', borderRadius: '50px',
+            background: 'rgba(239,68,68,0.1)',
+            border: '1px solid rgba(239,68,68,0.3)',
+            marginBottom: '16px'
+          }}>
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ef4444', display: 'inline-block', boxShadow: '0 0 10px #ef4444' }} />
+            <span style={{
+              fontSize: '11px', fontWeight: 800, letterSpacing: '0.2em',
+              color: '#ef4444', textTransform: 'uppercase', fontFamily: "'Inter', sans-serif"
+            }}>
+              DAILY STREAM • LATEST 6 RELEASES
+            </span>
+          </div>
 
           <h2 style={{
             fontSize: 'clamp(2.6rem, 5.5vw, 4.2rem)',
@@ -170,7 +317,7 @@ const YouTube = () => {
             marginTop: '1rem', color: '#64748b',
             fontSize: '1rem', fontFamily: "'Inter', sans-serif",
           }}>
-            Click any video to watch it right here ↓
+            Click any video to watch directly or visit the channel ↓
           </p>
         </motion.div>
 
@@ -182,7 +329,7 @@ const YouTube = () => {
         }}
           className="yt-grid"
         >
-          {youtubeData.map((video, index) => (
+          {videos.map((video, index) => (
             <motion.div
               key={video.id}
               initial={{ opacity: 0, y: 50 }}

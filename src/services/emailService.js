@@ -27,10 +27,14 @@ export const sendContactMessage = async (formData) => {
   }
 
   const templateParams = {
+    name: formData.name,
     from_name: formData.name,
+    email: formData.email,
     from_email: formData.email,
     message: formData.message,
+    title: `New Portfolio Message from ${formData.name}`,
     to_name: 'Priyabrata',
+    reply_to: formData.email
   }
 
   try {

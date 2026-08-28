@@ -1,18 +1,29 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 const ScrollProgress = () => {
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const progressBarRef = useRef(null)
 
   useEffect(() => {
+    let ticking = false
+
     const updateScrollProgress = () => {
-      const currentScroll = window.scrollY
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
-      if (scrollHeight) {
-        setScrollProgress(Number((currentScroll / scrollHeight).toFixed(2)) * 100)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (progressBarRef.current) {
+            const currentScroll = window.scrollY || document.documentElement.scrollTop
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+            const progress = scrollHeight > 0 ? Math.min(1, Math.max(0, currentScroll / scrollHeight)) : 0
+            progressBarRef.current.style.transform = `scaleX(${progress})`
+          }
+          ticking = false
+        })
+        ticking = true
       }
     }
 
-    window.addEventListener('scroll', updateScrollProgress)
+    window.addEventListener('scroll', updateScrollProgress, { passive: true })
+    updateScrollProgress()
+
     return () => window.removeEventListener('scroll', updateScrollProgress)
   }, [])
 
@@ -23,19 +34,22 @@ const ScrollProgress = () => {
         top: 0,
         left: 0,
         width: '100%',
-        height: '4px',
+        height: '3px',
         background: 'rgba(255, 255, 255, 0.05)',
         zIndex: 10001,
         pointerEvents: 'none'
       }}
     >
       <div 
+        ref={progressBarRef}
         style={{
-          width: `${scrollProgress}%`,
+          width: '100%',
           height: '100%',
+          transformOrigin: 'left center',
+          transform: 'scaleX(0)',
+          willChange: 'transform',
           background: 'linear-gradient(90deg, #00f3ff, #bf00ff, #ff00ff)',
-          boxShadow: '0 0 15px rgba(0, 243, 255, 0.8)',
-          transition: 'width 0.2s cubic-bezier(0.23, 1, 0.32, 1)'
+          boxShadow: '0 0 12px rgba(0, 243, 255, 0.8)'
         }}
       />
     </div>
