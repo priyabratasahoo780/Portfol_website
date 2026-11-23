@@ -14,13 +14,13 @@ const Loader = ({ onLoadingComplete }) => {
             setIsExiting(true)
             setTimeout(() => {
               onLoadingComplete()
-            }, 800)
-          }, 500)
+            }, 350)
+          }, 100)
           return 100
         }
-        return prev + Math.random() * 25 + 10
+        return prev + Math.random() * 22 + 16
       })
-    }, 100)
+    }, 28)
 
     return () => clearInterval(interval)
   }, [onLoadingComplete])

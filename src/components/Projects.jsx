@@ -99,6 +99,106 @@ const VideoModal = ({ video, onClose }) => (
 
 // ─── Project Data ────────────────────────────────────────────────────────────
 const projectsData = [
+  {
+    id: 13,
+    featured: true,
+    category: 'Mobile Apps',
+    title: 'EventFlow - Native Task & Alarm Engine',
+    emoji: '📱',
+    description: 'A full-stack mobile productivity platform with smart event scheduling, background geofencing, AI priority ranking, and an Android-native AlarmManager engine bypassing OS Doze mode.',
+    features: [
+      'Android-native Alarm Engine using foreground audio services to guarantee 100% reliable alarms',
+      'Smart Geofencing & Time-Gating with background location tracking for arrival/departure alerts',
+      'Full-Stack Architecture with Node.js, Express, MongoDB, Zustand & Clerk offline-first sync',
+    ],
+    liveLink: 'https://github.com/priyabratasahoo780/EventFlow',
+    codeLink: 'https://github.com/priyabratasahoo780/EventFlow.git',
+    youtubeLink: '#',
+    tech: ['React Native', 'Expo', 'TypeScript', 'Node.js', 'MongoDB', 'Zustand'],
+    image: '/assets/eventflow.png',
+    color: '#f97316',
+    gradient: 'linear-gradient(145deg, #f97316, #c2410c)',
+  },
+  {
+    id: 14,
+    featured: true,
+    category: 'Mobile Apps',
+    title: 'SafeSphere AI - Predictive Safety App',
+    emoji: '🛡️',
+    description: 'A zero-trust, predictive personal and women safety mobile ecosystem leveraging on-device Edge AI, zero-touch gesture triggers, and automated emergency network dispatch.',
+    features: [
+      'Edge AI zero-touch trigger system and real-time situational threat detection',
+      'Zero-Trust predictive safety ecosystem with instant live location and emergency dispatch',
+      'Built with React Native, TypeScript, Supabase backend and Google Gemini 2.0 AI',
+    ],
+    liveLink: 'https://github.com/priyabratasahoo780/Infinity_Coders-v2v',
+    codeLink: 'https://github.com/priyabratasahoo780/Infinity_Coders-v2v.git',
+    youtubeLink: '#',
+    tech: ['React Native', 'Expo', 'TypeScript', 'Supabase', 'Gemini 2.0'],
+    image: '/assets/safesphere.png',
+    color: '#8b5cf6',
+    gradient: 'linear-gradient(145deg, #8b5cf6, #6d28d9)',
+  },
+  {
+    id: 11,
+    featured: true,
+    category: 'Full-Stack Projects',
+    title: 'MediSync - Healthcare Platform',
+    emoji: '🏥',
+    description: 'A unified healthcare platform to synchronize patient records, specialist consultations, and pharmacy workflows with real-time clinical data orchestration and intelligent price comparison.',
+    features: [
+      'Secure zero-trust clinical record vault & appointment scheduling system',
+      'Real-time pharmacy price comparison matrix & local pharmacy discovery',
+      'Clinical data orchestration built with React.js, Node.js & Redux Toolkit',
+    ],
+    liveLink: 'https://medi-sync-rho.vercel.app/',
+    codeLink: 'https://github.com/priyabratasahoo780/mediSync.git',
+    youtubeLink: '#',
+    tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Redux Toolkit', 'Tailwind CSS'],
+    image: '/assets/medisync.png',
+    color: '#2A7FFF',
+    gradient: 'linear-gradient(145deg, #2A7FFF, #0052cc)',
+  },
+  {
+    id: 12,
+    featured: true,
+    category: 'Full-Stack Projects',
+    title: 'Human Capital Analytics & Studio',
+    emoji: '📊',
+    description: 'An enterprise-grade web platform and interactive dashboard with Node.js backend to process economic data, build ATS-friendly resumes, and generate comprehensive PDF reports.',
+    features: [
+      'Interactive dashboards & real-time data visualizations with Recharts & Redux',
+      'Complex MongoDB aggregation pipelines & JWT role-based access control (RBAC)',
+      'Dynamic ATS-friendly resume generation & PDF report export',
+    ],
+    liveLink: 'https://human-capital-project-sahoo-priyabr.vercel.app/',
+    codeLink: 'https://github.com/priyabratasahoo780/human_capital_project_sahoo_priyabrata.git',
+    youtubeLink: '#',
+    tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS', 'JWT'],
+    image: '/assets/human-capital.png',
+    color: '#10b981',
+    gradient: 'linear-gradient(145deg, #10b981, #047857)',
+  },
+  {
+    id: 10,
+    featured: true,
+    category: 'Full-Stack Projects',
+    title: 'ResourceHub - Campus & Lab Reservation',
+    emoji: '⚡',
+    description: 'A unified campus & lab reservation system to reserve university resources in seconds, not days. Effortlessly book high-performance GPU workstations, recording suites, and conference rooms.',
+    features: [
+      'Instant booking and centralized self-service resource catalog',
+      'Real-time availability tracking and automated approval workflow',
+      'Role-based access for students, faculty, and administrative staff',
+    ],
+    liveLink: 'https://nextjs-project-beryl-mu.vercel.app',
+    codeLink: 'https://github.com/priyabratasahoo780/nextjs_project.git',
+    youtubeLink: '#',
+    tech: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript'],
+    image: '/assets/nextjs.png',
+    color: '#00f3ff',
+    gradient: 'linear-gradient(145deg, #00f3ff, #0066ff)',
+  },
   // {
   //   id: 4,
   //   category: 'Mini Projects',
@@ -253,7 +353,7 @@ const projectsData = [
   },
 ]
 
-const FILTERS = ['All', 'Featured', 'Full-Stack Projects', 'APIs', 'Clones', 'Mini Projects']
+const FILTERS = ['All', 'Featured', 'Full-Stack Projects', 'Mobile Apps', 'Clones', 'Mini Projects']
 
 const Projects = memo(() => {
   const [activeFilter, setActiveFilter] = useState('All')
@@ -263,6 +363,8 @@ const Projects = memo(() => {
   
   const filteredProjects = activeFilter === 'All' 
     ? projectsData 
+    : activeFilter === 'Featured'
+    ? projectsData.filter(proj => proj.featured || proj.category === 'Full-Stack Projects' || proj.category === 'Mobile Apps')
     : projectsData.filter(proj => proj.category === activeFilter)
 
   // Pagination Logic

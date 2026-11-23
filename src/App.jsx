@@ -84,12 +84,8 @@ function App() {
     // Poll for components that might Lazy Load late
     const interval = setInterval(setupObservers, 2000)
 
-    // Also run on scroll to catch any missed updates (rare but helpful)
-    window.addEventListener('scroll', setupObservers, { passive: true })
-
     return () => {
       clearInterval(interval)
-      window.removeEventListener('scroll', setupObservers)
       observers.forEach((o) => o.disconnect())
     }
   }, [isLoading])
@@ -139,12 +135,9 @@ function App() {
     if (metaDesc) metaDesc.setAttribute('content', currentMeta.desc)
   }, [activeSection])
 
-  if (isLoading) {
-    return <Loading onLoadingComplete={handleLoadingComplete} />
-  }
-
   return (
     <ThemeProvider attribute="class" defaultTheme="dark">
+      {isLoading && <Loading onLoadingComplete={handleLoadingComplete} />}
       <div className="app-container relative">
         <MemoCursor />
         <MemoScrollProgress />

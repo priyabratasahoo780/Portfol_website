@@ -198,7 +198,6 @@ const Certificates = () => {
 
                   <div className="cert-footer-neon">
                     <span style={{ color: '#fff', opacity: 0.8 }}>{cert.issuer}</span>
-                    <span style={{ color: cert.color || '#06b6d4', fontWeight: 600 }}>{cert.date}</span>
                   </div>
                   
                   <button 
